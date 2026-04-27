@@ -121,11 +121,16 @@ function render() {
 function renderTabs() {
   const t = TREES;
   const tabsEl = document.getElementById('tabs');
+  const shouldRestoreFocus = tabsEl.contains(document.activeElement);
   tabsEl.setAttribute('role','tablist');
   tabsEl.setAttribute('aria-label','Select identification tree');
   tabsEl.innerHTML = Object.entries(t).map(([k,v])=>`
     <button role="tab" aria-selected="${state.tree===k}" aria-controls="card-area" tabindex="${state.tree===k?'0':'-1'}" class="tab ${state.tree===k?'active-'+k:''}" onclick="switchTree('${k}')">${v.label}</button>
   `).join('');
+  if (shouldRestoreFocus) {
+    const selectedTab = tabsEl.querySelector('[role="tab"][aria-selected="true"]');
+    if (selectedTab) selectedTab.focus();
+  }
 }
 
 function renderBreadcrumb() {
