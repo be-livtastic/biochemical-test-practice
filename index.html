@@ -57,6 +57,27 @@
       let sessionHistory = [];
       let quizMode = false;
 
+      function getTreeOrganismIds(treeKey) {
+        const start = TREES[treeKey] && TREES[treeKey].start;
+        if (!start) return [];
+        const seen = new Set();
+        const stack = [start];
+        const ids = new Set();
+        while (stack.length) {
+          const current = stack.pop();
+          if (seen.has(current)) continue;
+          seen.add(current);
+          if (current.startsWith('ORG_')) {
+            ids.add(current.replace('ORG_', ''));
+            continue;
+          }
+          const node = NODES[current];
+          if (!node || !node.test) continue;
+          stack.push(node.yes, node.no);
+        }
+        return [...ids];
+      }
+
       function getOptimalSteps(orgName) {
         const org = Object.values(ORGS).find(candidate => candidate.name === orgName);
         return org && Array.isArray(org.path) ? org.path.length : null;
@@ -124,7 +145,8 @@
       function renderProgressPanel() {
         const currentOrg = state.currentNode.startsWith('ORG_') ? ORGS[state.currentNode.replace('ORG_', '')] : null;
         const completed = completedEndpoints.filter(id => id.startsWith(`${state.tree}:`)).map(id => id.split(':')[1]);
-        const treeOrgs = Object.values(ORGS).filter(org => org.gram === TREES[state.tree].type);
+        const treeOrgIds = getTreeOrganismIds(state.tree);
+        const treeOrgs = treeOrgIds.map(id => ORGS[id]).filter(Boolean);
         const treeEndpointTotal = treeOrgs.length;
         const unseen = treeOrgs.map(org => org.name).filter(name => !completed.includes(name)).sort((a, b) => a.localeCompare(b));
         const latestAttempt = [...sessionHistory].reverse().find(entry => entry.tree === state.tree);
@@ -412,8 +434,9 @@
 
       function renderOrganismIndex() {
         const query = (document.getElementById('organism-search')?.value || '').toLowerCase().trim();
+        const reachableIds = new Set(getTreeOrganismIds(state.tree));
         const items = Object.entries(ORGS)
-          .filter(([, org]) => org.gram === TREES[state.tree].type)
+          .filter(([id]) => reachableIds.has(id))
           .filter(([, org]) => !query || org.name.toLowerCase().includes(query))
           .sort((a, b) => a[1].name.localeCompare(b[1].name))
           .map(([id, org]) => `<button class="btn-control" onclick="jumpToOrganism('${id}')">${org.name}</button>`)
