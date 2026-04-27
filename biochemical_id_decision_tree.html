@@ -1,71 +1,6 @@
 
 <h2 class="sr-only">Interactive biochemical identification decision trees for Gram-positive cocci, Gram-positive rods, and Gram-negative bacteria</h2>
-<style>
-.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.tab{padding:7px 14px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:13px;font-weight:500;cursor:pointer;color:var(--color-text-secondary);transition:all .15s}
-.tab.active-gpc,.tab.active-gpr{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}
-.tab.active-gn{background:#FBEAF0;border-color:#ED93B1;color:#72243E}
-.crumb-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:12px;min-height:22px}
-.crumb-item{font-size:11px;color:var(--color-text-tertiary);display:flex;align-items:center;gap:4px}
-.crumb-sep{font-size:10px;color:var(--color-text-tertiary)}
-.crumb-result.pos{color:#3B6D11;font-weight:500}
-.crumb-result.neg{color:#854F0B;font-weight:500}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px;animation:fadeUp .2s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.test-badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:var(--border-radius-md);margin-bottom:8px}
-.badge-gpc,.badge-gpr{background:#EEEDFE;color:#3C3489}
-.badge-gn{background:#FBEAF0;color:#72243E}
-.test-name{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:14px;line-height:1.3}
-.why-block{border-left:2px solid #AFA9EC;padding:10px 14px;margin-bottom:12px;background:var(--color-background-secondary);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
-.why-block.gn{border-left-color:#ED93B1}
-.why-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary);margin-bottom:4px}
-.why-text{font-size:13px;color:var(--color-text-primary);line-height:1.6}
-.proc-block{font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:14px;padding:8px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary)}
-.proc-label{font-weight:500;color:var(--color-text-primary)}
-.tip-block{font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:16px;font-style:italic;padding-left:10px;border-left:2px solid var(--color-border-secondary)}
-.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
-.btn-pos,.btn-neg{padding:11px 8px;border-radius:var(--border-radius-md);border:0.5px solid;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;text-align:center}
-.btn-pos{background:#EAF3DE;border-color:#97C459;color:#27500A}
-.btn-pos:hover{background:#C0DD97;border-color:#639922}
-.btn-neg{background:#FAEEDA;border-color:#EF9F27;color:#633806}
-.btn-neg:hover{background:#FAC775;border-color:#BA7517}
-.btn-back{width:100%;padding:7px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:transparent;font-size:12px;color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
-.btn-back:hover{background:var(--color-background-secondary)}
-.org-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
-.org-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
-.org-icon.gp{background:#EEEDFE;color:#3C3489}
-.org-icon.gn{background:#FBEAF0;color:#72243E}
-.org-name{font-size:17px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;line-height:1.3}
-.org-sub{font-size:12px;color:var(--color-text-secondary)}
-.path-summary{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;padding:8px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
-.path-step{font-size:11px;color:var(--color-text-secondary)}
-.path-pos{color:#27500A;background:#EAF3DE;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:500}
-.path-neg{color:#633806;background:#FAEEDA;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:500}
-.path-arr{color:var(--color-text-tertiary);font-size:10px}
-.section-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary);margin:12px 0 6px}
-.feat-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.feat-pill{font-size:11px;padding:3px 9px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:20px;color:var(--color-text-secondary)}
-.clinical-text{font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px}
-.distinction-box{background:#EEEDFE;border-radius:var(--border-radius-md);padding:12px;margin-bottom:14px}
-.distinction-box.gn{background:#FBEAF0}
-.dist-label{font-size:11px;font-weight:500;color:#3C3489;margin-bottom:4px;letter-spacing:.04em}
-.distinction-box.gn .dist-label{color:#72243E}
-.dist-text{font-size:12px;color:#26215C;line-height:1.6}
-.distinction-box.gn .dist-text{color:#4B1528}
-.org-btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.btn-restart{padding:9px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;font-weight:500;color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
-.btn-restart:hover{background:var(--color-background-secondary)}
-.tree-icon{font-size:16px}
-.session-panel{display:flex;gap:10px;align-items:stretch;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
-.progress-panel{flex:1;min-width:260px;padding:10px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-secondary)}
-.progress-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary);margin-bottom:6px}
-.progress-meta{font-size:12px;color:var(--color-text-secondary);margin-bottom:6px}
-.progress-list{display:flex;flex-wrap:wrap;gap:6px}
-.progress-pill{font-size:11px;padding:3px 9px;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:20px;color:var(--color-text-secondary)}
-.control-row{display:flex;gap:8px;align-items:center}
-.btn-control{padding:8px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;font-weight:500;color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
-.btn-control:hover{background:var(--color-background-secondary)}
-</style>
+<link rel="stylesheet" href="styles/decision-tree.css">
 
 <div id="app" style="padding:4px 0">
   <div class="tabs" id="tabs"></div>
@@ -81,284 +16,13 @@
 </div>
 
 <script>
-const NODES = {
-  gpc_catalase:{
-    tree:'gpc',test:'Catalase test',
-    mechanism:'Detects the enzyme catalase, which converts H₂O₂ → H₂O + O₂. This separates Staphylococcus and Micrococcus (catalase-positive) from Streptococcus and Enterococcus (catalase-negative). The distinction reflects fundamentally different strategies for handling reactive oxygen species.',
-    procedure:'Add a drop of 3% H₂O₂ to a colony on a clean slide or in a tube. Vigorous, immediate bubbling = positive. Never use colonies from blood agar — red blood cells contain catalase and will cause false positives.',
-    tip:'Distinction tip: If asked why you chose this test first, say: "Catalase status is the primary branch point in Gram-positive cocci identification because it divides the clinically significant organisms into two entirely different identification pathways."',
-    yes:'gpc_coagulase',no:'gpc_pyr',
-    yesLabel:'Positive — bubbles (Staph/Micrococcus)',noLabel:'Negative — no bubbles (Strep/Enterococcus)'
-  },
-  gpc_coagulase:{
-    tree:'gpc',test:'Coagulase test (tube method)',
-    mechanism:'Free coagulase converts fibrinogen to fibrin, clotting plasma. This virulence factor is unique to S. aureus among clinically significant staphylococci. The tube test detects free coagulase; the slide test detects bound coagulase (clumping factor) — always confirm a positive slide test with a tube test.',
-    procedure:'Inoculate 0.5 mL rabbit plasma. Incubate 37°C for 4h. Tilt tube — solid gel that does not flow = positive. If negative at 4h, re-read at 24h. Observe carefully: even a partial clot counts as positive.',
-    tip:'Distinction tip: S. lugdunensis (a CoNS) possesses clumping factor and gives a false-positive on the slide test, but is negative on the tube test. Mention this in your answer to show you understand the limitation of rapid tests.',
-    yes:'ORG_saureus',no:'gpc_novobiocin',
-    yesLabel:'Positive — gel forms (S. aureus)',noLabel:'Negative — liquid (CoNS)'
-  },
-  gpc_novobiocin:{
-    tree:'gpc',test:'Novobiocin susceptibility test',
-    mechanism:'Novobiocin inhibits DNA gyrase (topoisomerase II). S. saprophyticus has an intrinsic structural modification to its GyrB subunit that confers resistance. This distinguishes it from S. epidermidis, which is susceptible.',
-    procedure:'Place a 5 µg novobiocin disk on a blood agar plate inoculated with the organism. Incubate 37°C 24h. Zone of inhibition ≥16mm = susceptible (S. epidermidis); zone <16mm or no zone = resistant (S. saprophyticus).',
-    tip:'Distinction tip: S. saprophyticus resistant to novobiocin is the second most common cause of UTIs in young, sexually active women (after E. coli). The resistance is intrinsic, not acquired — it reflects the species\'s inherent biology, not antibiotic pressure.',
-    yes:'ORG_sepidermidis',no:'ORG_ssaprophyticus',
-    yesLabel:'Susceptible — zone ≥16mm',noLabel:'Resistant — zone <16mm'
-  },
-  gpc_pyr:{
-    tree:'gpc',test:'PYR test (pyrrolidonyl arylamidase)',
-    mechanism:'Detects the enzyme pyrrolidonyl peptidase, which cleaves the chromogenic PYR substrate, releasing a compound that reacts with cinnamaldehyde to produce a cherry-red colour. Only Enterococcus and S. pyogenes (Group A) are PYR-positive among catalase-negative cocci.',
-    procedure:'Touch colony to PYR-impregnated disk or substrate. After 2 min contact, add one drop of cinnamaldehyde reagent. Cherry-red colour within 1 min = positive. Orange colour is a weak positive; yellow = negative.',
-    tip:'Distinction tip: Only two catalase-negative cocci are PYR-positive: Enterococcus and Streptococcus pyogenes. Everything else is negative. This makes PYR one of the most discriminating single tests in Gram-positive identification.',
-    yes:'gpc_nacl',no:'gpc_optochin',
-    yesLabel:'Positive — cherry-red (Entero or S. pyogenes)',noLabel:'Negative — no colour change'
-  },
-  gpc_nacl:{
-    tree:'gpc',test:'6.5% NaCl tolerance test',
-    mechanism:'Tests osmotolerance. Enterococcus spp. can grow in high-salt environments because of their robust cell membrane and ion transport systems — an adaptation to their natural niche in the mammalian GI tract. S. pyogenes cannot tolerate this osmotic stress.',
-    procedure:'Inoculate brain heart infusion broth containing 6.5% NaCl. Incubate 35°C 24–48h. Visible turbidity = positive (growth = Enterococcus). No turbidity = negative (S. pyogenes).',
-    tip:'Distinction tip: Enterococcal osmotolerance, bile tolerance, and intrinsic antibiotic resistance all reflect adaptations to the GI tract. This robustness is exactly why VRE (vancomycin-resistant Enterococcus) is so difficult to eradicate from hospital environments.',
-    yes:'ORG_enterococcus',no:'ORG_spyogenes',
-    yesLabel:'Growth — tolerant (Enterococcus)',noLabel:'No growth — sensitive (S. pyogenes)'
-  },
-  gpc_optochin:{
-    tree:'gpc',test:'Optochin susceptibility test (P disk)',
-    mechanism:'Optochin (ethylhydrocupreine HCl) disrupts ATP synthesis in S. pneumoniae by interfering with its membrane-associated ATPase. Other alpha-haemolytic streptococci have structurally different ATPases and are therefore resistant.',
-    procedure:'Place a 5 µg optochin disk on blood agar inoculated with organism. Incubate 35–37°C in 5% CO₂ for 24h. Zone of inhibition ≥14mm = susceptible (S. pneumoniae); zone <14mm or no zone = resistant.',
-    tip:'Distinction tip: S. pneumoniae is BOTH optochin-susceptible AND bile-soluble. Using both tests together confirms pneumococcus definitively. An optochin zone of 9–13mm is indeterminate — request bile solubility testing.',
-    yes:'ORG_spneumoniae',no:'gpc_camp',
-    yesLabel:'Susceptible — zone ≥14mm (S. pneumoniae)',noLabel:'Resistant — zone <14mm'
-  },
-  gpc_camp:{
-    tree:'gpc',test:'CAMP test',
-    mechanism:'S. agalactiae produces CAMP factor (Christie–Atkins–Munch-Petersen protein), which binds to and modifies red blood cells, making them susceptible to complete lysis by S. aureus beta-lysin. The synergistic effect produces a characteristic arrowhead-shaped zone of enhanced haemolysis pointing toward the S. aureus streak.',
-    procedure:'Streak test organism perpendicular to (but not touching) a central streak of S. aureus beta-lysin on blood agar. Incubate 35°C 24h. Arrowhead-shaped zone of enhanced (complete) haemolysis at the junction = positive.',
-    tip:'Distinction tip: All Group B Streptococcus are CAMP-positive. S. agalactiae colonises the vagina in ~25% of pregnant women, and vertical transmission during birth causes neonatal meningitis and sepsis. Universal prenatal screening at 35–37 weeks is why this organism matters clinically.',
-    yes:'ORG_sagalactiae',no:'ORG_viridans',
-    yesLabel:'Positive — arrowhead lysis (S. agalactiae)',noLabel:'Negative — no enhancement (Viridans)'
-  },
-
-  gpr_spores:{
-    tree:'gpr',test:'Endospore observation (microscopy)',
-    mechanism:'Endospores are metabolically dormant, highly resistant structures formed by certain Gram-positive rods under nutrient stress. They appear as clear, refractile, unstained bodies inside or adjacent to rod-shaped cells on Gram stain. Spore-forming rods belong to only two clinically important genera: Bacillus (aerobic) and Clostridium (anaerobic).',
-    procedure:'Examine Gram-stained slide under oil immersion (100×). Look for clear, oval or round unstained bodies within or adjacent to rod-shaped cells — these are endospores. The Schaeffer–Fulton spore stain (malachite green) can confirm if needed.',
-    tip:'Distinction tip: If you see endospores, you have immediately narrowed to just two genera. The aerobe/anaerobe distinction then separates them completely. This is why spore observation is a powerful and efficient branch point.',
-    yes:'gpr_oxygen',no:'gpr_catalase2',
-    yesLabel:'Spores visible (refractile bodies in rods)',noLabel:'No spores visible'
-  },
-  gpr_oxygen:{
-    tree:'gpr',test:'Growth atmosphere (aerobe vs anaerobe)',
-    mechanism:'Bacillus species are obligate or facultative aerobes and possess catalase and superoxide dismutase to manage reactive oxygen species. Clostridium species are obligate anaerobes — they lack these enzymes and oxygen is lethal (generates toxic superoxide radicals that they cannot neutralise).',
-    procedure:'Observe growth conditions required or inoculate both aerobic and anaerobic environments. Most Bacillus grow well in ambient air; Clostridium requires anaerobic conditions (anaerobic jar with GasPak or anaerobic chamber).',
-    tip:'Distinction tip: Clostridium toxins include some of the most potent biological toxins known. C. botulinum produces botulinum toxin (flaccid paralysis), C. tetani produces tetanospasmin (spastic paralysis), C. perfringens produces alpha-toxin (gas gangrene). Each mechanism is worth knowing.',
-    yes:'ORG_bacillus',no:'ORG_clostridium',
-    yesLabel:'Aerobic growth (Bacillus)',noLabel:'Anaerobic only (Clostridium)'
-  },
-  gpr_catalase2:{
-    tree:'gpr',test:'Catalase test',
-    mechanism:'Among non-sporing Gram-positive rods, catalase status is a key differentiator. Listeria and Corynebacterium are catalase-positive. Lactobacillus and Erysipelothrix are catalase-negative. This reflects their different oxygen-handling strategies.',
-    procedure:'Add 3% H₂O₂ to colony on a glass slide. Bubbling = positive. Use CHOC or non-blood media to avoid false positives from blood agar plates.',
-    tip:'Distinction tip: The two most clinically important non-sporing Gram-positive rods are Listeria (catalase-positive, tumbling motility) and Corynebacterium (catalase-positive, palisade arrangement, Chinese-letter appearance). Both are catalase-positive but have very distinct microscopic morphology.',
-    yes:'gpr_motility',no:'ORG_lactobacillus',
-    yesLabel:'Positive — bubbles',noLabel:'Negative — no bubbles (Lactobacillus)'
-  },
-  gpr_motility:{
-    tree:'gpr',test:'Motility / "tumbling" motility at 25°C',
-    mechanism:'Listeria monocytogenes is motile due to peritrichous flagella expressed at 20–25°C but not at 37°C (a critical detail). Its characteristic "tumbling" motility — end-over-end tumbling movement — is visible by wet mount or semi-solid agar stab. Corynebacterium is non-motile.',
-    procedure:'Wet mount from liquid culture grown at 25°C. Examine under brightfield at 40×. Tumbling, end-over-end motility = Listeria. Alternatively, stab inoculate motility test agar at 25°C — umbrella-shaped growth pattern confirms motility.',
-    tip:'Distinction tip: Listeria is tested at 25°C, not 37°C, because flagella are only expressed at room temperature. If you use a 37°C culture you will miss the motility and misidentify it. This is a classic exam trap question.',
-    yes:'ORG_listeria',no:'ORG_coryne',
-    yesLabel:'Tumbling motility (Listeria)',noLabel:'Non-motile (Corynebacterium)'
-  },
-
-  gn_oxidase:{
-    tree:'gn',test:'Oxidase test',
-    mechanism:'Detects cytochrome c oxidase, the terminal enzyme in the electron transport chain. Organisms with this enzyme (oxidase-positive) include Pseudomonas, Neisseria, Aeromonas, and Agrobacterium. Enterobacteriaceae (E. coli, Klebsiella) use cytochrome d and are oxidase-negative.',
-    procedure:'Place a drop of oxidase reagent (tetramethyl-p-phenylenediamine) on filter paper. Touch a colony to the wet paper with a non-metallic loop (metal inhibits reaction). Purple-blue colour within 10–30 seconds = positive. Metal loops give false negatives.',
-    tip:'Distinction tip: All Enterobacteriaceae are oxidase-negative — this is a definitive rule. If your Gram-negative rod is oxidase-positive, it is NOT E. coli, Klebsiella, Salmonella, or any enterobacterium. You have immediately narrowed to a different family.',
-    yes:'gn_fluor',no:'gn_indole',
-    yesLabel:'Positive — purple-blue (Pseudomonas, Agrobacterium)',noLabel:'Negative — no colour (Enterobacteriaceae)'
-  },
-  gn_fluor:{
-    tree:'gn',test:'UV fluorescence (365 nm)',
-    mechanism:'Pseudomonas fluorescens and P. aeruginosa produce pyoverdine (a yellow-green fluorescent siderophore/pigment) detectable under UV light at 365 nm. Agrobacterium does not produce this pigment despite also being oxidase-positive and mucoid. Fluorescence is a strong differentiator within oxidase-positive Gram-negative rods.',
-    procedure:'Expose colonies on agar plate to UV light (365 nm Wood\'s lamp) in a darkened room. Yellow-green fluorescent glow under UV = Pseudomonas fluorescens/putida. Blue-green pigment visible in white light (pyocyanin) = P. aeruginosa. No fluorescence = not Pseudomonas.',
-    tip:'Distinction tip: Note that this experiment did not include UV fluorescence testing — so if Pseudomonas was assigned, it was identified by elimination using oxidase, colony morphology, and RFLP. In a real lab, UV fluorescence would be a first-line test. Mentioning this limitation shows critical evaluation of the experimental design.',
-    yes:'ORG_pseudomonas',no:'gn_mucoid',
-    yesLabel:'Fluorescent under UV (Pseudomonas)',noLabel:'No fluorescence'
-  },
-  gn_mucoid:{
-    tree:'gn',test:'Colony morphology — mucoid?',
-    mechanism:'Agrobacterium tumefaciens produces abundant extracellular polysaccharides (EPS), creating a distinctive slimy, mucoid colony morphology. This polysaccharide production is important for its biology as a plant pathogen — it facilitates attachment to plant cells. High EPS can also inhibit PCR by reducing DNA template availability.',
-    procedure:'Examine colony surface appearance macroscopically. Mucoid colonies: glistening, wet-looking surface, colonies tend to "string" when touched with a loop. Compare to other non-mucoid colonies on the same plate.',
-    tip:'Distinction tip: PCR failure in Agrobacterium is often due to transferring excess extracellular polysaccharide rather than cells — meaning low DNA template. If colony PCR fails for a mucoid colony, try diluting the colony suspension, re-picking with less material, or performing a brief DNA extraction first.',
-    yes:'ORG_agrobacterium',no:'ORG_other_oxpos',
-    yesLabel:'Mucoid colonies (Agrobacterium)',noLabel:'Non-mucoid'
-  },
-  gn_indole:{
-    tree:'gn',test:'Indole test',
-    mechanism:'Detects the enzyme tryptophanase, which cleaves the indole ring from tryptophan, releasing free indole. Indole reacts with Kovács\' reagent (p-dimethylaminobenzaldehyde) to produce a cherry-red colour. E. coli is classically indole-positive; most other Enterobacteriaceae are negative.',
-    procedure:'Inoculate tryptone broth. Incubate 35–37°C 24–48h. Add 5 drops of Kovács\' reagent to the culture. Cherry-red ring at the surface = positive. Yellow/amber = negative.',
-    tip:'Distinction tip: The IMViC series (Indole, Methyl Red, Voges-Proskauer, Citrate) is the classical scheme for separating E. coli (+ − − −) from Enterobacter (− − + +) from Klebsiella (− − + +). Knowing the IMViC pattern for E. coli demonstrates systematic thinking.',
-    yes:'ORG_ecoli',no:'gn_motility2',
-    yesLabel:'Positive — cherry-red (E. coli likely)',noLabel:'Negative — no colour'
-  },
-  gn_motility2:{
-    tree:'gn',test:'Motility (semi-solid agar stab)',
-    mechanism:'Motile Gram-negative rods (e.g. Salmonella, Enterobacter, Proteus) possess flagella and show diffuse, spreading growth away from the stab line in semi-solid agar. Klebsiella is non-motile, producing a mucoid colony due to its polysaccharide capsule but remaining confined to the stab line.',
-    procedure:'Stab inoculate motility test agar (semi-solid, 0.4% agar). Incubate 35°C 24–48h. Diffuse cloudiness extending from the stab line = motile. Growth only along the stab line = non-motile.',
-    tip:'Distinction tip: Klebsiella is both non-motile and produces a large polysaccharide capsule — giving mucoid colonies. It is associated with community-acquired pneumonia in alcoholics and immunocompromised patients (produces characteristic "currant jelly" sputum due to blood mixed with mucoid exudate).',
-    yes:'ORG_motile_entero',no:'ORG_klebsiella',
-    yesLabel:'Motile (Salmonella/Enterobacter group)',noLabel:'Non-motile (Klebsiella)'
-  }
-};
-
-const ORGS = {
-  saureus:{
-    name:'Staphylococcus aureus',gram:'gp',initials:'Sa',
-    path:[{t:'Catalase',r:'pos'},{t:'Coagulase',r:'pos'}],
-    features:['Gram-positive cocci in clusters','Catalase-positive','Free coagulase-positive','Beta-haemolytic','Large cream/golden colonies','Mannitol fermenter (MSA)'],
-    clinical:'Skin/soft tissue infections, nosocomial pneumonia, bacteraemia, endocarditis, toxic shock syndrome, food poisoning (heat-stable enterotoxin — not destroyed by cooking).',
-    distinction:'MRSA carries the mecA gene encoding PBP2a — a modified penicillin-binding protein with low affinity for beta-lactams, conferring resistance to all penicillins and cephalosporins. CHROMagar MRSA shows characteristic mauve colonies. This is a critical public health issue because MRSA infections cannot be treated with first-line beta-lactams.'
-  },
-  sepidermidis:{
-    name:'Staphylococcus epidermidis',gram:'gp',initials:'Se',
-    path:[{t:'Catalase',r:'pos'},{t:'Coagulase',r:'neg'},{t:'Novobiocin',r:'pos'}],
-    features:['Gram-positive cocci in clusters','Catalase-positive','Coagulase-negative (CoNS)','Novobiocin susceptible (≥16mm zone)','White-grey colonies','Non-haemolytic or weak'],
-    clinical:'Nosocomial infections: prosthetic device infections (catheters, heart valves, joint replacements). Forms robust biofilm on plastic surfaces, protecting from antibiotics and host immune defences.',
-    distinction:'Distinguishing true CoNS infection from skin contamination (the most common source of blood culture contamination) requires clinical judgement: multiple positive blood cultures from different sites, or a positive culture from an indwelling device, increase specificity. Biofilm formation is the pathogenic mechanism — the biofilm physically shields organisms from antibiotics.'
-  },
-  ssaprophyticus:{
-    name:'Staphylococcus saprophyticus',gram:'gp',initials:'Ss',
-    path:[{t:'Catalase',r:'pos'},{t:'Coagulase',r:'neg'},{t:'Novobiocin',r:'neg'}],
-    features:['Gram-positive cocci in clusters','Catalase-positive','Coagulase-negative','Novobiocin resistant (<16mm zone)','White opaque colonies'],
-    clinical:'UTIs in young, sexually active women — second most common cause after E. coli. Symptoms: dysuria, frequency, pyuria. Responds to trimethoprim-sulfamethoxazole and nitrofurantoin.',
-    distinction:'Novobiocin resistance is intrinsic, not acquired — it reflects a structural difference in the GyrB subunit of S. saprophyticus DNA gyrase. This is important because you cannot "de-resist" it with antibiotic stewardship — the resistance is biological, not epidemiological.'
-  },
-  enterococcus:{
-    name:'Enterococcus spp.',gram:'gp',initials:'En',
-    path:[{t:'Catalase',r:'neg'},{t:'PYR',r:'pos'},{t:'6.5% NaCl',r:'pos'}],
-    features:['Gram-positive cocci in pairs/short chains','Catalase-negative','PYR-positive','6.5% NaCl tolerance','Growth at 10°C and 45°C','Gamma or alpha haemolytic'],
-    clinical:'Normal GI flora that causes UTIs, wound infections, bacteraemia, and endocarditis in immunocompromised patients. E. faecalis and E. faecium are the most clinically important species.',
-    distinction:'VRE (vancomycin-resistant Enterococcus) has two main resistance mechanisms: VanA (acquired, high-level resistance to vancomycin AND teicoplanin) and VanB (lower-level, teicoplanin remains active). E. faecium is more often VRE than E. faecalis. Contact precautions and environmental decontamination are required — VRE can survive on surfaces for weeks.'
-  },
-  spyogenes:{
-    name:'Streptococcus pyogenes (Group A)',gram:'gp',initials:'Sp',
-    path:[{t:'Catalase',r:'neg'},{t:'PYR',r:'pos'},{t:'6.5% NaCl',r:'neg'}],
-    features:['Gram-positive cocci in chains','Catalase-negative','PYR-positive','6.5% NaCl sensitive','Beta-haemolytic (clear zone)','Bacitracin susceptible','Pinpoint colonies'],
-    clinical:'Pharyngitis (strep throat), impetigo, scarlet fever, necrotising fasciitis, streptococcal toxic shock syndrome. Post-streptococcal sequelae: rheumatic fever, post-streptococcal glomerulonephritis.',
-    distinction:'Rheumatic fever results from molecular mimicry — anti-M protein antibodies cross-react with cardiac tissue (particularly the myosin heavy chain), causing autoimmune valve damage. This is why even uncomplicated strep throat warrants antibiotic treatment — not because the infection itself is dangerous, but to prevent the autoimmune complication.'
-  },
-  spneumoniae:{
-    name:'Streptococcus pneumoniae',gram:'gp',initials:'Sp',
-    path:[{t:'Catalase',r:'neg'},{t:'PYR',r:'neg'},{t:'Optochin',r:'pos'}],
-    features:['Gram-positive diplococci (lancet-shaped)','Catalase-negative','PYR-negative','Alpha-haemolytic (green zone)','Optochin susceptible (≥14mm)','Bile soluble','Mucoid capsulated colonies'],
-    clinical:'Leading cause of community-acquired pneumonia, bacterial meningitis, otitis media, and sinusitis. Responsible for significant morbidity globally.',
-    distinction:'The polysaccharide capsule is the primary virulence factor — it inhibits opsonisation and prevents phagocytosis by blocking complement deposition. Asplenic patients are at extreme risk because the spleen is where encapsulated bacteria are cleared. PCV13 and PPSV23 vaccines target capsular polysaccharides (84+ serotypes exist).'
-  },
-  sagalactiae:{
-    name:'Streptococcus agalactiae (Group B)',gram:'gp',initials:'Sa',
-    path:[{t:'Catalase',r:'neg'},{t:'PYR',r:'neg'},{t:'Optochin',r:'neg'},{t:'CAMP',r:'pos'}],
-    features:['Gram-positive cocci in chains','Catalase-negative','PYR-negative','CAMP test positive (arrowhead)','Beta-haemolytic','Narrow haemolysis zone'],
-    clinical:'Leading cause of neonatal meningitis and sepsis. Colonises vagina in ~25% of pregnant women. Universal prenatal screening at 35–37 weeks; intrapartum antibiotic prophylaxis (penicillin) if positive.',
-    distinction:'CAMP factor is a pore-forming protein that binds to the altered red blood cell surface (modified by S. aureus beta-lysin) and completes lysis. The arrowhead points TOWARD the S. aureus streak — this directionality matters for interpretation. Intrapartum prophylaxis has reduced early-onset GBS disease by >80% in screened populations.'
-  },
-  viridans:{
-    name:'Viridans group Streptococci',gram:'gp',initials:'Vs',
-    path:[{t:'Catalase',r:'neg'},{t:'PYR',r:'neg'},{t:'Optochin',r:'neg'},{t:'CAMP',r:'neg'}],
-    features:['Gram-positive cocci in chains','Catalase-negative','PYR-negative','Alpha-haemolytic (green partial zone)','Optochin resistant','CAMP negative','Bile insoluble'],
-    clinical:'Normal oral and GI flora. Causes subacute bacterial endocarditis (SBE) after dental procedures in patients with pre-existing valve abnormalities. S. mutans associated with dental caries.',
-    distinction:'SBE from viridans streptococci results from transient bacteraemia during dental work seeding damaged or prosthetic valves. The organisms are not inherently virulent — it is the damaged valve surface that provides a substrate for colonisation. Antibiotic prophylaxis before high-risk dental procedures is recommended only for specific high-risk cardiac conditions (prosthetic valves, prior endocarditis).'
-  },
-  bacillus:{
-    name:'Bacillus spp.',gram:'gp',initials:'Ba',
-    path:[{t:'Spores',r:'pos'},{t:'Aerobic',r:'pos'}],
-    features:['Gram-positive rods','Endospores (central or subterminal)','Aerobic/facultatively anaerobic','Catalase-positive','Large, often spreading colonies','Rhizoid margin possible'],
-    clinical:'B. anthracis: anthrax (cutaneous, pulmonary, gastrointestinal — spores used in bioterrorism). B. cereus: food poisoning (two types: emetic from fried rice, diarrhoeal from meat/vegetables). B. subtilis/licheniformis: occasional opportunistic infections.',
-    distinction:'B. anthracis is non-motile (distinguishes it from other Bacillus which are usually motile) and lacks haemolysis. Spores are the infective form — extraordinarily resistant to heat, desiccation, and chemicals. The toxin complex (protective antigen + lethal factor + oedema factor) is the primary virulence mechanism.'
-  },
-  clostridium:{
-    name:'Clostridium spp.',gram:'gp',initials:'Cl',
-    path:[{t:'Spores',r:'pos'},{t:'Aerobic',r:'neg'}],
-    features:['Gram-positive rods (may stain variable)','Endospores (often terminal — "drumstick")','Obligate anaerobe','Catalase-negative','Produce potent exotoxins'],
-    clinical:'C. difficile: antibiotic-associated colitis; C. tetani: tetanus (spastic paralysis); C. botulinum: botulism (flaccid paralysis, food/wound/infant); C. perfringens: gas gangrene, food poisoning.',
-    distinction:'C. tetani produces tetanospasmin (blocks inhibitory interneurones → spastic paralysis — "lock jaw"). C. botulinum produces botulinum toxin (blocks ACh release at NMJ → flaccid paralysis). Opposite clinical presentations from related organisms — this distinction is a frequent exam question because the mechanism determines the presentation.'
-  },
-  listeria:{
-    name:'Listeria monocytogenes',gram:'gp',initials:'Lm',
-    path:[{t:'Spores',r:'neg'},{t:'Catalase',r:'pos'},{t:'Motility@25°C',r:'pos'}],
-    features:['Gram-positive short rods (coccobacilli)','Catalase-positive','Tumbling motility at 25°C (NOT 37°C)','Narrow beta-haemolysis','Intracellular pathogen','Can grow at 4°C (fridge!)'],
-    clinical:'Meningitis/encephalitis in neonates, elderly, and immunocompromised. Pregnancy: crosses placenta causing fetal abortion or neonatal infection. Foodborne outbreaks: deli meats, soft cheeses, raw milk.',
-    distinction:'Listeria can replicate at 4°C — refrigeration does NOT eliminate it. It is an intracellular pathogen that uses actin-based motility (ActA protein polymerises host actin into "comet tails") to spread directly between cells without exposing itself to extracellular antibiotics or antibodies. This explains why immunosuppression is such a strong risk factor.'
-  },
-  coryne:{
-    name:'Corynebacterium spp.',gram:'gp',initials:'Co',
-    path:[{t:'Spores',r:'neg'},{t:'Catalase',r:'pos'},{t:'Motility',r:'neg'}],
-    features:['Gram-positive pleomorphic rods','Club-shaped (coryneform)','Palisade/Chinese-letter arrangement','Non-motile','Catalase-positive','Non-sporing'],
-    clinical:'C. diphtheriae: diphtheria (pseudomembrane in throat, diphtheria toxin causes myocarditis, neuritis, adrenal necrosis). C. jeikeium and C. urealyticum: opportunistic nosocomial infections in immunocompromised.',
-    distinction:'Diphtheria toxin (encoded by bacteriophage β) inhibits protein synthesis by ADP-ribosylating elongation factor EF-2. The pseudomembrane in the pharynx is grey-white and bleeds when removed — this distinguishes it from viral pharyngitis. Low population immunity (declining vaccination rates) makes this organism a recurring public health concern.'
-  },
-  lactobacillus:{
-    name:'Lactobacillus spp.',gram:'gp',initials:'Lb',
-    path:[{t:'Spores',r:'neg'},{t:'Catalase',r:'neg'}],
-    features:['Gram-positive rods (medium-long, uniform)','Catalase-negative','Non-sporing','Chains or single','Fermentative','Normal flora (GI, vagina)'],
-    clinical:'Generally non-pathogenic normal flora of GI tract and vagina. Maintain vaginal pH through lactic acid production. Rare infections in immunocompromised patients. Used as probiotics.',
-    distinction:'The vancomycin resistance of Lactobacillus is intrinsic (not acquired) — its cell wall precursors terminate in D-Lac rather than D-Ala, giving low vancomycin affinity. This is biologically significant: it means PCR-based VRE testing can give false positives if Lactobacillus DNA contaminates a clinical specimen.'
-  },
-  pseudomonas:{
-    name:'Pseudomonas fluorescens / aeruginosa',gram:'gn',initials:'Pf',
-    path:[{t:'Oxidase',r:'pos'},{t:'UV fluorescence',r:'pos'}],
-    features:['Gram-negative rod','Oxidase-positive','Fluorescent under UV (pyoverdine)','Non-fermenter','Obligate aerobe','Characteristic sweet/grape-like odour','Pyocyanin (blue-green pigment) in P. aeruginosa'],
-    clinical:'P. aeruginosa: major opportunistic pathogen — ventilator-associated pneumonia, burn wound infections, CF lung colonisation, UTIs, keratitis. Intrinsic resistance to many antibiotics.',
-    distinction:'P. aeruginosa has exceptional intrinsic antibiotic resistance: constitutive AmpC beta-lactamase, efflux pumps (MexAB-OprM etc.), and low outer membrane permeability. Treatment requires anti-pseudomonal beta-lactams (piperacillin-tazobactam, cefepime, meropenem) — standard penicillin is completely ineffective. In the module\'s RFLP analysis, APA1 digestion shows a unique pattern for Pseudomonas that distinguishes it from E. coli.'
-  },
-  agrobacterium:{
-    name:'Agrobacterium tumefaciens',gram:'gn',initials:'At',
-    path:[{t:'Oxidase',r:'pos'},{t:'UV fluorescence',r:'neg'},{t:'Mucoid colonies',r:'pos'}],
-    features:['Gram-negative rod','Oxidase-positive','Non-fluorescent','Mucoid/slimy colonies (EPS)','Motile','Plant pathogen (crown gall)'],
-    clinical:'Plant pathogen — causes crown gall disease by transferring T-DNA into plant cells via a Ti plasmid. Limited human pathogenicity (rare opportunistic infections in immunocompromised). Widely used in plant genetic engineering as a DNA delivery vehicle.',
-    distinction:'The Ti plasmid makes Agrobacterium the only naturally occurring organism that transfers DNA from a bacterium into a eukaryotic nucleus — essentially natural genetic engineering. This is why it is used as a vector in plant biotechnology. Mucoid colonies are caused by extracellular polysaccharide secretion, which also inhibits colony PCR — a practical limitation acknowledged in your study notes.'
-  },
-  ecoli:{
-    name:'Escherichia coli',gram:'gn',initials:'Ec',
-    path:[{t:'Oxidase',r:'neg'},{t:'Indole',r:'pos'}],
-    features:['Gram-negative rod','Oxidase-negative','Indole-positive','Lactose fermenter (pink on MacConkey)','Beta-haemolytic (haemolytic strains)','Metallic sheen on EMB agar','IMViC: + − − −'],
-    clinical:'Most common cause of UTIs, neonatal meningitis (K1 capsule strains), traveller\'s diarrhoea. Pathogenic variants: ETEC, EHEC (O157:H7 — HUS risk), EPEC, EIEC, EAEC.',
-    distinction:'E. coli O157:H7 produces Shiga-like toxin (verotoxin) which inhibits protein synthesis in endothelial cells, causing haemolytic uraemic syndrome (HUS) — microangiopathic haemolytic anaemia + thrombocytopenia + renal failure. Antibiotic treatment is CONTRAINDICATED in EHEC because lysis releases more toxin. This is a critical clinical distinction.'
-  },
-  motile_entero:{
-    name:'Motile Enterobacteriaceae (e.g., Salmonella, Enterobacter)',gram:'gn',initials:'Me',
-    path:[{t:'Oxidase',r:'neg'},{t:'Indole',r:'neg'},{t:'Motility',r:'pos'}],
-    features:['Gram-negative rods','Oxidase-negative','Indole-negative (most)','Motile (peritrichous flagella)','Variable lactose fermentation','Enterobacteriaceae family'],
-    clinical:'Salmonella: typhoid fever (S. Typhi), non-typhoidal salmonellosis (food poisoning). Enterobacter: nosocomial infections, inducible AmpC resistance. Proteus: UTIs, swarming motility.',
-    distinction:'Salmonella Typhi is exclusively human — no animal reservoir. This is why typhoid eradication is theoretically possible through vaccination and sanitation (unlike non-typhoidal Salmonella which has a vast animal reservoir). InVAX vaccines (Ty21a oral or Vi polysaccharide) are effective but not permanent.'
-  },
-  klebsiella:{
-    name:'Klebsiella pneumoniae',gram:'gn',initials:'Kp',
-    path:[{t:'Oxidase',r:'neg'},{t:'Indole',r:'neg'},{t:'Motility',r:'neg'}],
-    features:['Gram-negative rod','Oxidase-negative','Indole-negative','Non-motile','Large polysaccharide capsule','Mucoid colonies','Lactose fermenter'],
-    clinical:'Community-acquired pneumonia (especially in alcoholics, diabetics — "currant jelly" sputum from haemorrhagic necrosis). Hospital-acquired UTIs, bacteraemia. Extended-spectrum beta-lactamase (ESBL) and carbapenemase (KPC) strains are critical healthcare threats.',
-    distinction:'Klebsiella\'s large polysaccharide capsule produces mucoid colonies (similar appearance to Agrobacterium but Gram-negative). The capsule is antiphagocytic. Hypervirulent Klebsiella (hvKP) strains produce "hypermucoviscous" colonies that form a string >5mm when touched with a loop — the "string test" is a quick bedside screen for hvKP, which has higher mortality than classical KPC strains.'
-  },
-  other_oxpos:{
-    name:'Other oxidase-positive Gram-negative rod',gram:'gn',initials:'OR',
-    path:[{t:'Oxidase',r:'pos'},{t:'UV fluorescence',r:'neg'},{t:'Mucoid',r:'neg'}],
-    features:['Gram-negative rod','Oxidase-positive','Non-fluorescent','Non-mucoid'],
-    clinical:'Further testing required: Aeromonas, Plesiomonas, Vibrio, Chromobacterium, Alcaligenes, or other oxidase-positive non-fermenters. Additional tests: glucose fermentation, motility, growth on TCBS agar.',
-    distinction:'When you reach an ambiguous result in the decision tree, the distinction-level response is to say: "Further biochemical characterisation would be required, specifically X and Y tests, to differentiate between [list of candidates]." Demonstrating that you know what additional tests to use is as important as knowing when to use them.'
-  }
-};
-
-const TREES = {
-  gpc:{label:'Gram+ Cocci',start:'gpc_catalase',color:'#7F77DD',type:'gp',desc:'Gram-positive cocci'},
-  gpr:{label:'Gram+ Rods',start:'gpr_spores',color:'#534AB7',type:'gp',desc:'Gram-positive rods'},
-  gn:{label:'Gram-negative',start:'gn_oxidase',color:'#D4537E',type:'gn',desc:'Gram-negative rods'}
-};
+let NODES = {};
+let ORGS = {};
+let TREES = {};
 
 const SESSION_STORAGE_KEY = 'biochemicalTreeSession';
 const SESSION_VERSION = 1;
-const DEFAULT_STATE = {tree:'gpc', currentNode:TREES.gpc.start, path:[]};
+let DEFAULT_STATE = {tree:'gpc', currentNode:'gpc_catalase', path:[]};
 
 let state = {...DEFAULT_STATE};
 let completedEndpoints = [];
@@ -438,6 +102,42 @@ function renderProgressPanel() {
       ${completed.length ? completed.map(name=>`<span class="progress-pill">${name}</span>`).join('') : '<span class="progress-pill">None yet</span>'}
     </div>
   `;
+}
+
+function showDataLoadError() {
+  document.getElementById('card-area').innerHTML = `
+    <div class="card">
+      <div class="test-name">Study data failed to load.</div>
+      <div class="clinical-text">Please check your connection and retry loading the decision tree dataset.</div>
+      <div class="org-btn-row">
+        <button class="btn-restart" onclick="loadDecisionTreeData()">Retry</button>
+      </div>
+    </div>`;
+}
+
+async function loadDecisionTreeData() {
+  try {
+    document.getElementById('card-area').innerHTML = `
+      <div class="card">
+        <div class="clinical-text">Loading study data…</div>
+      </div>`;
+    const response = await fetch('data/decision-trees.json');
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const parsedData = await response.json();
+    NODES = parsedData.NODES;
+    ORGS = parsedData.ORGS;
+    TREES = parsedData.TREES;
+    DEFAULT_STATE = {tree:'gpc', currentNode:TREES.gpc.start, path:[]};
+    state = {...DEFAULT_STATE};
+    loadSession();
+    recordCompletionIfEndpoint();
+    render();
+  } catch (error) {
+    console.error('Failed to load decision tree data', error);
+    showDataLoadError();
+  }
 }
 
 function render() {
@@ -615,7 +315,5 @@ function resetAllProgress() {
   render();
 }
 
-loadSession();
-recordCompletionIfEndpoint();
-render();
+loadDecisionTreeData();
 </script>
