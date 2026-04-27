@@ -58,7 +58,21 @@ function render() {
     renderOrgCard(ORGS[orgKey]);
   } else if (node) {
     renderTestCard(node);
+  } else {
+    renderStateError();
   }
+}
+
+function renderStateError() {
+  document.getElementById('card-area').innerHTML = `
+    <div class="card">
+      <div class="test-name">This pathway hit an invalid step.</div>
+      <div class="clinical-text">The current decision path does not map to a known test or organism card.</div>
+      <div class="org-btn-row">
+        <button class="btn-restart" onclick="restartCurrent()">↺ Restart current tree</button>
+        <button class="btn-back" onclick="switchTree('gpc')">↩ Go to Gram-positive cocci</button>
+      </div>
+    </div>`;
 }
 
 function renderTabs() {
@@ -85,7 +99,7 @@ function renderTestCard(node) {
   const isGN = treeType==='gn';
   document.getElementById('card-area').innerHTML = `
     <div class="card">
-      <div class="test-badge badge-${isGN?'gn':'gpc'}">${TREES[treeType].desc}</div>
+      <div class="test-badge badge-${treeType}">${TREES[treeType].desc}</div>
       <div class="test-name">${node.test}</div>
       <div class="why-block${isGN?' gn':''}">
         <div class="why-label">Why this test</div>
@@ -102,6 +116,10 @@ function renderTestCard(node) {
 }
 
 function renderOrgCard(org) {
+  if (!org) {
+    renderStateError();
+    return;
+  }
   const isGN = org.gram==='gn';
   const pathHtml = org.path.map((p,i)=>`
     <span class="path-step">${i>0?'':'Start'}</span>
@@ -142,6 +160,10 @@ function advance(result) {
   if (!node) return;
   state.path.push({test:node.test, result});
   const next = result==='pos' ? node.yes : node.no;
+  if (!next) {
+    renderStateError();
+    return;
+  }
   state.currentNode = next;
   render();
 }
