@@ -2,7 +2,7 @@
 <h2 class="sr-only">Interactive biochemical identification decision trees for Gram-positive cocci, Gram-positive rods, and Gram-negative bacteria</h2>
 <style>
 .tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.decision-tree-shell{width:min(100%,860px);margin:0 auto;padding:0 16px;box-sizing:border-box}
+.decision-tree-shell{width:min(100%,860px);margin:0 auto;padding:4px 16px;box-sizing:border-box}
 .tab{padding:7px 14px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:13px;font-weight:500;cursor:pointer;color:var(--color-text-secondary);transition:all .15s}
 .tab.active-gpc,.tab.active-gpr{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}
 .tab.active-gn{background:#FBEAF0;border-color:#ED93B1;color:#72243E}
@@ -59,7 +59,7 @@
 .tree-icon{font-size:16px}
 
 @media (max-width:768px){
-  .decision-tree-shell{padding:0 14px}
+  .decision-tree-shell{padding:4px 14px}
   .btn-row,.org-btn-row{grid-template-columns:1fr}
   .btn-pos,.btn-neg,.btn-restart,.btn-back{min-height:44px}
   .why-text,.clinical-text{font-size:14px;line-height:1.75}
@@ -69,7 +69,7 @@
 }
 
 @media (max-width:480px){
-  .decision-tree-shell{padding:0 12px}
+  .decision-tree-shell{padding:4px 12px}
   .tab{width:100%;text-align:center}
   .test-name{font-size:17px;line-height:1.4}
   .why-text,.clinical-text{font-size:15px;line-height:1.8}
@@ -80,10 +80,11 @@
 
 @media (prefers-reduced-motion:reduce){
   .card{animation:none}
+  .tab,.btn-pos,.btn-neg,.btn-back,.btn-restart{transition:none}
 }
 </style>
 
-<div id="app" class="decision-tree-shell" style="padding:4px 0">
+<div id="app" class="decision-tree-shell">
   <div class="tabs" id="tabs"></div>
   <div class="crumb-row" id="crumb"></div>
   <div id="card-area"></div>
