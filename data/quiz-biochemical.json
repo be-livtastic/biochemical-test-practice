@@ -1,0 +1,982 @@
+{
+  "QUESTIONS": [
+    {
+      "id": "cat-1",
+      "testName": "Catalase",
+      "category": "Universal",
+      "questionType": "identify-test",
+      "scenario": "You place a colony in hydrogen peroxide and see immediate vigorous bubbling. Which test is being demonstrated?",
+      "options": [
+        "Catalase test",
+        "Coagulase test",
+        "Oxidase test",
+        "Indole test"
+      ],
+      "correctAnswer": "Catalase test",
+      "hint": "This reaction releases oxygen gas in seconds.",
+      "explanation": "This is the catalase test because immediate bubbling after hydrogen peroxide indicates catalase enzyme activity.",
+      "colorChange": {
+        "positive": "Immediate vigorous bubbling (O\u2082 release)",
+        "negative": "No bubbles after 20 seconds",
+        "why": "Catalase cleaves H\u2082O\u2082 into H\u2082O and O\u2082. The bubbles are oxygen gas, not a dye."
+      },
+      "purpose": "Detects catalase enzyme activity to separate catalase-positive from catalase-negative organisms.",
+      "stepReason": "First branch point in Gram-positive cocci and useful in Gram-positive rods, splitting major pathways quickly.",
+      "commonOrganisms": [
+        {
+          "name": "Staphylococcus aureus",
+          "result": "positive"
+        },
+        {
+          "name": "Staphylococcus epidermidis",
+          "result": "positive"
+        },
+        {
+          "name": "Micrococcus spp.",
+          "result": "positive"
+        },
+        {
+          "name": "Streptococcus pyogenes",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "cat-2",
+      "testName": "Catalase",
+      "category": "Universal",
+      "questionType": "explain-step",
+      "scenario": "You have a Gram-positive coccus from blood agar. Why is catalase used before PYR or coagulase?",
+      "options": [
+        "Because it first separates Staphylococcus/Micrococcus from Streptococcus/Enterococcus",
+        "Because it directly identifies Staphylococcus aureus",
+        "Because only Gram-negative rods can be catalase-positive",
+        "Because catalase gives species-level identification in one step"
+      ],
+      "correctAnswer": "Because it first separates Staphylococcus/Micrococcus from Streptococcus/Enterococcus",
+      "hint": "Think broad branch-point efficiency.",
+      "explanation": "Catalase is chosen first because it provides a major split in Gram-positive cocci pathways; then downstream tests like coagulase or PYR are selected.",
+      "colorChange": {
+        "positive": "Immediate vigorous bubbling (O\u2082 release)",
+        "negative": "No bubbles after 20 seconds",
+        "why": "H\u2082O\u2082 decomposition by catalase releases visible oxygen gas."
+      },
+      "purpose": "Screens for catalase to establish early pathway direction.",
+      "stepReason": "A high-yield first decision node that avoids unnecessary narrower tests.",
+      "commonOrganisms": [
+        {
+          "name": "Enterococcus spp.",
+          "result": "negative"
+        },
+        {
+          "name": "Lactobacillus spp.",
+          "result": "negative"
+        },
+        {
+          "name": "E. coli",
+          "result": "positive"
+        },
+        {
+          "name": "Corynebacterium spp.",
+          "result": "positive"
+        }
+      ]
+    },
+    {
+      "id": "coag-1",
+      "testName": "Coagulase (tube method)",
+      "category": "Gram-positive",
+      "questionType": "identify-test",
+      "scenario": "Plasma in a tube becomes a firm gel that does not flow when tilted. Which test produced this result?",
+      "options": [
+        "Coagulase (tube) test",
+        "Catalase test",
+        "Novobiocin susceptibility",
+        "CAMP test"
+      ],
+      "correctAnswer": "Coagulase (tube) test",
+      "hint": "This is a physical liquid-to-solid shift, not a color change.",
+      "explanation": "The tube coagulase test is positive when free coagulase converts fibrinogen to fibrin, causing clot/gel formation.",
+      "colorChange": {
+        "positive": "Plasma coagulates into a firm gel",
+        "negative": "Plasma remains liquid",
+        "why": "Free coagulase converts fibrinogen to fibrin; readout is phase change rather than dye."
+      },
+      "purpose": "Detects free coagulase to identify S. aureus.",
+      "stepReason": "Performed after catalase-positive cocci to separate S. aureus from coagulase-negative staphylococci in one step.",
+      "commonOrganisms": [
+        {
+          "name": "Staphylococcus aureus",
+          "result": "positive"
+        },
+        {
+          "name": "Staphylococcus epidermidis",
+          "result": "negative"
+        },
+        {
+          "name": "Staphylococcus saprophyticus",
+          "result": "negative"
+        },
+        {
+          "name": "Staphylococcus lugdunensis",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "coag-2",
+      "testName": "Coagulase (tube method)",
+      "category": "Gram-positive",
+      "questionType": "interpret-result",
+      "scenario": "A catalase-positive coccus remains liquid in tube coagulase plasma after incubation. What does this mean?",
+      "options": [
+        "Coagulase-negative staphylococcus is more likely than S. aureus",
+        "The isolate is definitely Streptococcus pyogenes",
+        "The isolate is oxidase-positive and not Enterobacteriaceae",
+        "It confirms Group B Streptococcus"
+      ],
+      "correctAnswer": "Coagulase-negative staphylococcus is more likely than S. aureus",
+      "hint": "Catalase-positive already put you in staphylococcal territory.",
+      "explanation": "A negative tube coagulase in catalase-positive cocci points away from S. aureus and toward CoNS such as S. epidermidis or S. saprophyticus.",
+      "colorChange": {
+        "positive": "Firm non-flowing gel",
+        "negative": "Liquid plasma",
+        "why": "No fibrin clot forms when free coagulase is absent."
+      },
+      "purpose": "Distinguishes major staphylococcal groups by coagulase production.",
+      "stepReason": "Targets the most clinically dangerous staphylococcus (S. aureus) immediately after catalase-positive branching.",
+      "commonOrganisms": [
+        {
+          "name": "S. aureus",
+          "result": "positive"
+        },
+        {
+          "name": "S. epidermidis",
+          "result": "negative"
+        },
+        {
+          "name": "S. saprophyticus",
+          "result": "negative"
+        },
+        {
+          "name": "S. lugdunensis",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "pyr-1",
+      "testName": "PYR",
+      "category": "Gram-positive",
+      "questionType": "identify-test",
+      "scenario": "After adding cinnamaldehyde reagent, a test disk turns bright cherry-red within 60 seconds. Which test is this?",
+      "options": [
+        "PYR test",
+        "Indole test",
+        "Oxidase test",
+        "Urease test"
+      ],
+      "correctAnswer": "PYR test",
+      "hint": "Think pyrrolidonyl arylamidase.",
+      "explanation": "Cherry-red after cinnamaldehyde is classic for PYR positivity due to liberated \u03b2-naphthylamine reacting to form a colored Schiff base.",
+      "colorChange": {
+        "positive": "Cherry-red within 1 minute",
+        "negative": "No color change or yellow/orange",
+        "why": "PYR substrate cleavage releases \u03b2-naphthylamine, which reacts with cinnamaldehyde to produce red color."
+      },
+      "purpose": "Detects pyrrolidonyl arylamidase activity.",
+      "stepReason": "After catalase-negative branching, it separates Enterococcus/S. pyogenes from PYR-negative streptococci.",
+      "commonOrganisms": [
+        {
+          "name": "Enterococcus spp.",
+          "result": "positive"
+        },
+        {
+          "name": "S. pyogenes",
+          "result": "positive"
+        },
+        {
+          "name": "S. agalactiae",
+          "result": "negative"
+        },
+        {
+          "name": "S. pneumoniae",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "pyr-2",
+      "testName": "PYR",
+      "category": "Gram-positive",
+      "questionType": "explain-step",
+      "scenario": "A catalase-negative Gram-positive coccus is being worked up. Why is PYR chosen next?",
+      "options": [
+        "It splits PYR-positive Enterococcus/S. pyogenes from PYR-negative streptococci",
+        "It distinguishes S. aureus from CoNS",
+        "It confirms alpha hemolysis directly",
+        "It determines novobiocin resistance"
+      ],
+      "correctAnswer": "It splits PYR-positive Enterococcus/S. pyogenes from PYR-negative streptococci",
+      "hint": "This is the major branch inside catalase-negative cocci.",
+      "explanation": "PYR is used strategically because it divides the catalase-negative branch into clinically meaningful groups before narrower tests.",
+      "colorChange": {
+        "positive": "Cherry-red within 1 minute",
+        "negative": "No color change or yellow/orange",
+        "why": "Red color appears only if \u03b2-naphthylamine is generated from PYR substrate."
+      },
+      "purpose": "Rapid enzymatic branch test in streptococcal/enterococcal ID.",
+      "stepReason": "Creates a broad pathway split early, guiding optochin/CAMP decisions later.",
+      "commonOrganisms": [
+        {
+          "name": "Enterococcus spp.",
+          "result": "positive"
+        },
+        {
+          "name": "S. pyogenes",
+          "result": "positive"
+        },
+        {
+          "name": "Viridans streptococci",
+          "result": "negative"
+        },
+        {
+          "name": "S. pneumoniae",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "opto-1",
+      "testName": "Optochin susceptibility",
+      "category": "Gram-positive",
+      "questionType": "interpret-result",
+      "scenario": "An alpha-hemolytic streptococcus has a 16 mm zone around a P disk. What is the best interpretation?",
+      "options": [
+        "Optochin-susceptible, likely S. pneumoniae",
+        "Optochin-resistant viridans streptococcus",
+        "Novobiocin-resistant staphylococcus",
+        "CAMP-positive Group B streptococcus"
+      ],
+      "correctAnswer": "Optochin-susceptible, likely S. pneumoniae",
+      "hint": "Use the >=14 mm cutoff.",
+      "explanation": "A zone of 14 mm or greater indicates optochin susceptibility, supporting S. pneumoniae rather than viridans streptococci.",
+      "colorChange": {
+        "positive": "Zone of inhibition >=14 mm",
+        "negative": "Zone <14 mm or no zone",
+        "why": "Optochin disrupts ATPase activity in susceptible organisms; result is growth inhibition zone, not dye reaction."
+      },
+      "purpose": "Differentiates S. pneumoniae from other alpha-hemolytic streptococci.",
+      "stepReason": "Used in PYR-negative, catalase-negative pathway to identify the most clinically serious alpha-hemolytic streptococcus quickly.",
+      "commonOrganisms": [
+        {
+          "name": "S. pneumoniae",
+          "result": "susceptible"
+        },
+        {
+          "name": "Viridans streptococci",
+          "result": "resistant"
+        }
+      ]
+    },
+    {
+      "id": "opto-2",
+      "testName": "Optochin susceptibility",
+      "category": "Gram-positive",
+      "questionType": "identify-test",
+      "scenario": "There is no color reagent, but a clear inhibition zone on blood agar around a P disk is measured to classify alpha-hemolytic streptococci. Which test is this?",
+      "options": [
+        "Optochin susceptibility test",
+        "Catalase test",
+        "MUG test",
+        "H2S production test"
+      ],
+      "correctAnswer": "Optochin susceptibility test",
+      "hint": "P disk is the giveaway.",
+      "explanation": "The P disk method is optochin susceptibility testing, read by inhibition zone diameter.",
+      "colorChange": {
+        "positive": "Zone >=14 mm",
+        "negative": "Zone <14 mm",
+        "why": "The readout is differential growth suppression from ATPase inhibition, not color chemistry."
+      },
+      "purpose": "Screens alpha-hemolytic isolates for optochin susceptibility.",
+      "stepReason": "Selects likely S. pneumoniae before additional confirmatory work.",
+      "commonOrganisms": [
+        {
+          "name": "S. pneumoniae",
+          "result": "susceptible"
+        },
+        {
+          "name": "Viridans streptococci",
+          "result": "resistant"
+        }
+      ]
+    },
+    {
+      "id": "camp-1",
+      "testName": "CAMP test",
+      "category": "Gram-positive",
+      "questionType": "identify-test",
+      "scenario": "At the intersection of an unknown streptococcal streak with S. aureus, an arrowhead of enhanced beta-hemolysis points toward the S. aureus line. Which test is this?",
+      "options": [
+        "CAMP test",
+        "Coagulase test",
+        "Optochin test",
+        "Indole test"
+      ],
+      "correctAnswer": "CAMP test",
+      "hint": "Directionality of the arrowhead matters.",
+      "explanation": "This is a positive CAMP test. CAMP factor from S. agalactiae enhances hemolysis near S. aureus beta-lysin.",
+      "colorChange": {
+        "positive": "Arrowhead-shaped enhanced beta-hemolysis toward S. aureus streak",
+        "negative": "No enhanced hemolysis at junction",
+        "why": "CAMP factor cooperates with beta-lysin-modified RBC membranes to complete lysis."
+      },
+      "purpose": "Detects CAMP factor activity, especially for Group B Streptococcus.",
+      "stepReason": "Used in PYR-negative, optochin-resistant branch to identify S. agalactiae in clinically important obstetric contexts.",
+      "commonOrganisms": [
+        {
+          "name": "S. agalactiae",
+          "result": "positive"
+        },
+        {
+          "name": "Listeria monocytogenes",
+          "result": "positive"
+        },
+        {
+          "name": "Most other streptococci",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "camp-2",
+      "testName": "CAMP test",
+      "category": "Gram-positive",
+      "questionType": "explain-step",
+      "scenario": "Why is CAMP performed after an isolate is PYR-negative and optochin-resistant?",
+      "options": [
+        "To identify Group B Streptococcus in that remaining branch",
+        "To confirm S. aureus from catalase-positive cocci",
+        "To detect cytochrome c oxidase in non-fermenters",
+        "To check Enterobacteriaceae lactose fermentation"
+      ],
+      "correctAnswer": "To identify Group B Streptococcus in that remaining branch",
+      "hint": "This is a targeted late-branch discriminator.",
+      "explanation": "Once PYR and optochin remove other possibilities, CAMP efficiently detects S. agalactiae in the remaining streptococcal pathway.",
+      "colorChange": {
+        "positive": "Arrowhead enhanced hemolysis",
+        "negative": "No junction enhancement",
+        "why": "Protein-toxin interaction on RBCs creates the enhanced hemolytic pattern."
+      },
+      "purpose": "Confirms CAMP-factor producers.",
+      "stepReason": "Placed late to resolve the clinically critical Group B streptococcus branch.",
+      "commonOrganisms": [
+        {
+          "name": "S. agalactiae",
+          "result": "positive"
+        },
+        {
+          "name": "Viridans streptococci",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "novo-1",
+      "testName": "Novobiocin susceptibility",
+      "category": "Gram-positive",
+      "questionType": "interpret-result",
+      "scenario": "A coagulase-negative staphylococcus shows a 12 mm zone around novobiocin disk. What does this indicate?",
+      "options": [
+        "Novobiocin-resistant pattern, suggestive of S. saprophyticus",
+        "Novobiocin-susceptible pattern, suggestive of S. epidermidis",
+        "Optochin susceptibility indicating S. pneumoniae",
+        "CAMP positivity indicating S. agalactiae"
+      ],
+      "correctAnswer": "Novobiocin-resistant pattern, suggestive of S. saprophyticus",
+      "hint": "Use <16 mm as resistant.",
+      "explanation": "A zone under 16 mm is resistant. In coagulase-negative staphylococci, this strongly suggests S. saprophyticus.",
+      "colorChange": {
+        "positive": "Susceptible zone >=16 mm",
+        "negative": "Resistant zone <16 mm",
+        "why": "Novobiocin targets DNA gyrase; intrinsic GyrB changes reduce drug binding in resistant strains."
+      },
+      "purpose": "Distinguishes key coagulase-negative staphylococci.",
+      "stepReason": "Used after coagulase-negative branch to separate UTI-associated S. saprophyticus from S. epidermidis.",
+      "commonOrganisms": [
+        {
+          "name": "S. epidermidis",
+          "result": "susceptible"
+        },
+        {
+          "name": "S. saprophyticus",
+          "result": "resistant"
+        },
+        {
+          "name": "S. haemolyticus",
+          "result": "resistant"
+        }
+      ]
+    },
+    {
+      "id": "novo-2",
+      "testName": "Novobiocin susceptibility",
+      "category": "Gram-positive",
+      "questionType": "explain-step",
+      "scenario": "A catalase-positive isolate is coagulase-negative. Why choose novobiocin next?",
+      "options": [
+        "It differentiates S. saprophyticus (resistant) from S. epidermidis (susceptible)",
+        "It separates Enterococcus from streptococci",
+        "It confirms oxidase-positive non-fermenters",
+        "It is the first branch test for Gram-negative rods"
+      ],
+      "correctAnswer": "It differentiates S. saprophyticus (resistant) from S. epidermidis (susceptible)",
+      "hint": "This is a CoNS-specific split.",
+      "explanation": "Novobiocin is the classic next step in coagulase-negative staphylococcal identification because it separates common clinical species patterns.",
+      "colorChange": {
+        "positive": "Susceptible zone >=16 mm",
+        "negative": "Resistant zone <16 mm",
+        "why": "Zone size reflects whether novobiocin can inhibit DNA gyrase effectively."
+      },
+      "purpose": "Detects susceptibility pattern to novobiocin.",
+      "stepReason": "Targets the immediate differential diagnosis in coagulase-negative staphylococci.",
+      "commonOrganisms": [
+        {
+          "name": "S. epidermidis",
+          "result": "susceptible"
+        },
+        {
+          "name": "S. saprophyticus",
+          "result": "resistant"
+        }
+      ]
+    },
+    {
+      "id": "oxid-1",
+      "testName": "Oxidase test",
+      "category": "Gram-negative",
+      "questionType": "interpret-result",
+      "scenario": "A Gram-negative rod turns deep purple within 15 seconds on oxidase reagent. What does this indicate?",
+      "options": [
+        "Oxidase-positive, likely not Enterobacteriaceae",
+        "Oxidase-negative, likely Enterobacteriaceae",
+        "Indole-positive Enterobacteriaceae",
+        "Urease-negative non-fermenter"
+      ],
+      "correctAnswer": "Oxidase-positive, likely not Enterobacteriaceae",
+      "hint": "Enterobacteriaceae are oxidase-negative.",
+      "explanation": "Rapid purple/blue indicates cytochrome c oxidase activity, which excludes Enterobacteriaceae and redirects to other Gram-negative groups.",
+      "colorChange": {
+        "positive": "Purple/deep blue within 10\u201330 seconds",
+        "negative": "No color change after 60 seconds",
+        "why": "Reagent is oxidized by cytochrome c oxidase into purple indophenol compound."
+      },
+      "purpose": "Detects cytochrome c oxidase activity.",
+      "stepReason": "First major branch point in Gram-negative rod identification; quickly rules Enterobacteriaceae in or out.",
+      "commonOrganisms": [
+        {
+          "name": "Pseudomonas spp.",
+          "result": "positive"
+        },
+        {
+          "name": "Aeromonas spp.",
+          "result": "positive"
+        },
+        {
+          "name": "E. coli",
+          "result": "negative"
+        },
+        {
+          "name": "Klebsiella spp.",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "oxid-2",
+      "testName": "Oxidase test",
+      "category": "Universal",
+      "questionType": "identify-test",
+      "scenario": "Tetramethyl-p-phenylenediamine reagent is applied and the colony becomes blue-purple almost immediately. Which test is this?",
+      "options": [
+        "Oxidase test",
+        "Catalase test",
+        "TSI test",
+        "MUG test"
+      ],
+      "correctAnswer": "Oxidase test",
+      "hint": "This reagent is specific to cytochrome c oxidase screening.",
+      "explanation": "Blue-purple oxidation of tetramethyl-p-phenylenediamine is the hallmark oxidase reaction.",
+      "colorChange": {
+        "positive": "Purple/deep blue rapidly",
+        "negative": "No purple after 60 seconds",
+        "why": "Oxidative conversion of reagent produces indophenol dye."
+      },
+      "purpose": "Rapidly screens electron transport oxidase type.",
+      "stepReason": "Used early to separate Enterobacteriaceae (negative) from oxidase-positive non-fermenters and others.",
+      "commonOrganisms": [
+        {
+          "name": "Vibrio spp.",
+          "result": "positive"
+        },
+        {
+          "name": "Agrobacterium spp.",
+          "result": "positive"
+        },
+        {
+          "name": "Salmonella spp.",
+          "result": "negative"
+        },
+        {
+          "name": "Shigella spp.",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "indo-1",
+      "testName": "Indole test",
+      "category": "Gram-negative",
+      "questionType": "identify-test",
+      "scenario": "After adding Kov\u00e1cs' reagent to broth, a cherry-red ring forms at the surface. Which test is this?",
+      "options": [
+        "Indole test",
+        "PYR test",
+        "CAMP test",
+        "Urease test"
+      ],
+      "correctAnswer": "Indole test",
+      "hint": "Surface ring after reagent overlay.",
+      "explanation": "A red surface ring after Kov\u00e1cs' reagent indicates indole production from tryptophan metabolism.",
+      "colorChange": {
+        "positive": "Cherry-red/pink ring at surface",
+        "negative": "Yellow/amber ring or no change",
+        "why": "Indole reacts with p-dimethylaminobenzaldehyde in Kov\u00e1cs' reagent to form red compound at interface."
+      },
+      "purpose": "Detects tryptophanase-mediated indole production.",
+      "stepReason": "After oxidase-negative result, it helps separate E. coli from indole-negative Enterobacter/Klebsiella.",
+      "commonOrganisms": [
+        {
+          "name": "E. coli",
+          "result": "positive"
+        },
+        {
+          "name": "Proteus vulgaris",
+          "result": "positive"
+        },
+        {
+          "name": "Klebsiella pneumoniae",
+          "result": "negative"
+        },
+        {
+          "name": "Salmonella spp.",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "indo-2",
+      "testName": "Indole test",
+      "category": "Gram-negative",
+      "questionType": "explain-step",
+      "scenario": "In an oxidase-negative enteric isolate, why is indole a key next step?",
+      "options": [
+        "It branches E. coli away from common indole-negative Enterobacteriaceae",
+        "It detects cytochrome c oxidase to exclude Enterobacteriaceae",
+        "It confirms Group A streptococci",
+        "It is used mainly for staphylococcal species"
+      ],
+      "correctAnswer": "It branches E. coli away from common indole-negative Enterobacteriaceae",
+      "hint": "Think primary path to E. coli ID.",
+      "explanation": "Indole is a central branch in enteric workups because E. coli is usually indole-positive while common alternatives are indole-negative.",
+      "colorChange": {
+        "positive": "Red/pink top ring",
+        "negative": "Yellow/amber top ring",
+        "why": "Only indole producers generate the aldehyde-reactive product in Kov\u00e1cs' reagent."
+      },
+      "purpose": "Differentiates indole-producing from non-producing enterics.",
+      "stepReason": "Guides targeted confirmation toward E. coli and away from Klebsiella/Enterobacter branches.",
+      "commonOrganisms": [
+        {
+          "name": "E. coli",
+          "result": "positive"
+        },
+        {
+          "name": "Enterobacter spp.",
+          "result": "negative"
+        },
+        {
+          "name": "Shigella spp.",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "ure-1",
+      "testName": "Urease test",
+      "category": "Gram-negative",
+      "questionType": "interpret-result",
+      "scenario": "Urea medium turns bright magenta within 2 hours. What is the best interpretation?",
+      "options": [
+        "Rapid urease-positive reaction, strongly suggestive of Proteus",
+        "Urease-negative reaction typical of E. coli",
+        "Slow 48-hour urease pattern typical of Shigella",
+        "Indole-positive pattern specific to Klebsiella"
+      ],
+      "correctAnswer": "Rapid urease-positive reaction, strongly suggestive of Proteus",
+      "hint": "Rate matters here, not only color.",
+      "explanation": "Rapid pink/magenta conversion indicates strong urease activity, classically seen with Proteus species.",
+      "colorChange": {
+        "positive": "Bright pink/magenta (rapid in Proteus, slower in Klebsiella)",
+        "negative": "Yellow maintained after 48h",
+        "why": "Urease forms ammonia from urea, raising pH and shifting phenol red to alkaline pink."
+      },
+      "purpose": "Detects urease-mediated urea hydrolysis.",
+      "stepReason": "Used in Enterobacteriaceae pathway to identify Proteus and distinguish Klebsiella from E. coli.",
+      "commonOrganisms": [
+        {
+          "name": "Proteus mirabilis",
+          "result": "rapid positive"
+        },
+        {
+          "name": "Klebsiella pneumoniae",
+          "result": "slow positive"
+        },
+        {
+          "name": "E. coli",
+          "result": "negative"
+        },
+        {
+          "name": "Shigella spp.",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "ure-2",
+      "testName": "Urease test",
+      "category": "Gram-negative",
+      "questionType": "identify-test",
+      "scenario": "A medium with phenol red shifts from yellow to pink because ammonia accumulates from urea hydrolysis. Which test is this?",
+      "options": [
+        "Urease test",
+        "Oxidase test",
+        "MUG test",
+        "Coagulase test"
+      ],
+      "correctAnswer": "Urease test",
+      "hint": "The chemistry is pH indicator shift from ammonia.",
+      "explanation": "This is the urease test, interpreted by pH-driven color shift as urease-positive organisms alkalinize the medium.",
+      "colorChange": {
+        "positive": "Pink/magenta medium",
+        "negative": "Yellow medium persists",
+        "why": "Ammonia production raises pH causing phenol red transition."
+      },
+      "purpose": "Screens for urease enzyme activity.",
+      "stepReason": "Adds discriminatory power after early enteric branching and motility observations.",
+      "commonOrganisms": [
+        {
+          "name": "Helicobacter pylori",
+          "result": "positive"
+        },
+        {
+          "name": "Proteus spp.",
+          "result": "positive"
+        },
+        {
+          "name": "Salmonella spp.",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "h2s-1",
+      "testName": "H2S production (TSI)",
+      "category": "Gram-negative",
+      "questionType": "interpret-result",
+      "scenario": "A TSI tube develops blackening in the butt. What does this indicate?",
+      "options": [
+        "H2S production with iron sulfide precipitate formation",
+        "Urease activity in alkaline medium",
+        "Indole production at the surface",
+        "Oxidase positivity"
+      ],
+      "correctAnswer": "H2S production with iron sulfide precipitate formation",
+      "hint": "Black = metallic precipitate.",
+      "explanation": "Blackening in TSI indicates H2S generated from sulfur reduction reacting with iron salts to form ferrous sulfide precipitate.",
+      "colorChange": {
+        "positive": "Black precipitate in butt or medium",
+        "negative": "No blackening",
+        "why": "H2S gas reacts with ferrous ions to create insoluble black FeS."
+      },
+      "purpose": "Detects sulfur reduction to hydrogen sulfide.",
+      "stepReason": "Key branch in enteric pathogen differentiation, especially Salmonella vs Shigella.",
+      "commonOrganisms": [
+        {
+          "name": "Salmonella spp.",
+          "result": "positive"
+        },
+        {
+          "name": "Proteus spp.",
+          "result": "positive"
+        },
+        {
+          "name": "Shigella spp.",
+          "result": "negative"
+        },
+        {
+          "name": "Klebsiella spp.",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "h2s-2",
+      "testName": "H2S production (TSI)",
+      "category": "Gram-negative",
+      "questionType": "explain-step",
+      "scenario": "Why is H2S reading from TSI especially useful in enteric workups?",
+      "options": [
+        "It separates major pathogens like Salmonella (H2S+) from Shigella (H2S-)",
+        "It identifies staphylococci after catalase",
+        "It confirms alpha hemolysis in streptococci",
+        "It replaces oxidase testing entirely"
+      ],
+      "correctAnswer": "It separates major pathogens like Salmonella (H2S+) from Shigella (H2S-)",
+      "hint": "Think major enteric differential diagnosis.",
+      "explanation": "H2S status is clinically useful because it quickly distinguishes common enteric pathogens when interpreted with other TSI findings.",
+      "colorChange": {
+        "positive": "Black iron sulfide precipitate",
+        "negative": "No black precipitate",
+        "why": "Sulfur reduction chemistry yields visible FeS only when H2S is produced."
+      },
+      "purpose": "Adds sulfur metabolism information to screening profile.",
+      "stepReason": "Combined with sugar and gas patterns, it narrows enteric IDs before confirmatory tests.",
+      "commonOrganisms": [
+        {
+          "name": "Citrobacter spp.",
+          "result": "positive"
+        },
+        {
+          "name": "E. coli",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "mug-1",
+      "testName": "MUG test",
+      "category": "Gram-negative",
+      "questionType": "identify-test",
+      "scenario": "Under 366 nm UV light, a broth shows bright blue-white fluorescence after incubation with MUG substrate. Which test is this?",
+      "options": [
+        "MUG (\u03b2-glucuronidase) test",
+        "Indole test",
+        "Oxidase test",
+        "Optochin test"
+      ],
+      "correctAnswer": "MUG (\u03b2-glucuronidase) test",
+      "hint": "No visible white-light color change is needed.",
+      "explanation": "MUG positivity is identified by fluorescence from released methylumbelliferone under long-wave UV.",
+      "colorChange": {
+        "positive": "Bright blue-white fluorescence under 366 nm UV",
+        "negative": "No fluorescence beyond weak autofluorescence",
+        "why": "\u03b2-glucuronidase cleaves MUG to methylumbelliferone, a fluorescent product."
+      },
+      "purpose": "Detects \u03b2-glucuronidase activity, commonly used in E. coli confirmation.",
+      "stepReason": "Acts as a confirmatory branch test with indole for E. coli, while highlighting key exceptions like O157:H7.",
+      "commonOrganisms": [
+        {
+          "name": "E. coli (most strains)",
+          "result": "positive"
+        },
+        {
+          "name": "E. coli O157:H7",
+          "result": "negative"
+        },
+        {
+          "name": "Klebsiella spp.",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "mug-2",
+      "testName": "MUG test",
+      "category": "Gram-negative",
+      "questionType": "interpret-result",
+      "scenario": "An isolate is indole-positive but MUG-negative. What important caution should you remember?",
+      "options": [
+        "Consider E. coli O157:H7 as a key MUG-negative exception",
+        "Rule out all E. coli immediately",
+        "Assume oxidase-positive non-fermenter",
+        "Conclude Group B streptococcus"
+      ],
+      "correctAnswer": "Consider E. coli O157:H7 as a key MUG-negative exception",
+      "hint": "There is a famous diagnostic trap.",
+      "explanation": "Most E. coli are MUG-positive, but O157:H7 is often MUG-negative, so interpretation must account for this exception.",
+      "colorChange": {
+        "positive": "Blue-white fluorescence under UV",
+        "negative": "No fluorescence",
+        "why": "Absent fluorescence suggests missing \u03b2-glucuronidase activity in that isolate."
+      },
+      "purpose": "Adds confirmatory enzymatic evidence for E. coli identification.",
+      "stepReason": "Used with indole and other enteric data to avoid overcalling or missing key pathogenic variants.",
+      "commonOrganisms": [
+        {
+          "name": "E. coli (95%)",
+          "result": "positive"
+        },
+        {
+          "name": "E. coli O157:H7",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "tsi-1",
+      "testName": "TSI interpretation",
+      "category": "Gram-negative",
+      "questionType": "interpret-result",
+      "scenario": "A TSI tube reads K/A with blackening and gas bubbles. What pattern does this most strongly suggest?",
+      "options": [
+        "Salmonella-like profile (glucose only fermentation, H2S+, gas)",
+        "E. coli-like profile (A/A, gas, no H2S)",
+        "Pseudomonas profile (K/K non-fermenter)",
+        "Staphylococcal profile requiring coagulase"
+      ],
+      "correctAnswer": "Salmonella-like profile (glucose only fermentation, H2S+, gas)",
+      "hint": "K/A + H2S is classic.",
+      "explanation": "K/A with H2S and gas indicates glucose-only fermentation in butt with alkaline slant reversion, plus sulfur reduction, consistent with Salmonella-like behavior.",
+      "colorChange": {
+        "positive": "Acid (A)=yellow, Alkaline (K)=red/pink, H2S=black, gas=cracks/lift",
+        "negative": "No acid shift, no blackening, no gas",
+        "why": "Phenol red tracks pH from sugar fermentation; iron chemistry shows H2S; gas physically disrupts agar."
+      },
+      "purpose": "Provides multi-parameter metabolic screening in one tube.",
+      "stepReason": "Used early for suspected Enterobacteriaceae to guide which confirmatory tests to run next.",
+      "commonOrganisms": [
+        {
+          "name": "E. coli",
+          "result": "A/A gas no H2S"
+        },
+        {
+          "name": "Salmonella spp.",
+          "result": "K/A H2S gas"
+        },
+        {
+          "name": "Pseudomonas spp.",
+          "result": "K/K"
+        }
+      ]
+    },
+    {
+      "id": "tsi-2",
+      "testName": "TSI interpretation",
+      "category": "Gram-negative",
+      "questionType": "explain-step",
+      "scenario": "Why is TSI so valuable as an early Enterobacteriaceae screening step?",
+      "options": [
+        "It combines sugar fermentation, H2S, and gas readouts in one test",
+        "It directly identifies S. aureus from plasma clot",
+        "It is the best first test for Gram-positive cocci",
+        "It replaces all follow-up biochemical testing"
+      ],
+      "correctAnswer": "It combines sugar fermentation, H2S, and gas readouts in one test",
+      "hint": "Think information density per tube.",
+      "explanation": "TSI is efficient because a single tube yields multiple discriminating features (slant/butt reaction, H2S, gas), narrowing pathways rapidly.",
+      "colorChange": {
+        "positive": "A/K phenol red shifts, black H2S precipitate, visible gas disruption",
+        "negative": "No differential pattern development",
+        "why": "Different metabolic pathways alter pH and sulfur chemistry across aerobic slant vs anaerobic butt zones."
+      },
+      "purpose": "High-yield metabolic fingerprint screen.",
+      "stepReason": "Used before narrow confirmatory assays to avoid unnecessary downstream testing.",
+      "commonOrganisms": [
+        {
+          "name": "Klebsiella pneumoniae",
+          "result": "A/A gas no H2S"
+        },
+        {
+          "name": "Shigella spp.",
+          "result": "K/A no gas no H2S"
+        }
+      ]
+    },
+    {
+      "id": "oxid-3",
+      "testName": "Oxidase test",
+      "category": "Gram-negative",
+      "questionType": "explain-step",
+      "scenario": "Why does an oxidase-positive result immediately redirect a Gram-negative rod workflow?",
+      "options": [
+        "Because Enterobacteriaceae are oxidase-negative, so oxidase-positive points to other groups",
+        "Because oxidase-positive confirms Enterobacteriaceae immediately",
+        "Because oxidase replaces all sugar fermentation tests",
+        "Because oxidase determines Gram reaction directly"
+      ],
+      "correctAnswer": "Because Enterobacteriaceae are oxidase-negative, so oxidase-positive points to other groups",
+      "hint": "It is a family-level exclusion step.",
+      "explanation": "Oxidase is a high-value branch test because Enterobacteriaceae generally lack cytochrome c oxidase, so positivity shifts the algorithm away from that family.",
+      "colorChange": {
+        "positive": "Purple/deep blue within 10\u201330 seconds",
+        "negative": "No color change after 60 seconds",
+        "why": "Cytochrome c oxidase catalyzes reagent oxidation to purple indophenol."
+      },
+      "purpose": "Early family-level branching of Gram-negative rods.",
+      "stepReason": "Placed early to prevent wasting time on enteric-only pathways when oxidase is positive.",
+      "commonOrganisms": [
+        {
+          "name": "Pseudomonas spp.",
+          "result": "positive"
+        },
+        {
+          "name": "Vibrio spp.",
+          "result": "positive"
+        },
+        {
+          "name": "E. coli",
+          "result": "negative"
+        }
+      ]
+    },
+    {
+      "id": "coag-3",
+      "testName": "Coagulase (tube method)",
+      "category": "Gram-positive",
+      "questionType": "explain-step",
+      "scenario": "After catalase-positive cocci are seen, why is tube coagulase prioritized clinically?",
+      "options": [
+        "It rapidly flags S. aureus versus less virulent CoNS",
+        "It identifies Enterococcus species",
+        "It detects cytochrome oxidase in staphylococci",
+        "It is required before Gram staining"
+      ],
+      "correctAnswer": "It rapidly flags S. aureus versus less virulent CoNS",
+      "hint": "Think risk stratification.",
+      "explanation": "Coagulase is prioritized because separating S. aureus from CoNS quickly influences urgency and clinical interpretation.",
+      "colorChange": {
+        "positive": "Firm clot/gel in plasma",
+        "negative": "Plasma remains liquid",
+        "why": "Presence of free coagulase causes fibrin clot formation."
+      },
+      "purpose": "Rapid discrimination of S. aureus from coagulase-negative staphylococci.",
+      "stepReason": "High clinical impact makes this an early branch after catalase-positive cocci.",
+      "commonOrganisms": [
+        {
+          "name": "S. aureus",
+          "result": "positive"
+        },
+        {
+          "name": "S. epidermidis",
+          "result": "negative"
+        },
+        {
+          "name": "S. saprophyticus",
+          "result": "negative"
+        }
+      ]
+    }
+  ]
+}

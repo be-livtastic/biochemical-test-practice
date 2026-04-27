@@ -22,9 +22,9 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
 .chip-wrap{display:flex;gap:8px;flex-wrap:wrap}
 .chip{display:inline-block;padding:6px 10px;background:var(--surface-soft);border:1px solid #3a4c7a;border-radius:999px;font-size:13px}
 .answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.answer-btn{display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;border:1px solid #3a518b;background:#1b2c51;color:var(--text);font-weight:700;cursor:pointer;min-height:44px}
+.answer-btn{display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;border:1px solid #3a518b;background:#1b2c51;color:var(--text);font-weight:700;cursor:pointer;min-height:44px;text-align:left}
 .answer-btn:hover{background:#243c6d}
-.keycap{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:7px;background:#2e4b86;color:#cce2ff;font-size:12px;font-weight:800}
+.keycap{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:7px;background:#2e4b86;color:#cce2ff;font-size:12px;font-weight:800;flex-shrink:0}
 .hint-btn,.next-btn{margin-top:12px;padding:10px 12px;border-radius:10px;border:1px solid #4865a7;background:transparent;color:#d4e4ff;cursor:pointer;font-weight:700}
 .next-btn{background:#2a8a4a;border-color:#4db26d;color:#e9ffef}
 .hint{margin:10px 0 0;padding:10px;border-radius:10px;background:#3b2b12;color:#ffd79b;border:1px solid #9e742d}
@@ -33,9 +33,40 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
 .result-banner{padding:10px 12px;border-radius:10px;font-weight:800;margin-bottom:10px}
 .result-banner.correct{background:#1f4d2f;color:var(--green)}
 .result-banner.incorrect{background:#5b2525;color:var(--red)}
-.rflp-note,.why-note,.clinical,.distinction,.score{margin:10px 0;padding:10px;border-radius:10px;background:var(--surface-soft);border:1px solid #344a80}
+.rflp-note,.why-note,.clinical,.distinction,.score,.scenario{margin:10px 0;padding:10px;border-radius:10px;background:var(--surface-soft);border:1px solid #344a80}
 .missed-list{margin:0;padding-left:20px}
 .missed-list li{margin-bottom:6px}
+
+.mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.mode-btn{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:12px;border:1px solid #4460a4;background:#1b2c51;color:var(--text);cursor:pointer;text-align:left;min-height:100px}
+.mode-btn strong{font-size:18px}
+.mode-btn span{font-size:13px;color:#d5e5ff}
+.mode-btn:hover{transform:translateY(-1px)}
+.mode-organism{border-color:#4f68af;background:linear-gradient(150deg,#20335e,#1a2b4e)}
+.mode-biochem{border-color:#946b28;background:linear-gradient(150deg,#4d3612,#3b2910)}
+
+.type-badge{display:inline-block;margin-top:10px;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.badge-identify{background:#274e89;color:#d0e5ff}
+.badge-interpret{background:#2f6344;color:#d8ffe7}
+.badge-explain{background:#754c20;color:#ffe6bf}
+
+.color-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;background:var(--surface-soft);border:1px solid #344a80;border-radius:12px;padding:10px}
+.color-cell{padding:10px;border-radius:10px;border:1px solid transparent}
+.color-cell h3{margin:0 0 6px;font-size:14px}
+.color-cell p{margin:0;font-size:14px}
+.color-cell.positive{background:#1f442a;border-color:#3f8b56}
+.color-cell.negative{background:#553f1d;border-color:#9d773a}
+.color-why{grid-column:1 / -1;padding:10px;border-radius:10px;background:#1c2747;border:1px solid #36508c}
+
+.org-table{width:100%;border-collapse:collapse;margin-top:6px}
+.org-table th,.org-table td{padding:8px;border-bottom:1px solid #2f426e;text-align:left;vertical-align:top}
+.org-table th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.result-pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700}
+.pill-positive{background:#1f4d2f;color:#baf7c9}
+.pill-negative{background:#5b2525;color:#ffd2d2}
+.table-wrap{overflow:auto}
+.summary-table td:nth-child(3),.summary-table td:nth-child(4){min-width:220px}
+
 @media (max-width:720px){
-  .answer-grid{grid-template-columns:1fr}
+  .answer-grid,.mode-grid,.color-panel{grid-template-columns:1fr}
 }
