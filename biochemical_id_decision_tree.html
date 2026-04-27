@@ -12,10 +12,66 @@
     </div>
   </div>
   <div class="crumb-row" id="crumb"></div>
-  <div id="card-area"></div>
+  <div id="card-area" role="tabpanel" tabindex="0"></div>
+  <div id="aria-live-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 </div>
 
 <script>
+function syncTabPanelSemantics() {
+  const tabsEl = document.getElementById('tabs');
+  const panelEl = document.getElementById('card-area');
+
+  if (!tabsEl || !panelEl) return;
+
+  tabsEl.setAttribute('role', 'tablist');
+
+  const tabs = Array.from(
+    tabsEl.querySelectorAll('[role="tab"], button, [aria-controls="card-area"]')
+  );
+
+  tabs.forEach((tab, index) => {
+    if (!tab.id) {
+      tab.id = `decision-tree-tab-${index + 1}`;
+    }
+    if (!tab.hasAttribute('role')) {
+      tab.setAttribute('role', 'tab');
+    }
+    if (!tab.hasAttribute('aria-controls')) {
+      tab.setAttribute('aria-controls', 'card-area');
+    }
+  });
+
+  const activeTab =
+    tabsEl.querySelector('[role="tab"][aria-selected="true"]') ||
+    tabsEl.querySelector('[role="tab"].active-gpc, [role="tab"].active-gpr, [role="tab"].active-gn') ||
+    tabs[0];
+
+  panelEl.setAttribute('role', 'tabpanel');
+  if (!panelEl.hasAttribute('tabindex')) {
+    panelEl.setAttribute('tabindex', '0');
+  }
+  if (activeTab) {
+    panelEl.setAttribute('aria-labelledby', activeTab.id);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  syncTabPanelSemantics();
+
+  const tabsEl = document.getElementById('tabs');
+  if (!tabsEl) return;
+
+  const observer = new MutationObserver(() => {
+    syncTabPanelSemantics();
+  });
+
+  observer.observe(tabsEl, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['class', 'aria-selected', 'id', 'role', 'aria-controls']
+  });
+});
 let NODES = {};
 let ORGS = {};
 let TREES = {};
@@ -153,13 +209,22 @@ function render() {
   } else if (node) {
     renderTestCard(node);
   }
+  updateLiveRegion();
 }
 
 function renderTabs() {
   const t = TREES;
-  document.getElementById('tabs').innerHTML = Object.entries(t).map(([k,v])=>`
-    <button class="tab ${state.tree===k?'active-'+k:''}" onclick="switchTree('${k}')">${v.label}</button>
+  const tabsEl = document.getElementById('tabs');
+  const shouldRestoreFocus = tabsEl.contains(document.activeElement);
+  tabsEl.setAttribute('role','tablist');
+  tabsEl.setAttribute('aria-label','Select identification tree');
+  tabsEl.innerHTML = Object.entries(t).map(([k,v])=>`
+    <button role="tab" aria-selected="${state.tree===k}" aria-controls="card-area" tabindex="${state.tree===k?'0':'-1'}" class="tab ${state.tree===k?'active-'+k:''}" onclick="switchTree('${k}')">${v.label}</button>
   `).join('');
+  if (shouldRestoreFocus) {
+    const selectedTab = tabsEl.querySelector('[role="tab"][aria-selected="true"]');
+    if (selectedTab) selectedTab.focus();
+  }
 }
 
 function renderBreadcrumb() {
@@ -180,7 +245,7 @@ function renderTestCard(node) {
   document.getElementById('card-area').innerHTML = `
     <div class="card">
       <div class="test-badge badge-${isGN?'gn':'gpc'}">${TREES[treeType].desc}</div>
-      <div class="test-name">${node.test}</div>
+      <h3 class="test-name">${node.test}</h3>
       <div class="why-block${isGN?' gn':''}">
         <div class="why-label">Why this test</div>
         <div class="why-text">${node.mechanism}</div>
@@ -192,6 +257,7 @@ function renderTestCard(node) {
         <button class="btn-neg" onclick="advance('neg')">${node.noLabel}</button>
       </div>
       ${state.path.length>0?`<button class="btn-back" onclick="goBack()">← Back to previous test</button>`:''}
+      <div class="shortcut-hint">Keyboard shortcuts: <strong>Y</strong> = positive, <strong>N</strong> = negative${state.path.length>0?', <strong>Backspace</strong> = back one test':''}.</div>
     </div>`;
 }
 
@@ -314,6 +380,43 @@ function resetAllProgress() {
   sessionHistory = [];
   render();
 }
+
+function updateLiveRegion() {
+  const live = document.getElementById('aria-live-status');
+  if (!live) return;
+  const node = NODES[state.currentNode];
+  if (node) {
+    live.textContent = `Now viewing ${node.test} in the ${TREES[state.tree].label} decision tree.`;
+    return;
+  }
+  if (state.currentNode.startsWith('ORG_')) {
+    const orgKey = state.currentNode.replace('ORG_','');
+    const org = ORGS[orgKey];
+    if (org) live.textContent = `Identification complete: ${org.name}.`;
+  }
+}
+
+document.addEventListener('keydown',(event)=>{
+  if (event.altKey || event.ctrlKey || event.metaKey) return;
+  const key = event.key.toLowerCase();
+  const current = NODES[state.currentNode];
+  if (current && !current.orgId) {
+    if (key==='y') {
+      event.preventDefault();
+      advance('pos');
+      return;
+    }
+    if (key==='n') {
+      event.preventDefault();
+      advance('neg');
+      return;
+    }
+  }
+  if (event.key==='Backspace' && state.path.length>0) {
+    event.preventDefault();
+    goBack();
+  }
+});
 
 loadDecisionTreeData();
 </script>
