@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Biochemical ID Quest</title>
     <meta name="description" content="Interactive biochemical decision trees for identifying Gram-positive cocci, Gram-positive rods, and Gram-negative bacteria.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles/decision-tree.css">
   </head>
   <body>
@@ -30,6 +31,12 @@
         <div class="progress-title">Organism quick index</div>
         <input id="organism-search" class="search-input" type="search" placeholder="Search organism name..." oninput="renderOrganismIndex()">
         <div class="progress-list" id="organism-index"></div>
+      </section>
+      <section class="session-panel" aria-label="Session history panel">
+        <details id="history-panel">
+          <summary class="progress-title">History</summary>
+          <div class="history-list" id="history-list"></div>
+        </details>
       </section>
       <div class="crumb-row" id="crumb"></div>
       <section id="card-area" role="tabpanel" tabindex="0"></section>
@@ -117,15 +124,19 @@
       function renderProgressPanel() {
         const currentOrg = state.currentNode.startsWith('ORG_') ? ORGS[state.currentNode.replace('ORG_', '')] : null;
         const completed = completedEndpoints.filter(id => id.startsWith(`${state.tree}:`)).map(id => id.split(':')[1]);
-        const treeEndpointTotal = Object.values(ORGS).filter(org => org.gram === TREES[state.tree].type).length;
+        const treeOrgs = Object.values(ORGS).filter(org => org.gram === TREES[state.tree].type);
+        const treeEndpointTotal = treeOrgs.length;
+        const unseen = treeOrgs.map(org => org.name).filter(name => !completed.includes(name)).sort((a, b) => a.localeCompare(b));
         const latestAttempt = [...sessionHistory].reverse().find(entry => entry.tree === state.tree);
         const optimal = latestAttempt ? getOptimalSteps(latestAttempt.finalOrganism) : null;
         const accuracyLine = latestAttempt && optimal
           ? `${latestAttempt.finalOrganism}: ${latestAttempt.branchSteps.length} steps taken vs ${optimal} optimal`
           : 'No completed attempt yet in this tree';
+        const percent = treeEndpointTotal ? Math.round((completed.length / treeEndpointTotal) * 100) : 0;
         document.getElementById('mode-toggle').textContent = `Mode: ${quizMode ? 'Test' : 'Guided'}`;
         document.getElementById('progress-panel').innerHTML = `
           <div class="progress-title">Mission progress</div>
+          <div class="completion-ring" style="--p:${percent}"><span>${percent}%</span></div>
           <div class="progress-meta">Current depth: <strong>${state.path.length}</strong></div>
           <div class="progress-meta">Current status: <strong>${currentOrg ? currentOrg.name : 'In progress'}</strong></div>
           <div class="progress-meta">Completed endpoints: <strong>${completed.length} / ${treeEndpointTotal}</strong></div>
@@ -133,7 +144,23 @@
           <div class="progress-list">
             ${completed.length ? completed.map(name => `<span class="progress-pill">${name}</span>`).join('') : '<span class="progress-pill">No endpoints yet</span>'}
           </div>
+          <div class="progress-meta">Not yet reached:</div>
+          <div class="progress-list">
+            ${unseen.length ? unseen.map(name => `<span class="progress-pill progress-pill-unseen">${name}</span>`).join('') : '<span class="progress-pill">All organisms reached in this tree.</span>'}
+          </div>
         `;
+      }
+
+      function renderHistoryPanel() {
+        const history = [...sessionHistory].reverse().slice(0, 12);
+        const html = history.length ? history.map(entry => `
+          <article class="history-item">
+            <div><strong>${entry.finalOrganism}</strong> <span class="history-meta">(${TREES[entry.tree]?.label || entry.tree})</span></div>
+            <div class="history-meta">${new Date(entry.timestamp).toLocaleString()}</div>
+            <div class="history-path">${entry.branchSteps.map(step => `${step.test} → ${step.result === 'pos' ? 'positive' : 'negative'}`).join(' • ')}</div>
+          </article>
+        `).join('') : '<p class="history-meta">No completed identifications yet.</p>';
+        document.getElementById('history-list').innerHTML = html;
       }
 
       function showDataLoadError() {
@@ -171,6 +198,7 @@
         renderProgressPanel();
         renderOrganismIndex();
         renderBreadcrumb();
+        renderHistoryPanel();
         const node = NODES[state.currentNode];
         if (node && node.orgId) {
           renderOrgCard(ORGS[node.orgId]);
@@ -232,6 +260,9 @@
       function renderOrgCard(org) {
         if (!org) return;
         const isGN = org.gram === 'gn';
+        const quizHeader = quizMode ? '<div class="org-sub">Mystery organism resolved</div>' : '<div class="org-sub">Identification complete</div>';
+        const canonicalPath = findPathToNode(TREES[state.tree].start, state.currentNode) || [];
+        const exactMatch = JSON.stringify(canonicalPath) === JSON.stringify(state.path);
         const pathHtml = org.path.map((p, i) => `
           <span class="path-step">${i > 0 ? '' : 'Start'}</span>
           ${i > 0 ? '<span class="path-arr">›</span>' : ''}
@@ -248,7 +279,7 @@
               <div class="org-icon ${isGN ? 'gn' : 'gp'}">${org.initials}</div>
               <div>
                 <div class="org-name">${org.name}</div>
-                <div class="org-sub">Identification complete</div>
+                ${quizHeader}
               </div>
             </div>
             <div class="path-summary">${pathHtml}</div>
@@ -257,6 +288,7 @@
             <div class="section-label">Clinical significance</div>
             <p class="clinical-text">${org.clinical}</p>
             <div class="proc-block"><span class="proc-label">Path efficiency: </span>${taken} steps taken vs ${optimal} optimal.</div>
+            ${quizMode ? `<div class="proc-block"><span class="proc-label">Quiz check: </span>${exactMatch ? 'Perfect path match.' : 'Reached the right endpoint but via a non-canonical route.'}</div>` : ''}
             <div class="section-label">Distinction-level insight</div>
             <div class="distinction-box${isGN ? ' gn' : ''}">
               <div class="dist-label">For verbal assessment</div>
@@ -266,6 +298,7 @@
               <button class="btn-restart" onclick="restartCurrent()">↺ Start this tree again</button>
               <button class="btn-back" onclick="goBack()">← Back one step</button>
             </div>
+            <p class="shortcut-hint">Shortcuts: <strong>R</strong> = restart tree, <strong>Backspace</strong> = back.</p>
           </article>`;
       }
 
@@ -445,6 +478,10 @@
         if (event.key === 'Backspace' && state.path.length > 0) {
           event.preventDefault();
           goBack();
+        }
+        if (key === 'r' && state.path.length >= 0) {
+          event.preventDefault();
+          restartCurrent();
         }
       });
 
