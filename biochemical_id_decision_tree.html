@@ -3,7 +3,14 @@
 <link rel="stylesheet" href="styles/decision-tree.css">
 
 <div id="app" style="padding:4px 0">
-  <div class="tabs" id="tabs" role="tablist" aria-label="Biochemical identification trees"></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="session-panel">
+    <div class="progress-panel" id="progress-panel"></div>
+    <div class="control-row">
+      <button class="btn-control" onclick="exportSession()">Export session</button>
+      <button class="btn-control" onclick="resetAllProgress()">Reset all progress</button>
+    </div>
+  </div>
   <div class="crumb-row" id="crumb"></div>
   <div id="card-area" role="tabpanel" tabindex="0"></div>
   <div id="aria-live-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
@@ -68,7 +75,90 @@ document.addEventListener('DOMContentLoaded', () => {
 let NODES = {};
 let ORGS = {};
 let TREES = {};
-let state = {tree:'gpc', currentNode:'gpc_catalase', path:[]};
+
+const SESSION_STORAGE_KEY = 'biochemicalTreeSession';
+const SESSION_VERSION = 1;
+let DEFAULT_STATE = {tree:'gpc', currentNode:'gpc_catalase', path:[]};
+
+let state = {...DEFAULT_STATE};
+let completedEndpoints = [];
+let sessionHistory = [];
+
+function saveSession() {
+  const payload = {
+    version: SESSION_VERSION,
+    savedAt: new Date().toISOString(),
+    state: {tree: state.tree, currentNode: state.currentNode, path: state.path},
+    completedEndpoints,
+    sessionHistory
+  };
+  localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(payload));
+}
+
+function isValidStep(step) {
+  return step && typeof step.test==='string' && (step.result==='pos' || step.result==='neg');
+}
+
+function resolveNodeFromPath(tree, path) {
+  let cur = TREES[tree].start;
+  for (const step of path) {
+    const node = NODES[cur];
+    if (!node || node.test!==step.test) return null;
+    cur = step.result==='pos' ? node.yes : node.no;
+  }
+  return cur;
+}
+
+function loadSession() {
+  const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw);
+    const savedState = parsed && parsed.state;
+    if (!parsed || parsed.version!==SESSION_VERSION || !savedState) return;
+    const tree = savedState.tree;
+    const path = Array.isArray(savedState.path) && savedState.path.every(isValidStep) ? savedState.path : [];
+    if (!TREES[tree]) return;
+    const derivedNode = resolveNodeFromPath(tree, path);
+    if (!derivedNode) return;
+    const currentNode = savedState.currentNode;
+    if (typeof currentNode!=='string' || currentNode!==derivedNode) return;
+    state = {tree, currentNode, path};
+    completedEndpoints = Array.isArray(parsed.completedEndpoints) ? parsed.completedEndpoints : [];
+    sessionHistory = Array.isArray(parsed.sessionHistory) ? parsed.sessionHistory : [];
+  } catch (_err) {
+    state = {...DEFAULT_STATE};
+    completedEndpoints = [];
+    sessionHistory = [];
+  }
+}
+
+function recordCompletionIfEndpoint() {
+  if (!state.currentNode.startsWith('ORG_')) return;
+  const orgKey = state.currentNode.replace('ORG_','');
+  const org = ORGS[orgKey];
+  if (!org) return;
+  const endpointId = `${state.tree}:${org.name}`;
+  if (!completedEndpoints.includes(endpointId)) {
+    completedEndpoints.push(endpointId);
+  }
+}
+
+function renderProgressPanel() {
+  const currentOrg = state.currentNode.startsWith('ORG_') ? ORGS[state.currentNode.replace('ORG_','')] : null;
+  const completed = completedEndpoints
+    .filter(id=>id.startsWith(`${state.tree}:`))
+    .map(id=>id.split(':')[1]);
+  document.getElementById('progress-panel').innerHTML = `
+    <div class="progress-title">Session progress</div>
+    <div class="progress-meta">Current branch depth: <strong>${state.path.length}</strong></div>
+    <div class="progress-meta">Current endpoint: <strong>${currentOrg?currentOrg.name:'In progress'}</strong></div>
+    <div class="progress-meta">Completed organism endpoints (${completed.length}):</div>
+    <div class="progress-list">
+      ${completed.length ? completed.map(name=>`<span class="progress-pill">${name}</span>`).join('') : '<span class="progress-pill">None yet</span>'}
+    </div>
+  `;
+}
 
 function showDataLoadError() {
   document.getElementById('card-area').innerHTML = `
@@ -95,16 +185,20 @@ async function loadDecisionTreeData() {
     NODES = parsedData.NODES;
     ORGS = parsedData.ORGS;
     TREES = parsedData.TREES;
-    state = {tree:'gpc', currentNode:TREES.gpc.start, path:[]};
+    DEFAULT_STATE = {tree:'gpc', currentNode:TREES.gpc.start, path:[]};
+    state = {...DEFAULT_STATE};
+    loadSession();
+    recordCompletionIfEndpoint();
     render();
   } catch (error) {
-    console.error('Failed to load decision tree data', error);
+    console.error('Failed to load decision tree data:', error.message, error);
     showDataLoadError();
   }
 }
 
 function render() {
   renderTabs();
+  renderProgressPanel();
   renderBreadcrumb();
   const node = NODES[state.currentNode];
   if (node && node.orgId) {
@@ -209,6 +303,18 @@ function advance(result) {
   state.path.push({test:node.test, result});
   const next = result==='pos' ? node.yes : node.no;
   state.currentNode = next;
+  recordCompletionIfEndpoint();
+  if (state.currentNode.startsWith('ORG_')) {
+    const org = ORGS[state.currentNode.replace('ORG_','')];
+    sessionHistory.push({
+      version: SESSION_VERSION,
+      timestamp: new Date().toISOString(),
+      tree: state.tree,
+      branchSteps: state.path.map(step=>({...step})),
+      finalOrganism: org ? org.name : state.currentNode
+    });
+  }
+  saveSession();
   render();
 }
 
@@ -227,6 +333,7 @@ function goBack() {
     }
     state.currentNode = cur;
   }
+  saveSession();
   render();
 }
 
@@ -234,12 +341,43 @@ function switchTree(key) {
   state.tree = key;
   state.currentNode = TREES[key].start;
   state.path = [];
+  saveSession();
   render();
 }
 
 function restartCurrent() {
   state.currentNode = TREES[state.tree].start;
   state.path = [];
+  saveSession();
+  render();
+}
+
+function exportSession() {
+  const finalOrg = state.currentNode.startsWith('ORG_') ? ORGS[state.currentNode.replace('ORG_','')] : null;
+  const payload = {
+    version: SESSION_VERSION,
+    timestamp: new Date().toISOString(),
+    tree: state.tree,
+    branchSteps: state.path,
+    finalOrganism: finalOrg ? finalOrg.name : null,
+    completedEndpoints
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `biochemical-session-${Date.now()}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function resetAllProgress() {
+  localStorage.removeItem(SESSION_STORAGE_KEY);
+  state = {...DEFAULT_STATE};
+  completedEndpoints = [];
+  sessionHistory = [];
   render();
 }
 
@@ -282,3 +420,14 @@ document.addEventListener('keydown',(event)=>{
 
 loadDecisionTreeData();
 </script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url=./index.html">
+    <title>Redirecting…</title>
+  </head>
+  <body>
+    <p>Redirecting to <a href="./index.html">the biochemical test practice app</a>.</p>
+  </body>
+</html>
