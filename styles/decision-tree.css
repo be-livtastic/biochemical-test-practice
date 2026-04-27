@@ -29,6 +29,7 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
 .progress-pill{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--surface-soft);border:1px solid #3a4c7d;color:#bdd0f5}
 .control-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 .btn-control{border:1px solid #4f669f;background:#20325c;color:#d8e6ff;padding:8px 12px;border-radius:10px;cursor:pointer}
+.search-input{width:100%;margin:8px 0 10px;padding:9px 10px;border-radius:10px;border:1px solid #3d568f;background:var(--surface-soft);color:var(--text)}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .tab{border:1px solid var(--border);background:var(--surface);padding:9px 12px;border-radius:10px;color:var(--text);cursor:pointer}
 .tab.active-gpc,.tab.active-gpr{background:var(--violet-bg);border-color:#7f6ece;color:var(--violet)}
