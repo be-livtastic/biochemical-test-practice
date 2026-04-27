@@ -56,10 +56,26 @@
 .btn-restart{padding:9px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;font-weight:500;color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
 .btn-restart:hover{background:var(--color-background-secondary)}
 .tree-icon{font-size:16px}
+.session-panel{display:flex;gap:10px;align-items:stretch;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
+.progress-panel{flex:1;min-width:260px;padding:10px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-secondary)}
+.progress-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary);margin-bottom:6px}
+.progress-meta{font-size:12px;color:var(--color-text-secondary);margin-bottom:6px}
+.progress-list{display:flex;flex-wrap:wrap;gap:6px}
+.progress-pill{font-size:11px;padding:3px 9px;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:20px;color:var(--color-text-secondary)}
+.control-row{display:flex;gap:8px;align-items:center}
+.btn-control{padding:8px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;font-weight:500;color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
+.btn-control:hover{background:var(--color-background-secondary)}
 </style>
 
 <div id="app" style="padding:4px 0">
   <div class="tabs" id="tabs"></div>
+  <div class="session-panel">
+    <div class="progress-panel" id="progress-panel"></div>
+    <div class="control-row">
+      <button class="btn-control" onclick="exportSession()">Export session</button>
+      <button class="btn-control" onclick="resetAllProgress()">Reset all progress</button>
+    </div>
+  </div>
   <div class="crumb-row" id="crumb"></div>
   <div id="card-area"></div>
 </div>
@@ -340,10 +356,93 @@ const TREES = {
   gn:{label:'Gram-negative',start:'gn_oxidase',color:'#D4537E',type:'gn',desc:'Gram-negative rods'}
 };
 
-let state = {tree:'gpc', currentNode:'gpc_catalase', path:[]};
+const SESSION_STORAGE_KEY = 'biochemicalTreeSession';
+const SESSION_VERSION = 1;
+const DEFAULT_STATE = {tree:'gpc', currentNode:TREES.gpc.start, path:[]};
+
+let state = {...DEFAULT_STATE};
+let completedEndpoints = [];
+let sessionHistory = [];
+
+function saveSession() {
+  const payload = {
+    version: SESSION_VERSION,
+    savedAt: new Date().toISOString(),
+    state: {tree: state.tree, currentNode: state.currentNode, path: state.path},
+    completedEndpoints,
+    sessionHistory
+  };
+  localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(payload));
+}
+
+function isValidStep(step) {
+  return step && typeof step.test==='string' && (step.result==='pos' || step.result==='neg');
+}
+
+function resolveNodeFromPath(tree, path) {
+  let cur = TREES[tree].start;
+  for (const step of path) {
+    const node = NODES[cur];
+    if (!node || node.test!==step.test) return null;
+    cur = step.result==='pos' ? node.yes : node.no;
+  }
+  return cur;
+}
+
+function loadSession() {
+  const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw);
+    const savedState = parsed && parsed.state;
+    if (!parsed || parsed.version!==SESSION_VERSION || !savedState) return;
+    const tree = savedState.tree;
+    const path = Array.isArray(savedState.path) && savedState.path.every(isValidStep) ? savedState.path : [];
+    if (!TREES[tree]) return;
+    const derivedNode = resolveNodeFromPath(tree, path);
+    if (!derivedNode) return;
+    const currentNode = savedState.currentNode;
+    if (typeof currentNode!=='string' || currentNode!==derivedNode) return;
+    state = {tree, currentNode, path};
+    completedEndpoints = Array.isArray(parsed.completedEndpoints) ? parsed.completedEndpoints : [];
+    sessionHistory = Array.isArray(parsed.sessionHistory) ? parsed.sessionHistory : [];
+  } catch (_err) {
+    state = {...DEFAULT_STATE};
+    completedEndpoints = [];
+    sessionHistory = [];
+  }
+}
+
+function recordCompletionIfEndpoint() {
+  if (!state.currentNode.startsWith('ORG_')) return;
+  const orgKey = state.currentNode.replace('ORG_','');
+  const org = ORGS[orgKey];
+  if (!org) return;
+  const endpointId = `${state.tree}:${org.name}`;
+  if (!completedEndpoints.includes(endpointId)) {
+    completedEndpoints.push(endpointId);
+  }
+}
+
+function renderProgressPanel() {
+  const currentOrg = state.currentNode.startsWith('ORG_') ? ORGS[state.currentNode.replace('ORG_','')] : null;
+  const completed = completedEndpoints
+    .filter(id=>id.startsWith(`${state.tree}:`))
+    .map(id=>id.split(':')[1]);
+  document.getElementById('progress-panel').innerHTML = `
+    <div class="progress-title">Session progress</div>
+    <div class="progress-meta">Current branch depth: <strong>${state.path.length}</strong></div>
+    <div class="progress-meta">Current endpoint: <strong>${currentOrg?currentOrg.name:'In progress'}</strong></div>
+    <div class="progress-meta">Completed organism endpoints (${completed.length}):</div>
+    <div class="progress-list">
+      ${completed.length ? completed.map(name=>`<span class="progress-pill">${name}</span>`).join('') : '<span class="progress-pill">None yet</span>'}
+    </div>
+  `;
+}
 
 function render() {
   renderTabs();
+  renderProgressPanel();
   renderBreadcrumb();
   const node = NODES[state.currentNode];
   if (node && node.orgId) {
@@ -438,6 +537,18 @@ function advance(result) {
   state.path.push({test:node.test, result});
   const next = result==='pos' ? node.yes : node.no;
   state.currentNode = next;
+  recordCompletionIfEndpoint();
+  if (state.currentNode.startsWith('ORG_')) {
+    const org = ORGS[state.currentNode.replace('ORG_','')];
+    sessionHistory.push({
+      version: SESSION_VERSION,
+      timestamp: new Date().toISOString(),
+      tree: state.tree,
+      branchSteps: state.path.map(step=>({...step})),
+      finalOrganism: org ? org.name : state.currentNode
+    });
+  }
+  saveSession();
   render();
 }
 
@@ -456,6 +567,7 @@ function goBack() {
     }
     state.currentNode = cur;
   }
+  saveSession();
   render();
 }
 
@@ -463,14 +575,47 @@ function switchTree(key) {
   state.tree = key;
   state.currentNode = TREES[key].start;
   state.path = [];
+  saveSession();
   render();
 }
 
 function restartCurrent() {
   state.currentNode = TREES[state.tree].start;
   state.path = [];
+  saveSession();
   render();
 }
 
+function exportSession() {
+  const finalOrg = state.currentNode.startsWith('ORG_') ? ORGS[state.currentNode.replace('ORG_','')] : null;
+  const payload = {
+    version: SESSION_VERSION,
+    timestamp: new Date().toISOString(),
+    tree: state.tree,
+    branchSteps: state.path,
+    finalOrganism: finalOrg ? finalOrg.name : null,
+    completedEndpoints
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `biochemical-session-${Date.now()}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function resetAllProgress() {
+  localStorage.removeItem(SESSION_STORAGE_KEY);
+  state = {...DEFAULT_STATE};
+  completedEndpoints = [];
+  sessionHistory = [];
+  render();
+}
+
+loadSession();
+recordCompletionIfEndpoint();
 render();
 </script>
