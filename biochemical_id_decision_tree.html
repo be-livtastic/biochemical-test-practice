@@ -3,13 +3,68 @@
 <link rel="stylesheet" href="styles/decision-tree.css">
 
 <div id="app" style="padding:4px 0">
-  <div class="tabs" id="tabs"></div>
+  <div class="tabs" id="tabs" role="tablist" aria-label="Biochemical identification trees"></div>
   <div class="crumb-row" id="crumb"></div>
-  <div id="card-area"></div>
+  <div id="card-area" role="tabpanel" tabindex="0"></div>
   <div id="aria-live-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 </div>
 
 <script>
+function syncTabPanelSemantics() {
+  const tabsEl = document.getElementById('tabs');
+  const panelEl = document.getElementById('card-area');
+
+  if (!tabsEl || !panelEl) return;
+
+  tabsEl.setAttribute('role', 'tablist');
+
+  const tabs = Array.from(
+    tabsEl.querySelectorAll('[role="tab"], button, [aria-controls="card-area"]')
+  );
+
+  tabs.forEach((tab, index) => {
+    if (!tab.id) {
+      tab.id = `decision-tree-tab-${index + 1}`;
+    }
+    if (!tab.hasAttribute('role')) {
+      tab.setAttribute('role', 'tab');
+    }
+    if (!tab.hasAttribute('aria-controls')) {
+      tab.setAttribute('aria-controls', 'card-area');
+    }
+  });
+
+  const activeTab =
+    tabsEl.querySelector('[role="tab"][aria-selected="true"]') ||
+    tabsEl.querySelector('[role="tab"].active-gpc, [role="tab"].active-gpr, [role="tab"].active-gn') ||
+    tabs[0];
+
+  panelEl.setAttribute('role', 'tabpanel');
+  if (!panelEl.hasAttribute('tabindex')) {
+    panelEl.setAttribute('tabindex', '0');
+  }
+  if (activeTab) {
+    panelEl.setAttribute('aria-labelledby', activeTab.id);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  syncTabPanelSemantics();
+
+  const tabsEl = document.getElementById('tabs');
+  if (!tabsEl) return;
+
+  const observer = new MutationObserver(() => {
+    syncTabPanelSemantics();
+  });
+
+  observer.observe(tabsEl, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['class', 'aria-selected', 'id', 'role', 'aria-controls']
+  });
+});
 let NODES = {};
 let ORGS = {};
 let TREES = {};
