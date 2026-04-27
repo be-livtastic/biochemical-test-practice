@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Biochemical Organism Quiz</title>
-    <meta name="description" content="Morphology-first organism quiz loop for practical identification revision.">
+    <meta name="description" content="Morphology and biochemical quiz loop for practical identification revision.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles/quiz.css">
   </head>
@@ -12,30 +12,82 @@
     <main id="app" class="quiz-shell">
       <header class="hero">
         <p class="hero-kicker">Biochemical Quiz</p>
-        <h1>Identify the unknown organism.</h1>
-        <p class="hero-sub">Read the morphology clues, choose from six organisms, reveal a hint if needed, and review full feedback.</p>
+        <h1>Choose your revision mode.</h1>
+        <p class="hero-sub">Practice organism identification from morphology clues, or identify biochemical tests and interpret what their results mean.</p>
       </header>
       <section id="card-area" aria-live="polite"></section>
     </main>
 
     <script>
       let organismPool = [];
+      let biochemPool = [];
       let quizOrder = [];
       let currentIndex = 0;
       let score = 0;
       let answers = [];
       let hintVisible = false;
       let selectedName = '';
+      let quizMode = '';
 
-      async function startQuiz(pool = organismPool) {
-        organismPool = pool;
-        quizOrder = [...pool].sort(() => Math.random() - 0.5);
+      function renderModeSelector() {
+        const app = document.getElementById('card-area');
+        app.innerHTML = `
+          <article class="card">
+            <h2>Select quiz mode</h2>
+            <p class="hero-sub">Both modes use the same scoring and summary flow.</p>
+            <div class="mode-grid">
+              <button class="mode-btn mode-organism" onclick="startQuiz('organism')">
+                <strong>Identify the organism</strong>
+                <span>Morphology clues → choose organism</span>
+              </button>
+              <button class="mode-btn mode-biochem" onclick="startQuiz('biochem')">
+                <strong>Identify the test</strong>
+                <span>Scenario/result → test, meaning, reasoning</span>
+              </button>
+            </div>
+          </article>
+        `;
+      }
+
+      async function startQuiz(mode, overridePool = null) {
+        quizMode = mode;
+
+        if (mode === 'organism') {
+          if (!organismPool.length) {
+            const response = await fetch('data/quiz-organisms.json');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            organismPool = data.ORGS;
+          }
+          const pool = overridePool || organismPool;
+          quizOrder = [...pool].sort(() => Math.random() - 0.5);
+        } else {
+          if (!biochemPool.length) {
+            const response = await fetch('data/quiz-biochemical.json');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            biochemPool = data.QUESTIONS;
+          }
+          const pool = overridePool || biochemPool;
+          quizOrder = [...pool].sort(() => Math.random() - 0.5);
+        }
+
         currentIndex = 0;
         score = 0;
         answers = [];
         hintVisible = false;
         selectedName = '';
-        renderQuestion(quizOrder[currentIndex]);
+
+        if (!quizOrder.length) {
+          renderModeSelector();
+          return;
+        }
+
+        if (quizMode === 'organism') {
+          renderQuestion(quizOrder[currentIndex]);
+        } else {
+          renderBiochemQuestion(quizOrder[currentIndex]);
+        }
       }
 
       function renderQuestion(organism) {
@@ -73,6 +125,44 @@
         });
       }
 
+      function renderBiochemQuestion(questionObj) {
+        hintVisible = false;
+        selectedName = '';
+        const app = document.getElementById('card-area');
+        const badgeMap = {
+          'identify-test': { label: 'Identify test', cls: 'badge-identify' },
+          'interpret-result': { label: 'Interpret result', cls: 'badge-interpret' },
+          'explain-step': { label: 'Explain step', cls: 'badge-explain' }
+        };
+        const badge = badgeMap[questionObj.questionType] || { label: questionObj.questionType, cls: '' };
+
+        app.innerHTML = `
+          <article class="card">
+            <div class="question-head">
+              <h2>Biochemical test question</h2>
+              <p>Question ${currentIndex + 1} of ${quizOrder.length} • ${questionObj.testName}</p>
+            </div>
+            <span class="type-badge ${badge.cls}">${badge.label}</span>
+            <p class="scenario">${questionObj.scenario}</p>
+
+            <div class="section-label">Choose one</div>
+            <div class="answer-grid">
+              ${questionObj.options.map((option, idx) => `<button class="answer-btn" onclick="checkBiochemAnswer('${option.replace(/'/g, "\\'")}', '${questionObj.correctAnswer.replace(/'/g, "\\'")}')"><span class="keycap">${idx + 1}</span>${option}</button>`).join('')}
+            </div>
+
+            <button class="hint-btn" id="hint-toggle">Show hint</button>
+            <p id="hint-text" class="hint hidden">${questionObj.hint}</p>
+            <p class="kbd-note">Keyboard: press 1–4 to answer, Backspace to go back one question.</p>
+          </article>
+        `;
+
+        document.getElementById('hint-toggle').addEventListener('click', () => {
+          hintVisible = !hintVisible;
+          document.getElementById('hint-text').classList.toggle('hidden', !hintVisible);
+          document.getElementById('hint-toggle').textContent = hintVisible ? 'Hide hint' : 'Show hint';
+        });
+      }
+
       function checkAnswer(selected, correctName) {
         selectedName = selected;
         const organism = quizOrder[currentIndex];
@@ -80,6 +170,23 @@
         answers[currentIndex] = { organism: correctName, selected, wasCorrect };
         if (wasCorrect) score += 1;
         renderResult(organism, wasCorrect);
+      }
+
+      function checkBiochemAnswer(selected, correctAnswer) {
+        selectedName = selected;
+        const questionObj = quizOrder[currentIndex];
+        const wasCorrect = selected === correctAnswer;
+        answers[currentIndex] = {
+          id: questionObj.id,
+          testName: questionObj.testName,
+          selected,
+          correctAnswer,
+          wasCorrect,
+          colorChange: questionObj.colorChange,
+          stepReason: questionObj.stepReason
+        };
+        if (wasCorrect) score += 1;
+        renderBiochemResult(questionObj, wasCorrect);
       }
 
       function renderResult(organism, wasCorrect) {
@@ -110,72 +217,186 @@
         `;
       }
 
+      function renderBiochemResult(questionObj, wasCorrect) {
+        const app = document.getElementById('card-area');
+        const organismRows = questionObj.commonOrganisms
+          .map(item => `<tr><td>${item.name}</td><td><span class="result-pill ${item.result.toLowerCase().includes('positive') || item.result.toLowerCase().includes('susceptible') || item.result.includes('+') ? 'pill-positive' : 'pill-negative'}">${item.result}</span></td></tr>`)
+          .join('');
+
+        app.innerHTML = `
+          <article class="card">
+            <div class="result-banner ${wasCorrect ? 'correct' : 'incorrect'}">
+              ${wasCorrect ? 'Correct' : 'Incorrect'}
+            </div>
+
+            <p class="why-note"><strong>Correct answer:</strong> ${questionObj.correctAnswer}</p>
+            <p class="clinical"><strong>Explanation:</strong> ${questionObj.explanation}</p>
+
+            <div class="section-label">Colour change</div>
+            <div class="color-panel">
+              <div class="color-cell positive">
+                <h3>Positive result</h3>
+                <p>${questionObj.colorChange.positive}</p>
+              </div>
+              <div class="color-cell negative">
+                <h3>Negative result</h3>
+                <p>${questionObj.colorChange.negative}</p>
+              </div>
+              <div class="color-why"><strong>Why this happens:</strong> ${questionObj.colorChange.why}</div>
+            </div>
+
+            <p class="distinction"><strong>Purpose:</strong> ${questionObj.purpose}</p>
+            <p class="distinction"><strong>Step reason:</strong> ${questionObj.stepReason}</p>
+
+            <div class="section-label">Common organisms</div>
+            <table class="org-table">
+              <thead><tr><th>Organism</th><th>Result</th></tr></thead>
+              <tbody>${organismRows}</tbody>
+            </table>
+
+            <button class="next-btn" onclick="nextQuestion()">${currentIndex + 1 >= quizOrder.length ? 'See summary' : 'Next question'}</button>
+          </article>
+        `;
+      }
+
       function nextQuestion() {
         currentIndex += 1;
         if (currentIndex >= quizOrder.length) {
           renderSummary();
           return;
         }
-        renderQuestion(quizOrder[currentIndex]);
+        if (quizMode === 'organism') {
+          renderQuestion(quizOrder[currentIndex]);
+        } else {
+          renderBiochemQuestion(quizOrder[currentIndex]);
+        }
       }
 
       function renderSummary() {
         const app = document.getElementById('card-area');
-        const missed = answers.filter(a => !a.wasCorrect);
+
+        if (quizMode === 'organism') {
+          const missed = answers.filter(a => !a.wasCorrect);
+          app.innerHTML = `
+            <article class="card">
+              <h2>Quiz summary</h2>
+              <p class="score">Score: <strong>${score}/${quizOrder.length}</strong></p>
+
+              <div class="section-label">Missed organisms</div>
+              ${missed.length
+                ? `<ul class="missed-list">${missed.map(item => `<li><strong>${item.organism}</strong> (you chose ${item.selected})</li>`).join('')}</ul>
+                   <button class="next-btn" id="retry-missed">Retry missed (${missed.length})</button>`
+                : '<p class="clinical">Great work — no misses this round.</p>'}
+
+              <button class="hint-btn" id="restart-all">Restart full quiz</button>
+              <button class="hint-btn" id="back-home">Back to mode selector</button>
+            </article>
+          `;
+
+          const retryBtn = document.getElementById('retry-missed');
+          if (retryBtn) {
+            retryBtn.addEventListener('click', () => {
+              const missedNames = new Set(missed.map(item => item.organism));
+              const retryPool = organismPool.filter(org => missedNames.has(org.name));
+              startQuiz('organism', retryPool);
+            });
+          }
+          document.getElementById('restart-all').addEventListener('click', () => startQuiz('organism'));
+          document.getElementById('back-home').addEventListener('click', renderModeSelector);
+          return;
+        }
+
+        const byTest = new Map();
+        quizOrder.forEach(question => {
+          if (!byTest.has(question.testName)) {
+            byTest.set(question.testName, {
+              testName: question.testName,
+              colorChange: `${question.colorChange.positive} | ${question.colorChange.negative}`,
+              stepReason: question.stepReason,
+              total: 0,
+              correct: 0
+            });
+          }
+        });
+
+        answers.forEach(answer => {
+          const entry = byTest.get(answer.testName);
+          if (entry) {
+            entry.total += 1;
+            if (answer.wasCorrect) entry.correct += 1;
+          }
+        });
+
+        const rows = [...byTest.values()]
+          .map(item => `<tr>
+              <td>${item.testName}</td>
+              <td>${item.correct === item.total ? 'Got it right' : 'Got it wrong'} (${item.correct}/${item.total})</td>
+              <td>${item.colorChange}</td>
+              <td>${item.stepReason}</td>
+            </tr>`)
+          .join('');
+
         app.innerHTML = `
           <article class="card">
-            <h2>Quiz summary</h2>
+            <h2>Biochemical quiz summary</h2>
             <p class="score">Score: <strong>${score}/${quizOrder.length}</strong></p>
-
-            <div class="section-label">Missed organisms</div>
-            ${missed.length
-              ? `<ul class="missed-list">${missed.map(item => `<li><strong>${item.organism}</strong> (you chose ${item.selected})</li>`).join('')}</ul>
-                 <button class="next-btn" id="retry-missed">Retry missed (${missed.length})</button>`
-              : '<p class="clinical">Great work — no misses this round.</p>'}
-
-            <button class="hint-btn" id="restart-all">Restart full quiz</button>
+            <div class="section-label">Revision table</div>
+            <div class="table-wrap">
+              <table class="org-table summary-table">
+                <thead>
+                  <tr>
+                    <th>Test name</th>
+                    <th>Your performance</th>
+                    <th>Colour change reminder</th>
+                    <th>Step reason reminder</th>
+                  </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+              </table>
+            </div>
+            <button class="hint-btn" id="restart-biochem">Restart biochemical quiz</button>
+            <button class="hint-btn" id="back-home">Back to mode selector</button>
           </article>
         `;
 
-        const retryBtn = document.getElementById('retry-missed');
-        if (retryBtn) {
-          retryBtn.addEventListener('click', () => {
-            const retryPool = organismPool.filter(org => missed.some(m => m.organism === org.name));
-            startQuiz(retryPool);
-          });
-        }
-        document.getElementById('restart-all').addEventListener('click', () => startQuiz(window.fullPool));
+        document.getElementById('restart-biochem').addEventListener('click', () => startQuiz('biochem'));
+        document.getElementById('back-home').addEventListener('click', renderModeSelector);
       }
 
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'Backspace' && currentIndex > 0) {
+        if (event.key === 'Backspace' && currentIndex > 0 && quizOrder.length) {
           event.preventDefault();
           currentIndex -= 1;
           answers = answers.slice(0, currentIndex);
           score = answers.filter(answer => answer.wasCorrect).length;
-          renderQuestion(quizOrder[currentIndex]);
+          if (quizMode === 'organism') {
+            renderQuestion(quizOrder[currentIndex]);
+          } else if (quizMode === 'biochem') {
+            renderBiochemQuestion(quizOrder[currentIndex]);
+          }
+          return;
         }
 
         const numeric = Number(event.key);
-        const options = [...organismPool].sort((a, b) => a.name.localeCompare(b.name));
-        if (numeric >= 1 && numeric <= 6 && options[numeric - 1]) {
-          const current = quizOrder[currentIndex];
-          if (!current) return;
-          checkAnswer(options[numeric - 1].name, current.name);
+        if (!Number.isInteger(numeric) || !quizOrder[currentIndex]) return;
+
+        if (quizMode === 'organism') {
+          const options = [...organismPool].sort((a, b) => a.name.localeCompare(b.name));
+          if (numeric >= 1 && numeric <= 6 && options[numeric - 1]) {
+            checkAnswer(options[numeric - 1].name, quizOrder[currentIndex].name);
+          }
+          return;
+        }
+
+        if (quizMode === 'biochem') {
+          const options = quizOrder[currentIndex].options;
+          if (numeric >= 1 && numeric <= 4 && options[numeric - 1]) {
+            checkBiochemAnswer(options[numeric - 1], quizOrder[currentIndex].correctAnswer);
+          }
         }
       });
 
-      (async () => {
-        try {
-          const response = await fetch('data/quiz-organisms.json');
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          const data = await response.json();
-          window.fullPool = data.ORGS;
-          startQuiz(window.fullPool);
-        } catch (error) {
-          document.getElementById('card-area').innerHTML = `<article class="card"><h2>Unable to load quiz data</h2><p class="clinical">${error.message}</p></article>`;
-        }
-      })();
+      renderModeSelector();
     </script>
   </body>
 </html>
