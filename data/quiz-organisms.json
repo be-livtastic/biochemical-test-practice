@@ -1,0 +1,192 @@
+{
+  "ORGS": [
+    {
+      "id": "agrobacterium",
+      "sampleNumber": "1",
+      "name": "Agrobacterium",
+      "morphologyClues": [
+        "White circular colonies",
+        "Slimy/mucoid surface (extracellular polysaccharide)",
+        "Gram-negative rod",
+        "Oxidase-positive",
+        "Non-fluorescent under UV"
+      ],
+      "gramStatus": "Gram-negative",
+      "keyTest": "Colony morphology (mucoid EPS production)",
+      "hint": "Think about what the colony texture tells you about extracellular production.",
+      "wrongAnswerFeedback": {
+        "Bacillus": "Bacillus is Gram-positive and identified by visible endospores in rods, not mucoid Gram-negative colonies.",
+        "Escherichia coli": "E. coli is typically lactose-fermenting with MacConkey pink growth and EMB metallic sheen, unlike the mucoid non-fluorescent profile here.",
+        "Micrococcus": "Micrococcus is a coccal organism with yellow pigmentation, not a Gram-negative rod with slimy white colonies.",
+        "Pseudomonas": "Pseudomonas should show UV fluorescence via pyoverdine, while this organism is specifically non-fluorescent.",
+        "Staphylococcus": "Staphylococcus is Gram-positive cocci in clusters and lacks the Gram-negative rod morphology seen here."
+      },
+      "features": [
+        "White circular mucoid colony",
+        "Extracellular polysaccharide production",
+        "Gram-negative rod",
+        "Oxidase-positive",
+        "UV non-fluorescent"
+      ],
+      "clinical": "Agrobacterium is primarily known as a plant pathogen and molecular biology tool, but in practical identification settings it is recognised through mucoid colony phenotype and oxidase-positive Gram-negative morphology.",
+      "distinction": "Calling out the mucoid EPS phenotype and linking it to identification accuracy demonstrates higher-level interpretation beyond single test recall.",
+      "rflpNote": ""
+    },
+    {
+      "id": "bacillus",
+      "sampleNumber": "2",
+      "name": "Bacillus",
+      "morphologyClues": [
+        "Pale white colonies",
+        "Irregular/rhizoid margin possible",
+        "Rod-shaped cells",
+        "Endospores visible as clear refractile bodies inside rods",
+        "Aerobic growth"
+      ],
+      "gramStatus": "Gram-positive",
+      "keyTest": "Endospore observation",
+      "hint": "Look closely at the internal structure of the rod-shaped cells — is there anything visible inside them?",
+      "wrongAnswerFeedback": {
+        "Agrobacterium": "Agrobacterium is a Gram-negative mucoid rod and does not show the endospore pattern that defines Bacillus.",
+        "Escherichia coli": "E. coli rods do not form endospores and are usually interpreted through lactose/RFLP cues rather than spore microscopy.",
+        "Micrococcus": "Micrococcus is cocci with yellow colonies, whereas this sample is a spore-forming rod.",
+        "Pseudomonas": "Pseudomonas is Gram-negative and fluorescence-linked; it does not show internal endospore bodies.",
+        "Staphylococcus": "Staphylococcus appears as Gram-positive cocci in clusters, not endospore-forming rods."
+      },
+      "features": [
+        "Pale white colony",
+        "Possible irregular/rhizoid edges",
+        "Gram-positive rod profile",
+        "Endospore-positive",
+        "Aerobic growth"
+      ],
+      "clinical": "Bacillus species are environmentally robust spore-formers; in practical exams, correctly recognising endospores is the pivotal branch point that separates Bacillus from non-sporers.",
+      "distinction": "Mentioning both spore visibility and aerobic growth shows complete branch reasoning rather than morphology-only guessing.",
+      "rflpNote": ""
+    },
+    {
+      "id": "ecoli",
+      "sampleNumber": "3/4",
+      "name": "Escherichia coli",
+      "morphologyClues": [
+        "Gram-negative rod",
+        "White colonies on nutrient agar",
+        "Pink colonies on MacConkey (lactose fermenter)",
+        "Metallic sheen on EMB agar",
+        "RFLP with AflIII: three bands (~850bp, ~370bp, ~300bp)"
+      ],
+      "gramStatus": "Gram-negative",
+      "keyTest": "AflIII RFLP pattern",
+      "hint": "Use the lactose fermentation picture with the three-band AflIII gel signature.",
+      "wrongAnswerFeedback": {
+        "Agrobacterium": "Agrobacterium is mucoid and non-fluorescent but lacks the characteristic lactose-fermenting EMB and three-band AflIII pattern of E. coli.",
+        "Bacillus": "Bacillus is Gram-positive and spore-forming, unlike this Gram-negative rod with enteric fermentation markers.",
+        "Micrococcus": "Micrococcus is a yellow-pigmented coccus and does not match Gram-negative enteric growth plus RFLP clues.",
+        "Pseudomonas": "Pseudomonas can be oxidase-positive and fluorescent and is differentiated from E. coli by a non-three-band AflIII profile.",
+        "Staphylococcus": "Staphylococcus is Gram-positive cocci in clusters, not Gram-negative lactose-fermenting rods."
+      },
+      "features": [
+        "Gram-negative rod",
+        "MacConkey pink lactose fermenter",
+        "EMB metallic sheen",
+        "AflIII three-band RFLP",
+        "Distinct from Pseudomonas by band count"
+      ],
+      "clinical": "E. coli is a major clinical and laboratory reference organism, and in this assessment context it is confirmed through combined plate morphology and a characteristic RFLP restriction pattern.",
+      "distinction": "High-scoring answers explicitly tie colony evidence to gel interpretation, not one or the other in isolation.",
+      "rflpNote": "With AflIII digestion, E. coli shows three visible bands around 850bp, 370bp, and 300bp, separating it from Pseudomonas two-band outcomes."
+    },
+    {
+      "id": "micrococcus",
+      "sampleNumber": "5",
+      "name": "Micrococcus",
+      "morphologyClues": [
+        "Yellow circular colonies",
+        "Small colony size",
+        "Spherical cells (cocci)",
+        "Isolated single cells — not in clusters or chains"
+      ],
+      "gramStatus": "Gram-positive",
+      "keyTest": "Colony pigmentation and cell arrangement",
+      "hint": "Focus on pigmentation and arrangement: bright yellow and mostly isolated cells narrows this quickly.",
+      "wrongAnswerFeedback": {
+        "Agrobacterium": "Agrobacterium is a Gram-negative rod with mucoid white colonies, not yellow cocci.",
+        "Bacillus": "Bacillus is rod-shaped and spore-forming, while this sample is coccal and non-spore-focused.",
+        "Escherichia coli": "E. coli is a Gram-negative rod and lacks the yellow coccal morphology seen here.",
+        "Pseudomonas": "Pseudomonas is Gram-negative and UV-fluorescent, not yellow cocci with isolated arrangement.",
+        "Staphylococcus": "Staphylococcus usually shows white colonies and irregular clusters, whereas this isolate is yellow and mostly isolated cocci."
+      },
+      "features": [
+        "Yellow circular small colonies",
+        "Gram-positive cocci",
+        "Mostly isolated cells",
+        "Not clustered like Staphylococcus"
+      ],
+      "clinical": "Micrococcus is commonly an environmental or skin-associated isolate and often a confusion point in practical exams due to overlap with other Gram-positive cocci.",
+      "distinction": "Distinguished from Staphylococcus by yellow pigmentation and isolated cell arrangement rather than white colonies and clusters.",
+      "rflpNote": ""
+    },
+    {
+      "id": "pseudomonas",
+      "sampleNumber": "6",
+      "name": "Pseudomonas",
+      "morphologyClues": [
+        "White colonies on nutrient agar",
+        "Gram-negative rod",
+        "Yellow-green fluorescence under UV (pyoverdine)",
+        "RFLP with ApaI: unique pattern distinguishes from E. coli",
+        "RFLP with AflIII: two bands (unlike E. coli's three)"
+      ],
+      "gramStatus": "Gram-negative",
+      "keyTest": "UV fluorescence and AflIII two-band RFLP",
+      "hint": "Look for pyoverdine fluorescence first, then confirm with the two-band AflIII digest.",
+      "wrongAnswerFeedback": {
+        "Agrobacterium": "Agrobacterium may be oxidase-positive but is non-fluorescent and mucoid, unlike this UV-positive profile.",
+        "Bacillus": "Bacillus is Gram-positive and spore-forming, not a fluorescent Gram-negative rod.",
+        "Escherichia coli": "E. coli separates here because its AflIII digest gives three bands, while this sample has two.",
+        "Micrococcus": "Micrococcus is yellow cocci and not associated with UV pyoverdine fluorescence or Gram-negative rod morphology.",
+        "Staphylococcus": "Staphylococcus is Gram-positive cocci in clusters and has no fluorescence/RFLP pattern like this isolate."
+      },
+      "features": [
+        "Gram-negative rod",
+        "UV yellow-green fluorescence (pyoverdine)",
+        "AflIII two-band RFLP",
+        "ApaI differentiating pattern",
+        "Separated from E. coli by gel profile"
+      ],
+      "clinical": "Pseudomonas species are clinically important opportunists; in assessment settings, integrating fluorescence with restriction digest interpretation is key to correct assignment.",
+      "distinction": "Distinction-level reasoning states exactly why gel band number and fluorescence together rule out E. coli.",
+      "rflpNote": "Pseudomonas is recognised by a unique ApaI digest pattern and a two-band AflIII profile, unlike E. coli's three-band digest."
+    },
+    {
+      "id": "staphylococcus",
+      "sampleNumber": "7",
+      "name": "Staphylococcus",
+      "morphologyClues": [
+        "Bright white large circular colonies",
+        "Spreading growth pattern across plate",
+        "Gram-positive cocci",
+        "Arranged in irregular clusters"
+      ],
+      "gramStatus": "Gram-positive",
+      "keyTest": "Cluster arrangement on microscopy",
+      "hint": "The key visual split is clustered Gram-positive cocci versus isolated yellow cocci.",
+      "wrongAnswerFeedback": {
+        "Agrobacterium": "Agrobacterium is Gram-negative rod morphology, not Gram-positive cocci in clusters.",
+        "Bacillus": "Bacillus forms rods with possible spores, not clustered cocci.",
+        "Escherichia coli": "E. coli is a Gram-negative rod and does not match bright white clustered coccal morphology.",
+        "Micrococcus": "Micrococcus is usually smaller yellow colonies with isolated cocci rather than large white spreading clustered colonies.",
+        "Pseudomonas": "Pseudomonas is Gram-negative and fluorescence-linked; this sample is Gram-positive cocci in clusters."
+      },
+      "features": [
+        "Bright white large circular colony",
+        "Spreading plate growth",
+        "Gram-positive cocci",
+        "Irregular clustered arrangement"
+      ],
+      "clinical": "Staphylococcus includes major human pathogens; in this practical context, colony size, whiteness, and cluster arrangement are the decisive visual indicators.",
+      "distinction": "A clear comparison to Micrococcus (clusters versus isolated yellow cocci) demonstrates confident morphology-based differentiation.",
+      "rflpNote": ""
+    }
+  ]
+}

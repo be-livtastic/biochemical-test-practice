@@ -1,24 +1,22 @@
-# Biochemical ID Quest
+# Biochemical Organism Quiz
 
-Biochemical ID Quest is a browser-based teaching tool for microbiology practical revision.
-It models Gram-positive cocci, Gram-positive rods, and Gram-negative decision trees using
-real lab-style biochemical tests, then explains both mechanism and clinical significance.
+Biochemical Organism Quiz is a browser-based microbiology revision tool built around
+recognition-first recall: the app presents morphology clues for an unknown organism,
+and you identify it from six answer options.
 
 ## Features
 
-- Guided and quiz/test modes.
-- Keyboard navigation (`Y`, `N`, `Backspace`, `R`).
-- Session persistence in `localStorage` with schema validation.
-- Session history tracking and export (`.json` and `.txt`).
-- Accessibility support via ARIA live region updates.
-- Data-driven trees from `data/decision-trees.json`.
+- One-loop quiz flow: question → optional hint → result.
+- Six-organism morphology-focused revision set.
+- Keyboard support (`1-6` to answer, `Backspace` to go back one question).
+- Full result cards with features, clinical context, distinction insight, and RFLP notes where relevant.
+- End-of-round summary with missed-organism retry.
 
 ## Project structure
 
-- `index.html` — app UI and logic.
-- `data/decision-trees.json` — test nodes, trees, and organism cards.
-- `styles/decision-tree.css` — visual styling.
-- `biochemical_id_decision_tree.html` — redirect entrypoint.
+- `index.html` — single-page quiz UI and logic.
+- `data/quiz-organisms.json` — flat organism quiz dataset.
+- `styles/quiz.css` — quiz-specific styling.
 
 ## Run locally
 
@@ -30,9 +28,9 @@ python -m http.server 8000
 
 Then open `http://localhost:8000/`.
 
-## Extending the tree
+## Extending the quiz
 
-1. Add or update test nodes in `NODES` with `yes`/`no` links.
-2. Add organism cards in `ORGS` with `path`, `features`, and `distinction` text.
-3. Add any new terminal mapping node in `NODES` (`ORG_*` entries).
-4. Reload and test pathways in both Guided and Test modes.
+1. Add or edit organism objects in `data/quiz-organisms.json`.
+2. Keep morphology clues concise and visual (colony, shape, arrangement, special cues).
+3. Provide wrong-answer feedback keyed by organism name for targeted correction.
+4. Add RFLP notes only where molecular interpretation is assessed.
