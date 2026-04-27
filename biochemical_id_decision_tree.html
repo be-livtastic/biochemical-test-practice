@@ -135,7 +135,7 @@ async function loadDecisionTreeData() {
     recordCompletionIfEndpoint();
     render();
   } catch (error) {
-    console.error('Failed to load decision tree data', error);
+    console.error('Failed to load decision tree data:', error.message, error);
     showDataLoadError();
   }
 }
