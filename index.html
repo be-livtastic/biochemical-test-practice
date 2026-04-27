@@ -1,0 +1,203 @@
+
+<h2 class="sr-only">Interactive biochemical identification decision trees for Gram-positive cocci, Gram-positive rods, and Gram-negative bacteria</h2>
+<link rel="stylesheet" href="styles/decision-tree.css">
+
+<div id="app" class="decision-tree-shell">
+  <div class="tabs" id="tabs"></div>
+  <div class="crumb-row" id="crumb"></div>
+  <div id="card-area"></div>
+</div>
+
+<script>
+let NODES = {};
+let ORGS = {};
+let TREES = {};
+let state = {tree:'gpc', currentNode:'gpc_catalase', path:[]};
+
+function showDataLoadError() {
+  document.getElementById('card-area').innerHTML = `
+    <div class="card">
+      <div class="test-name">Study data failed to load.</div>
+      <div class="clinical-text">Please check your connection and retry loading the decision tree dataset.</div>
+      <div class="org-btn-row">
+        <button class="btn-restart" onclick="loadDecisionTreeData()">Retry</button>
+      </div>
+    </div>`;
+}
+
+async function loadDecisionTreeData() {
+  try {
+    document.getElementById('card-area').innerHTML = `
+      <div class="card">
+        <div class="clinical-text">Loading study data…</div>
+      </div>`;
+    const response = await fetch('data/decision-trees.json');
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const parsedData = await response.json();
+    NODES = parsedData.NODES;
+    ORGS = parsedData.ORGS;
+    TREES = parsedData.TREES;
+    state = {tree:'gpc', currentNode:TREES.gpc.start, path:[]};
+    render();
+  } catch (error) {
+    console.error('Failed to load decision tree data', error);
+    showDataLoadError();
+  }
+}
+
+function render() {
+  renderTabs();
+  renderBreadcrumb();
+  const node = NODES[state.currentNode];
+  if (node && node.orgId) {
+    renderOrgCard(ORGS[node.orgId]);
+  } else if (state.currentNode.startsWith('ORG_')) {
+    const orgKey = state.currentNode.replace('ORG_','');
+    renderOrgCard(ORGS[orgKey]);
+  } else if (node) {
+    renderTestCard(node);
+  } else {
+    renderStateError();
+  }
+}
+
+function renderStateError() {
+  document.getElementById('card-area').innerHTML = `
+    <div class="card">
+      <div class="test-name">This pathway hit an invalid step.</div>
+      <div class="clinical-text">The current decision path does not map to a known test or organism card.</div>
+      <div class="org-btn-row">
+        <button class="btn-restart" onclick="restartCurrent()">↺ Restart current tree</button>
+        <button class="btn-back" onclick="switchTree('gpc')">↩ Go to Gram-positive cocci</button>
+      </div>
+    </div>`;
+}
+
+function renderTabs() {
+  const t = TREES;
+  document.getElementById('tabs').innerHTML = Object.entries(t).map(([k,v])=>`
+    <button class="tab ${state.tree===k?'active-'+k:''}" onclick="switchTree('${k}')">${v.label}</button>
+  `).join('');
+}
+
+function renderBreadcrumb() {
+  const items = state.path.map((p,i)=>`
+    <span class="crumb-item">
+      <span style="color:var(--color-text-tertiary);font-size:11px">${p.test}</span>
+      <span class="crumb-sep"> → </span>
+      <span class="crumb-result ${p.result==='pos'?'pos':'neg'}">${p.result==='pos'?'positive':'negative'}</span>
+    </span>
+    ${i<state.path.length-1?'<span class="crumb-sep"> › </span>':''}
+  `).join('');
+  document.getElementById('crumb').innerHTML = items || `<span style="font-size:11px;color:var(--color-text-tertiary)">Start of identification pathway</span>`;
+}
+
+function renderTestCard(node) {
+  const treeType = node.tree;
+  const isGN = treeType==='gn';
+  document.getElementById('card-area').innerHTML = `
+    <div class="card">
+      <div class="test-badge badge-${treeType}">${TREES[treeType].desc}</div>
+      <div class="test-name">${node.test}</div>
+      <div class="why-block${isGN?' gn':''}">
+        <div class="why-label">Why this test</div>
+        <div class="why-text">${node.mechanism}</div>
+      </div>
+      <div class="proc-block"><span class="proc-label">Procedure: </span>${node.procedure}</div>
+      <div class="tip-block">${node.tip}</div>
+      <div class="btn-row">
+        <button class="btn-pos" onclick="advance('pos')">${node.yesLabel}</button>
+        <button class="btn-neg" onclick="advance('neg')">${node.noLabel}</button>
+      </div>
+      ${state.path.length>0?`<button class="btn-back" onclick="goBack()">← Back to previous test</button>`:''}
+    </div>`;
+}
+
+function renderOrgCard(org) {
+  if (!org) {
+    renderStateError();
+    return;
+  }
+  const isGN = org.gram==='gn';
+  const pathHtml = org.path.map((p,i)=>`
+    <span class="path-step">${i>0?'':'Start'}</span>
+    ${i>0?'<span class="path-arr">›</span>':''}
+    <span class="path-step">${p.t}</span>
+    <span class="path-arr">→</span>
+    <span class="${p.r==='pos'?'path-pos':'path-neg'}">${p.r==='pos'?'positive':'negative'}</span>
+  `).join('');
+  const feats = org.features.map(f=>`<span class="feat-pill">${f}</span>`).join('');
+  document.getElementById('card-area').innerHTML = `
+    <div class="card">
+      <div class="org-header">
+        <div class="org-icon ${isGN?'gn':'gp'}">${org.initials}</div>
+        <div>
+          <div class="org-name">${org.name}</div>
+          <div class="org-sub">Identification complete</div>
+        </div>
+      </div>
+      <div class="path-summary">${pathHtml}</div>
+      <div class="section-label">Key identifying features</div>
+      <div class="feat-list">${feats}</div>
+      <div class="section-label">Clinical significance</div>
+      <div class="clinical-text">${org.clinical}</div>
+      <div class="section-label">Distinction-level insight</div>
+      <div class="distinction-box${isGN?' gn':''}">
+        <div class="dist-label">For verbal assessment</div>
+        <div class="dist-text">${org.distinction}</div>
+      </div>
+      <div class="org-btn-row">
+        <button class="btn-restart" onclick="restartCurrent()">↺ Start this tree again</button>
+        <button class="btn-back" onclick="goBack()">← Back one step</button>
+      </div>
+    </div>`;
+}
+
+function advance(result) {
+  const node = NODES[state.currentNode];
+  if (!node) return;
+  state.path.push({test:node.test, result});
+  const next = result==='pos' ? node.yes : node.no;
+  if (!next) {
+    renderStateError();
+    return;
+  }
+  state.currentNode = next;
+  render();
+}
+
+function goBack() {
+  if (state.path.length===0) return;
+  state.path.pop();
+  const treeStart = TREES[state.tree].start;
+  if (state.path.length===0) {
+    state.currentNode = treeStart;
+  } else {
+    let cur = treeStart;
+    for (const step of state.path) {
+      const n = NODES[cur];
+      if (!n) break;
+      cur = step.result==='pos' ? n.yes : n.no;
+    }
+    state.currentNode = cur;
+  }
+  render();
+}
+
+function switchTree(key) {
+  state.tree = key;
+  state.currentNode = TREES[key].start;
+  state.path = [];
+  render();
+}
+
+function restartCurrent() {
+  state.currentNode = TREES[state.tree].start;
+  state.path = [];
+  render();
+}
+
+loadDecisionTreeData();
+</script>
