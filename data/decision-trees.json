@@ -5,22 +5,22 @@
       "test": "Catalase test",
       "mechanism": "Detects the enzyme catalase, which converts H₂O₂ → H₂O + O₂. This separates Staphylococcus and Micrococcus (catalase-positive) from Streptococcus and Enterococcus (catalase-negative). The distinction reflects fundamentally different strategies for handling reactive oxygen species.",
       "procedure": "Add a drop of 3% H₂O₂ to a colony on a clean slide or in a tube. Vigorous, immediate bubbling = positive. Never use colonies from blood agar — red blood cells contain catalase and will cause false positives.",
-      "tip": "Distinction tip: If asked why you chose this test first, say: \"Catalase status is the primary branch point in Gram-positive cocci identification because it divides the clinically significant organisms into two entirely different identification pathways.\"",
-      "yes": "gpc_coagulase",
+      "tip": "Distinction tip: If asked why you chose this test first, say: \"Catalase status is the primary branch point in Gram-positive cocci identification because it divides the clinically significant organisms into two entirely different identification pathways.\" If plate findings are available, combine catalase with haemolysis pattern to prioritise likely organisms faster.",
+      "yes": "gpc_coagulase_screen",
       "no": "gpc_pyr",
-      "yesLabel": "Positive — bubbles (Staph/Micrococcus)",
-      "noLabel": "Negative — no bubbles (Strep/Enterococcus)"
+      "yesLabel": "Positive — bubbles (Staphylococcus pathway)",
+      "noLabel": "Negative — no bubbles (Streptococcus/Enterococcus pathway)"
     },
     "gpc_coagulase": {
       "tree": "gpc",
-      "test": "Coagulase test (tube method)",
+      "test": "Tube coagulase confirmation",
       "mechanism": "Free coagulase converts fibrinogen to fibrin, clotting plasma. This virulence factor is unique to S. aureus among clinically significant staphylococci. The tube test detects free coagulase; the slide test detects bound coagulase (clumping factor) — always confirm a positive slide test with a tube test.",
       "procedure": "Inoculate 0.5 mL rabbit plasma. Incubate 37°C for 4h. Tilt tube — solid gel that does not flow = positive. If negative at 4h, re-read at 24h. Observe carefully: even a partial clot counts as positive.",
       "tip": "Distinction tip: S. lugdunensis (a CoNS) possesses clumping factor and gives a false-positive on the slide test, but is negative on the tube test. Mention this in your answer to show you understand the limitation of rapid tests.",
       "yes": "ORG_saureus",
-      "no": "gpc_novobiocin",
+      "no": "gpc_colony_colour",
       "yesLabel": "Positive — gel forms (S. aureus)",
-      "noLabel": "Negative — liquid (CoNS)"
+      "noLabel": "Negative — liquid (CoNS/Micrococcus path)"
     },
     "gpc_novobiocin": {
       "tree": "gpc",
@@ -61,7 +61,7 @@
       "mechanism": "Optochin (ethylhydrocupreine HCl) disrupts ATP synthesis in S. pneumoniae by interfering with its membrane-associated ATPase. Other alpha-haemolytic streptococci have structurally different ATPases and are therefore resistant.",
       "procedure": "Place a 5 µg optochin disk on blood agar inoculated with organism. Incubate 35–37°C in 5% CO₂ for 24h. Zone of inhibition ≥14mm = susceptible (S. pneumoniae); zone <14mm or no zone = resistant.",
       "tip": "Distinction tip: S. pneumoniae is BOTH optochin-susceptible AND bile-soluble. Using both tests together confirms pneumococcus definitively. An optochin zone of 9–13mm is indeterminate — request bile solubility testing.",
-      "yes": "ORG_spneumoniae",
+      "yes": "gpc_bile",
       "no": "gpc_camp",
       "yesLabel": "Susceptible — zone ≥14mm (S. pneumoniae)",
       "noLabel": "Resistant — zone <14mm"
@@ -106,9 +106,9 @@
       "procedure": "Add 3% H₂O₂ to colony on a glass slide. Bubbling = positive. Use CHOC or non-blood media to avoid false positives from blood agar plates.",
       "tip": "Distinction tip: The two most clinically important non-sporing Gram-positive rods are Listeria (catalase-positive, tumbling motility) and Corynebacterium (catalase-positive, palisade arrangement, Chinese-letter appearance). Both are catalase-positive but have very distinct microscopic morphology.",
       "yes": "gpr_motility",
-      "no": "ORG_lactobacillus",
+      "no": "gpr_h2s",
       "yesLabel": "Positive — bubbles",
-      "noLabel": "Negative — no bubbles (Lactobacillus)"
+      "noLabel": "Negative — no bubbles (Lactobacillus/Erysipelothrix)"
     },
     "gpr_motility": {
       "tree": "gpr",
@@ -121,17 +121,6 @@
       "yesLabel": "Tumbling motility (Listeria)",
       "noLabel": "Non-motile (Corynebacterium)"
     },
-    "gn_oxidase": {
-      "tree": "gn",
-      "test": "Oxidase test",
-      "mechanism": "Detects cytochrome c oxidase, the terminal enzyme in the electron transport chain. Organisms with this enzyme (oxidase-positive) include Pseudomonas, Neisseria, Aeromonas, and Agrobacterium. Enterobacteriaceae (E. coli, Klebsiella) use cytochrome d and are oxidase-negative.",
-      "procedure": "Place a drop of oxidase reagent (tetramethyl-p-phenylenediamine) on filter paper. Touch a colony to the wet paper with a non-metallic loop (metal inhibits reaction). Purple-blue colour within 10–30 seconds = positive. Metal loops give false negatives.",
-      "tip": "Distinction tip: All Enterobacteriaceae are oxidase-negative — this is a definitive rule. If your Gram-negative rod is oxidase-positive, it is NOT E. coli, Klebsiella, Salmonella, or any enterobacterium. You have immediately narrowed to a different family.",
-      "yes": "gn_fluor",
-      "no": "gn_indole",
-      "yesLabel": "Positive — purple-blue (Pseudomonas, Agrobacterium)",
-      "noLabel": "Negative — no colour (Enterobacteriaceae)"
-    },
     "gn_fluor": {
       "tree": "gn",
       "test": "UV fluorescence (365 nm)",
@@ -139,7 +128,7 @@
       "procedure": "Expose colonies on agar plate to UV light (365 nm Wood's lamp) in a darkened room. Yellow-green fluorescent glow under UV = Pseudomonas fluorescens/putida. Blue-green pigment visible in white light (pyocyanin) = P. aeruginosa. No fluorescence = not Pseudomonas.",
       "tip": "Distinction tip: Note that this experiment did not include UV fluorescence testing — so if Pseudomonas was assigned, it was identified by elimination using oxidase, colony morphology, and RFLP. In a real lab, UV fluorescence would be a first-line test. Mentioning this limitation shows critical evaluation of the experimental design.",
       "yes": "ORG_pseudomonas",
-      "no": "gn_mucoid",
+      "no": "gn_betahem",
       "yesLabel": "Fluorescent under UV (Pseudomonas)",
       "noLabel": "No fluorescence"
     },
@@ -154,27 +143,345 @@
       "yesLabel": "Mucoid colonies (Agrobacterium)",
       "noLabel": "Non-mucoid"
     },
-    "gn_indole": {
-      "tree": "gn",
-      "test": "Indole test",
-      "mechanism": "Detects the enzyme tryptophanase, which cleaves the indole ring from tryptophan, releasing free indole. Indole reacts with Kovács' reagent (p-dimethylaminobenzaldehyde) to produce a cherry-red colour. E. coli is classically indole-positive; most other Enterobacteriaceae are negative.",
-      "procedure": "Inoculate tryptone broth. Incubate 35–37°C 24–48h. Add 5 drops of Kovács' reagent to the culture. Cherry-red ring at the surface = positive. Yellow/amber = negative.",
-      "tip": "Distinction tip: The IMViC series (Indole, Methyl Red, Voges-Proskauer, Citrate) is the classical scheme for separating E. coli (+ − − −) from Enterobacter (− − + +) from Klebsiella (− − + +). Knowing the IMViC pattern for E. coli demonstrates systematic thinking.",
-      "yes": "ORG_ecoli",
-      "no": "gn_motility2",
-      "yesLabel": "Positive — cherry-red (E. coli likely)",
-      "noLabel": "Negative — no colour"
-    },
     "gn_motility2": {
       "tree": "gn",
       "test": "Motility (semi-solid agar stab)",
-      "mechanism": "Motile Gram-negative rods (e.g. Salmonella, Enterobacter, Proteus) possess flagella and show diffuse, spreading growth away from the stab line in semi-solid agar. Klebsiella is non-motile, producing a mucoid colony due to its polysaccharide capsule but remaining confined to the stab line.",
-      "procedure": "Stab inoculate motility test agar (semi-solid, 0.4% agar). Incubate 35°C 24–48h. Diffuse cloudiness extending from the stab line = motile. Growth only along the stab line = non-motile.",
-      "tip": "Distinction tip: Klebsiella is both non-motile and produces a large polysaccharide capsule — giving mucoid colonies. It is associated with community-acquired pneumonia in alcoholics and immunocompromised patients (produces characteristic \"currant jelly\" sputum due to blood mixed with mucoid exudate).",
-      "yes": "ORG_motile_entero",
-      "no": "ORG_klebsiella",
-      "yesLabel": "Motile (Salmonella/Enterobacter group)",
-      "noLabel": "Non-motile (Klebsiella)"
+      "mechanism": "Differentiates motile Enterobacter from non-motile Klebsiella in citrate-positive isolates.",
+      "procedure": "Diffuse growth away from stab = motile. Growth confined to stab = non-motile.",
+      "tip": "Distinction tip: pair non-motility with slower urease positivity for Klebsiella confirmation.",
+      "yes": "ORG_enterobacter",
+      "no": "gn_urease_kleb",
+      "yesLabel": "Motile (Enterobacter likely)",
+      "noLabel": "Non-motile (Klebsiella likely)"
+    },
+    "gpc_hemolysis": {
+      "tree": "gpc",
+      "test": "Haemolysis on blood agar",
+      "mechanism": "Haemolysis pattern is an early phenotypic split for Gram-positive cocci. Beta-haemolysis (complete clearing) suggests S. aureus, S. pyogenes, or S. agalactiae. Alpha-haemolysis (green partial lysis) suggests S. pneumoniae or viridans streptococci. Gamma haemolysis (no lysis) is common in Enterococcus and some CoNS.",
+      "procedure": "Inspect blood agar after 18–24 h incubation. Clear halo = beta; green discolouration = alpha; no change = gamma. Use this alongside Gram stain and catalase rather than as a stand-alone test.",
+      "tip": "Distinction tip: verbal examiners often ask what you observe before adding reagents. Naming haemolysis first shows systematic culture-plate interpretation.",
+      "yes": "gpc_catalase",
+      "no": "gpc_pyr",
+      "yesLabel": "Beta-haemolysis present",
+      "noLabel": "Alpha/gamma or unclear haemolysis"
+    },
+    "gpc_coagulase_screen": {
+      "tree": "gpc",
+      "test": "Slide coagulase screen (clumping factor)",
+      "mechanism": "Slide coagulase detects bound coagulase (clumping factor). It is fast but less specific than tube coagulase because some coagulase-negative staphylococci (notably S. lugdunensis) can agglutinate and appear falsely positive.",
+      "procedure": "Mix colony with saline and plasma on a slide. Immediate clumping is a positive screen. Always confirm positives with tube coagulase before reporting S. aureus.",
+      "tip": "Distinction tip: never report S. aureus from slide coagulase alone; use tube coagulase confirmation to avoid S. lugdunensis misidentification.",
+      "yes": "gpc_coagulase",
+      "no": "gpc_novobiocin",
+      "yesLabel": "Slide positive — confirm with tube test",
+      "noLabel": "Slide negative — proceed as CoNS"
+    },
+    "gpc_bile": {
+      "tree": "gpc",
+      "test": "Bile solubility test",
+      "mechanism": "S. pneumoniae autolyses in bile salts due to activation of its autolytic enzymes. Viridans streptococci remain intact. Bile solubility therefore confirms pneumococcus when optochin is susceptible or borderline.",
+      "procedure": "Add sodium deoxycholate (bile salts) to a dense suspension and incubate up to 30 min at 35–37°C. Clearing of turbidity = positive.",
+      "tip": "Distinction tip: use bile solubility when optochin zone is indeterminate (9–13 mm) to avoid overcalling pneumococcus.",
+      "yes": "ORG_spneumoniae",
+      "no": "ORG_viridans",
+      "yesLabel": "Positive — clears in bile (S. pneumoniae)",
+      "noLabel": "Negative — not bile soluble"
+    },
+    "gpr_h2s": {
+      "tree": "gpr",
+      "test": "H2S production (TSI/KIA or butt reaction)",
+      "mechanism": "Erysipelothrix rhusiopathiae can produce H2S in TSI/KIA media, while Lactobacillus spp. are H2S-negative. This helps split catalase-negative, non-sporing Gram-positive rods.",
+      "procedure": "Inoculate TSI/KIA with stab and streak. Blackening (especially in butt) indicates H2S production.",
+      "tip": "Distinction tip: Erysipelothrix is associated with fish/animal exposure and can cause endocarditis — do not dismiss all catalase-negative rods as Lactobacillus.",
+      "yes": "ORG_erysipelothrix",
+      "no": "ORG_lactobacillus",
+      "yesLabel": "H2S positive (Erysipelothrix)",
+      "noLabel": "H2S negative (Lactobacillus)"
+    },
+    "gn_macconkey": {
+      "tree": "gn",
+      "test": "MacConkey lactose fermentation (pink colonies?)",
+      "mechanism": "MacConkey agar gives an immediate screen of enteric Gram-negative rods. Lactose fermenters form pink/red colonies from acid production; non-lactose fermenters stay pale/colourless.",
+      "procedure": "Review colony colour after incubation on MacConkey agar. Pink/red colonies = lactose fermenter. Colourless/pale colonies = non-lactose fermenter.",
+      "tip": "Distinction tip: this is a frontline branch in routine labs and should be integrated before deeper biochemical testing.",
+      "yes": "gn_oxidase_lf",
+      "no": "gn_oxidase_nlf",
+      "yesLabel": "Yes — pink lactose fermenter",
+      "noLabel": "No — colourless non-lactose fermenter"
+    },
+    "gn_oxidase_lf": {
+      "tree": "gn",
+      "test": "Oxidase test (lactose fermenter branch)",
+      "mechanism": "Confirms whether a lactose fermenter is Enterobacteriaceae (oxidase-negative) or a less common oxidase-positive fermenter.",
+      "procedure": "Use oxidase reagent; purple-blue in 10–30 s is positive.",
+      "tip": "Distinction tip: classic coliforms (E. coli, Klebsiella, Enterobacter) are oxidase-negative.",
+      "yes": "ORG_aeromonas",
+      "no": "gn_indole_lf",
+      "yesLabel": "Positive — atypical lactose fermenter",
+      "noLabel": "Negative — Enterobacteriaceae likely"
+    },
+    "gn_indole_lf": {
+      "tree": "gn",
+      "test": "Indole test",
+      "mechanism": "Indole positivity strongly suggests E. coli among common lactose fermenters.",
+      "procedure": "Tryptone broth + Kovacs reagent: red ring is positive.",
+      "tip": "Distinction tip: follow indole-negative isolates with citrate/VP and motility rather than stopping early.",
+      "yes": "gn_mug",
+      "no": "gn_citrate",
+      "yesLabel": "Positive — possible E. coli",
+      "noLabel": "Negative — not E. coli"
+    },
+    "gn_mug": {
+      "tree": "gn",
+      "test": "MUG test (β-glucuronidase, UV 366 nm)",
+      "mechanism": "Most E. coli strains hydrolyse MUG to a fluorescent product, supporting rapid confirmation.",
+      "procedure": "Inoculate MUG substrate and examine under 366 nm UV; fluorescence is positive.",
+      "tip": "Distinction tip: ~95% of E. coli are MUG-positive; interpret with other tests for atypical strains.",
+      "yes": "gn_smac",
+      "no": "ORG_other_lf",
+      "yesLabel": "MUG positive — proceed to SMAC",
+      "noLabel": "MUG negative (other coliform)"
+    },
+    "gn_citrate": {
+      "tree": "gn",
+      "test": "Citrate utilisation (Simmons citrate)",
+      "mechanism": "Enterobacter and Klebsiella use citrate as sole carbon source (positive), while E. coli is typically citrate-negative.",
+      "procedure": "Inoculate Simmons citrate slant. Blue colour/growth = positive; green/no growth = negative.",
+      "tip": "Distinction tip: citrate and VP are the key IMViC gaps when indole alone is insufficient.",
+      "yes": "gn_motility2",
+      "no": "ORG_other_lf",
+      "yesLabel": "Positive — Enterobacter/Klebsiella group",
+      "noLabel": "Negative — atypical coliform"
+    },
+    "gn_urease_kleb": {
+      "tree": "gn",
+      "test": "Urease test (timed)",
+      "mechanism": "Klebsiella is urease-positive, usually slower than Proteus. Urease hydrolyses urea to ammonia, alkalinising medium.",
+      "procedure": "Urea broth/slant: pink shift within 24–48 h supports Klebsiella.",
+      "tip": "Distinction tip: report timing — rapid urease suggests Proteus, slower positivity supports Klebsiella.",
+      "yes": "ORG_klebsiella",
+      "no": "ORG_other_lf",
+      "yesLabel": "Slow urease positive (Klebsiella)",
+      "noLabel": "Urease negative/atypical"
+    },
+    "gn_oxidase_nlf": {
+      "tree": "gn",
+      "test": "Oxidase test (non-lactose fermenter branch)",
+      "mechanism": "Separates oxidase-negative enteric pathogens (Salmonella, Shigella, Proteus) from oxidase-positive non-fermenters or fastidious organisms.",
+      "procedure": "Purple-blue within 10–30 s is positive.",
+      "tip": "Distinction tip: oxidase-negative + non-lactose fermenter should trigger TSI/H2S workup.",
+      "yes": "gn_choc",
+      "no": "gn_tsi",
+      "yesLabel": "Positive — oxidase positive",
+      "noLabel": "Negative — oxidase negative"
+    },
+    "gn_tsi": {
+      "tree": "gn",
+      "test": "TSI/KIA profile with H2S production",
+      "mechanism": "TSI combines glucose/lactose/sucrose fermentation, gas, and H2S detection. H2S-positive blackening strongly supports Salmonella or Proteus among oxidase-negative non-lactose fermenters.",
+      "procedure": "Stab butt and streak slant; read at 18–24 h for K/A or A/A patterns, gas cracks, and black precipitate.",
+      "tip": "Distinction tip: in your notes, H2S-positive points to Salmonella; confirm Proteus by rapid urease/swarming.",
+      "yes": "gn_urease_rapid",
+      "no": "gn_shigella_motility",
+      "yesLabel": "H2S positive (black butt)",
+      "noLabel": "H2S negative"
+    },
+    "gn_urease_rapid": {
+      "tree": "gn",
+      "test": "Rapid urease (15 min–4 h)",
+      "mechanism": "Proteus species are strongly and rapidly urease positive; Salmonella is urease negative.",
+      "procedure": "Inoculate urea medium and observe early colour change. Rapid bright pink is positive.",
+      "tip": "Distinction tip: rapid urease plus swarming motility is classic Proteus.",
+      "yes": "ORG_proteus",
+      "no": "ORG_salmonella",
+      "yesLabel": "Rapid urease positive (Proteus)",
+      "noLabel": "Urease negative (Salmonella)"
+    },
+    "gn_shigella_motility": {
+      "tree": "gn",
+      "test": "Motility (for H2S-negative isolate)",
+      "mechanism": "Shigella is characteristically non-motile; many other enteric rods are motile.",
+      "procedure": "Semi-solid motility medium: growth only along stab line is non-motile.",
+      "tip": "Distinction tip: H2S-negative + non-motile strongly supports Shigella.",
+      "yes": "ORG_other_nlf",
+      "no": "ORG_shigella",
+      "yesLabel": "Motile — reconsider differential",
+      "noLabel": "Non-motile (Shigella)"
+    },
+    "gn_choc": {
+      "tree": "gn",
+      "test": "Growth requirement on CHOC agar / fastidious pattern",
+      "mechanism": "Neisseria and Haemophilus are oxidase-positive but fastidious; they require enriched media and (for Haemophilus) X and V factors.",
+      "procedure": "Assess growth on chocolate agar and factor dependence (X, V, XV disks) where available.",
+      "tip": "Distinction tip: fastidious oxidase-positive isolates should not be forced into enteric decision branches.",
+      "yes": "gn_xv",
+      "no": "gn_fluor",
+      "yesLabel": "Fastidious growth on CHOC",
+      "noLabel": "Non-fastidious oxidase-positive rod"
+    },
+    "gn_xv": {
+      "tree": "gn",
+      "test": "X/V factor dependence",
+      "mechanism": "Haemophilus influenzae requires both X (hemin) and V (NAD) factors. Neisseria does not show this requirement pattern.",
+      "procedure": "Use factor disk testing on supplemented agar: growth only around XV indicates Haemophilus.",
+      "tip": "Distinction tip: this branch anchors the CHOC-agar section from your notes.",
+      "yes": "ORG_haemophilus",
+      "no": "ORG_neisseria",
+      "yesLabel": "Requires X and V factors (Haemophilus)",
+      "noLabel": "No X/V dependence (Neisseria)"
+    },
+    "gn_betahem": {
+      "tree": "gn",
+      "test": "Beta-haemolysis on blood agar",
+      "mechanism": "Aeromonas spp. are oxidase-positive water-associated rods that are frequently beta-haemolytic, unlike many other oxidase-positive rods in this branch.",
+      "procedure": "Inspect blood agar for clear haemolytic zones around colonies.",
+      "tip": "Distinction tip: oxidase-positive + beta-haemolysis should prompt Aeromonas consideration.",
+      "yes": "ORG_aeromonas",
+      "no": "gn_mucoid",
+      "yesLabel": "Beta-haemolytic (Aeromonas likely)",
+      "noLabel": "Not beta-haemolytic"
+    },
+    "ORG_saureus": {
+      "tree": "gp",
+      "orgId": "saureus"
+    },
+    "ORG_sepidermidis": {
+      "tree": "gp",
+      "orgId": "sepidermidis"
+    },
+    "ORG_ssaprophyticus": {
+      "tree": "gp",
+      "orgId": "ssaprophyticus"
+    },
+    "ORG_enterococcus": {
+      "tree": "gp",
+      "orgId": "enterococcus"
+    },
+    "ORG_spyogenes": {
+      "tree": "gp",
+      "orgId": "spyogenes"
+    },
+    "ORG_spneumoniae": {
+      "tree": "gp",
+      "orgId": "spneumoniae"
+    },
+    "ORG_sagalactiae": {
+      "tree": "gp",
+      "orgId": "sagalactiae"
+    },
+    "ORG_viridans": {
+      "tree": "gp",
+      "orgId": "viridans"
+    },
+    "ORG_bacillus": {
+      "tree": "gp",
+      "orgId": "bacillus"
+    },
+    "ORG_clostridium": {
+      "tree": "gp",
+      "orgId": "clostridium"
+    },
+    "ORG_listeria": {
+      "tree": "gp",
+      "orgId": "listeria"
+    },
+    "ORG_coryne": {
+      "tree": "gp",
+      "orgId": "coryne"
+    },
+    "ORG_lactobacillus": {
+      "tree": "gp",
+      "orgId": "lactobacillus"
+    },
+    "ORG_pseudomonas": {
+      "tree": "gn",
+      "orgId": "pseudomonas"
+    },
+    "ORG_agrobacterium": {
+      "tree": "gn",
+      "orgId": "agrobacterium"
+    },
+    "ORG_ecoli": {
+      "tree": "gn",
+      "orgId": "ecoli"
+    },
+    "ORG_klebsiella": {
+      "tree": "gn",
+      "orgId": "klebsiella"
+    },
+    "ORG_other_oxpos": {
+      "tree": "gn",
+      "orgId": "other_oxpos"
+    },
+    "ORG_enterobacter": {
+      "tree": "gn",
+      "orgId": "enterobacter"
+    },
+    "ORG_salmonella": {
+      "tree": "gn",
+      "orgId": "salmonella"
+    },
+    "ORG_shigella": {
+      "tree": "gn",
+      "orgId": "shigella"
+    },
+    "ORG_proteus": {
+      "tree": "gn",
+      "orgId": "proteus"
+    },
+    "ORG_aeromonas": {
+      "tree": "gn",
+      "orgId": "aeromonas"
+    },
+    "ORG_haemophilus": {
+      "tree": "gn",
+      "orgId": "haemophilus"
+    },
+    "ORG_neisseria": {
+      "tree": "gn",
+      "orgId": "neisseria"
+    },
+    "ORG_other_lf": {
+      "tree": "gn",
+      "orgId": "other_lf"
+    },
+    "ORG_other_nlf": {
+      "tree": "gn",
+      "orgId": "other_nlf"
+    },
+    "ORG_erysipelothrix": {
+      "tree": "gp",
+      "orgId": "erysipelothrix"
+    },
+    "gpc_colony_colour": {
+      "tree": "gpc",
+      "test": "Colony pigmentation (yellow carotenoid pigment?)",
+      "mechanism": "Micrococcus species produce carotenoid pigments that create bright yellow colonies, while common coagulase-negative staphylococci are usually white or cream. Pigmentation therefore adds a practical phenotype split after coagulase negativity.",
+      "procedure": "Inspect colony colour in good light after 18–24 h incubation. Bright yellow colonies suggest Micrococcus; white/cream colonies support CoNS and should proceed to novobiocin testing.",
+      "tip": "Distinction tip: Micrococcus are catalase-positive cocci often arranged in tetrads and can be mistaken for staphylococci. Pair yellow pigment with tetrad morphology to justify the call confidently.",
+      "yes": "ORG_micrococcus",
+      "no": "gpc_novobiocin",
+      "yesLabel": "Yellow colonies (Micrococcus likely)",
+      "noLabel": "White/cream colonies (CoNS pathway)"
+    },
+    "ORG_micrococcus": {
+      "tree": "gp",
+      "orgId": "micrococcus"
+    },
+    "gn_smac": {
+      "tree": "gn",
+      "test": "Sorbitol MacConkey (SMAC) fermentation",
+      "mechanism": "Most E. coli ferment sorbitol and form pink colonies on SMAC. E. coli O157:H7 is typically sorbitol non-fermenting, producing colourless colonies. This is a critical public-health screen.",
+      "procedure": "Inoculate SMAC and incubate overnight. Pink colonies indicate sorbitol fermentation; colourless colonies indicate sorbitol non-fermentation and require urgent confirmatory testing.",
+      "tip": "Distinction tip: suspect STEC/O157 when sorbitol-negative E. coli is detected. Early lab escalation matters because antibiotic-induced lysis may increase Shiga toxin release and worsen HUS risk.",
+      "yes": "ORG_ecoli",
+      "no": "ORG_ecoli_o157",
+      "yesLabel": "Sorbitol positive (typical E. coli)",
+      "noLabel": "Sorbitol negative (possible O157:H7)"
+    },
+    "ORG_ecoli_o157": {
+      "tree": "gn",
+      "orgId": "ecoli_o157"
     }
   },
   "ORGS": {
@@ -184,11 +491,19 @@
       "initials": "Sa",
       "path": [
         {
-          "t": "Catalase",
+          "t": "Haemolysis on blood agar",
           "r": "pos"
         },
         {
-          "t": "Coagulase",
+          "t": "Catalase test",
+          "r": "pos"
+        },
+        {
+          "t": "Slide coagulase screen (clumping factor)",
+          "r": "pos"
+        },
+        {
+          "t": "Tube coagulase confirmation",
           "r": "pos"
         }
       ],
@@ -209,15 +524,27 @@
       "initials": "Se",
       "path": [
         {
-          "t": "Catalase",
+          "t": "Haemolysis on blood agar",
           "r": "pos"
         },
         {
-          "t": "Coagulase",
+          "t": "Catalase test",
+          "r": "pos"
+        },
+        {
+          "t": "Slide coagulase screen (clumping factor)",
+          "r": "pos"
+        },
+        {
+          "t": "Tube coagulase confirmation",
           "r": "neg"
         },
         {
-          "t": "Novobiocin",
+          "t": "Colony pigmentation (yellow carotenoid pigment?)",
+          "r": "neg"
+        },
+        {
+          "t": "Novobiocin susceptibility test",
           "r": "pos"
         }
       ],
@@ -238,15 +565,27 @@
       "initials": "Ss",
       "path": [
         {
-          "t": "Catalase",
+          "t": "Haemolysis on blood agar",
           "r": "pos"
         },
         {
-          "t": "Coagulase",
+          "t": "Catalase test",
+          "r": "pos"
+        },
+        {
+          "t": "Slide coagulase screen (clumping factor)",
+          "r": "pos"
+        },
+        {
+          "t": "Tube coagulase confirmation",
           "r": "neg"
         },
         {
-          "t": "Novobiocin",
+          "t": "Colony pigmentation (yellow carotenoid pigment?)",
+          "r": "neg"
+        },
+        {
+          "t": "Novobiocin susceptibility test",
           "r": "neg"
         }
       ],
@@ -266,15 +605,19 @@
       "initials": "En",
       "path": [
         {
-          "t": "Catalase",
-          "r": "neg"
-        },
-        {
-          "t": "PYR",
+          "t": "Haemolysis on blood agar",
           "r": "pos"
         },
         {
-          "t": "6.5% NaCl",
+          "t": "Catalase test",
+          "r": "neg"
+        },
+        {
+          "t": "PYR test (pyrrolidonyl arylamidase)",
+          "r": "pos"
+        },
+        {
+          "t": "6.5% NaCl tolerance test",
           "r": "pos"
         }
       ],
@@ -295,15 +638,19 @@
       "initials": "Sp",
       "path": [
         {
-          "t": "Catalase",
-          "r": "neg"
-        },
-        {
-          "t": "PYR",
+          "t": "Haemolysis on blood agar",
           "r": "pos"
         },
         {
-          "t": "6.5% NaCl",
+          "t": "Catalase test",
+          "r": "neg"
+        },
+        {
+          "t": "PYR test (pyrrolidonyl arylamidase)",
+          "r": "pos"
+        },
+        {
+          "t": "6.5% NaCl tolerance test",
           "r": "neg"
         }
       ],
@@ -325,15 +672,23 @@
       "initials": "Sp",
       "path": [
         {
-          "t": "Catalase",
+          "t": "Haemolysis on blood agar",
+          "r": "pos"
+        },
+        {
+          "t": "Catalase test",
           "r": "neg"
         },
         {
-          "t": "PYR",
+          "t": "PYR test (pyrrolidonyl arylamidase)",
           "r": "neg"
         },
         {
-          "t": "Optochin",
+          "t": "Optochin susceptibility test (P disk)",
+          "r": "pos"
+        },
+        {
+          "t": "Bile solubility test",
           "r": "pos"
         }
       ],
@@ -355,19 +710,23 @@
       "initials": "Sa",
       "path": [
         {
-          "t": "Catalase",
+          "t": "Haemolysis on blood agar",
+          "r": "pos"
+        },
+        {
+          "t": "Catalase test",
           "r": "neg"
         },
         {
-          "t": "PYR",
+          "t": "PYR test (pyrrolidonyl arylamidase)",
           "r": "neg"
         },
         {
-          "t": "Optochin",
+          "t": "Optochin susceptibility test (P disk)",
           "r": "neg"
         },
         {
-          "t": "CAMP",
+          "t": "CAMP test",
           "r": "pos"
         }
       ],
@@ -388,19 +747,23 @@
       "initials": "Vs",
       "path": [
         {
-          "t": "Catalase",
+          "t": "Haemolysis on blood agar",
+          "r": "pos"
+        },
+        {
+          "t": "Catalase test",
           "r": "neg"
         },
         {
-          "t": "PYR",
+          "t": "PYR test (pyrrolidonyl arylamidase)",
           "r": "neg"
         },
         {
-          "t": "Optochin",
-          "r": "neg"
+          "t": "Optochin susceptibility test (P disk)",
+          "r": "pos"
         },
         {
-          "t": "CAMP",
+          "t": "Bile solubility test",
           "r": "neg"
         }
       ],
@@ -422,11 +785,11 @@
       "initials": "Ba",
       "path": [
         {
-          "t": "Spores",
+          "t": "Endospore observation (microscopy)",
           "r": "pos"
         },
         {
-          "t": "Aerobic",
+          "t": "Growth atmosphere (aerobe vs anaerobe)",
           "r": "pos"
         }
       ],
@@ -447,11 +810,11 @@
       "initials": "Cl",
       "path": [
         {
-          "t": "Spores",
+          "t": "Endospore observation (microscopy)",
           "r": "pos"
         },
         {
-          "t": "Aerobic",
+          "t": "Growth atmosphere (aerobe vs anaerobe)",
           "r": "neg"
         }
       ],
@@ -471,15 +834,15 @@
       "initials": "Lm",
       "path": [
         {
-          "t": "Spores",
+          "t": "Endospore observation (microscopy)",
           "r": "neg"
         },
         {
-          "t": "Catalase",
+          "t": "Catalase test",
           "r": "pos"
         },
         {
-          "t": "Motility@25°C",
+          "t": "Motility / \"tumbling\" motility at 25°C",
           "r": "pos"
         }
       ],
@@ -500,15 +863,15 @@
       "initials": "Co",
       "path": [
         {
-          "t": "Spores",
+          "t": "Endospore observation (microscopy)",
           "r": "neg"
         },
         {
-          "t": "Catalase",
+          "t": "Catalase test",
           "r": "pos"
         },
         {
-          "t": "Motility",
+          "t": "Motility / \"tumbling\" motility at 25°C",
           "r": "neg"
         }
       ],
@@ -529,11 +892,15 @@
       "initials": "Lb",
       "path": [
         {
-          "t": "Spores",
+          "t": "Endospore observation (microscopy)",
           "r": "neg"
         },
         {
-          "t": "Catalase",
+          "t": "Catalase test",
+          "r": "neg"
+        },
+        {
+          "t": "H2S production (TSI/KIA or butt reaction)",
           "r": "neg"
         }
       ],
@@ -554,11 +921,19 @@
       "initials": "Pf",
       "path": [
         {
-          "t": "Oxidase",
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "neg"
+        },
+        {
+          "t": "Oxidase test (non-lactose fermenter branch)",
           "r": "pos"
         },
         {
-          "t": "UV fluorescence",
+          "t": "Growth requirement on CHOC agar / fastidious pattern",
+          "r": "neg"
+        },
+        {
+          "t": "UV fluorescence (365 nm)",
           "r": "pos"
         }
       ],
@@ -569,7 +944,8 @@
         "Non-fermenter",
         "Obligate aerobe",
         "Characteristic sweet/grape-like odour",
-        "Pyocyanin (blue-green pigment) in P. aeruginosa"
+        "Pyocyanin (blue-green pigment) in P. aeruginosa",
+        "TSI: K/K (non-fermenter)"
       ],
       "clinical": "P. aeruginosa: major opportunistic pathogen — ventilator-associated pneumonia, burn wound infections, CF lung colonisation, UTIs, keratitis. Intrinsic resistance to many antibiotics.",
       "distinction": "P. aeruginosa has exceptional intrinsic antibiotic resistance: constitutive AmpC beta-lactamase, efflux pumps (MexAB-OprM etc.), and low outer membrane permeability. Treatment requires anti-pseudomonal beta-lactams (piperacillin-tazobactam, cefepime, meropenem) — standard penicillin is completely ineffective. In the module's RFLP analysis, APA1 digestion shows a unique pattern for Pseudomonas that distinguishes it from E. coli."
@@ -580,15 +956,27 @@
       "initials": "At",
       "path": [
         {
-          "t": "Oxidase",
-          "r": "pos"
-        },
-        {
-          "t": "UV fluorescence",
+          "t": "MacConkey lactose fermentation (pink colonies?)",
           "r": "neg"
         },
         {
-          "t": "Mucoid colonies",
+          "t": "Oxidase test (non-lactose fermenter branch)",
+          "r": "pos"
+        },
+        {
+          "t": "Growth requirement on CHOC agar / fastidious pattern",
+          "r": "neg"
+        },
+        {
+          "t": "UV fluorescence (365 nm)",
+          "r": "neg"
+        },
+        {
+          "t": "Beta-haemolysis on blood agar",
+          "r": "neg"
+        },
+        {
+          "t": "Colony morphology — mucoid?",
           "r": "pos"
         }
       ],
@@ -601,7 +989,7 @@
         "Plant pathogen (crown gall)"
       ],
       "clinical": "Plant pathogen — causes crown gall disease by transferring T-DNA into plant cells via a Ti plasmid. Limited human pathogenicity (rare opportunistic infections in immunocompromised). Widely used in plant genetic engineering as a DNA delivery vehicle.",
-      "distinction": "The Ti plasmid makes Agrobacterium the only naturally occurring organism that transfers DNA from a bacterium into a eukaryotic nucleus — essentially natural genetic engineering. This is why it is used as a vector in plant biotechnology. Mucoid colonies are caused by extracellular polysaccharide secretion, which also inhibits colony PCR — a practical limitation acknowledged in your study notes."
+      "distinction": "Colony PCR failure in mucoid organisms is often caused by excess extracellular polysaccharide competing with DNA template. A 1:10 dilution of the picked colony suspension or a brief alkaline lysis step improves template availability and PCR success."
     },
     "ecoli": {
       "name": "Escherichia coli",
@@ -609,11 +997,23 @@
       "initials": "Ec",
       "path": [
         {
-          "t": "Oxidase",
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "pos"
+        },
+        {
+          "t": "Oxidase test (lactose fermenter branch)",
           "r": "neg"
         },
         {
-          "t": "Indole",
+          "t": "Indole test",
+          "r": "pos"
+        },
+        {
+          "t": "MUG test (β-glucuronidase, UV 366 nm)",
+          "r": "pos"
+        },
+        {
+          "t": "Sorbitol MacConkey (SMAC) fermentation",
           "r": "pos"
         }
       ],
@@ -622,41 +1022,12 @@
         "Oxidase-negative",
         "Indole-positive",
         "Lactose fermenter (pink on MacConkey)",
-        "Beta-haemolytic (haemolytic strains)",
-        "Metallic sheen on EMB agar",
-        "IMViC: + − − −"
+        "MUG positive (β-glucuronidase, UV 366 nm)",
+        "IMViC profile: + − − − (indole+, MR+, VP−, citrate−)",
+        "TSI: A/A (acid slant/acid butt), gas, no H2S"
       ],
       "clinical": "Most common cause of UTIs, neonatal meningitis (K1 capsule strains), traveller's diarrhoea. Pathogenic variants: ETEC, EHEC (O157:H7 — HUS risk), EPEC, EIEC, EAEC.",
       "distinction": "E. coli O157:H7 produces Shiga-like toxin (verotoxin) which inhibits protein synthesis in endothelial cells, causing haemolytic uraemic syndrome (HUS) — microangiopathic haemolytic anaemia + thrombocytopenia + renal failure. Antibiotic treatment is CONTRAINDICATED in EHEC because lysis releases more toxin. This is a critical clinical distinction."
-    },
-    "motile_entero": {
-      "name": "Motile Enterobacteriaceae (e.g., Salmonella, Enterobacter)",
-      "gram": "gn",
-      "initials": "Me",
-      "path": [
-        {
-          "t": "Oxidase",
-          "r": "neg"
-        },
-        {
-          "t": "Indole",
-          "r": "neg"
-        },
-        {
-          "t": "Motility",
-          "r": "pos"
-        }
-      ],
-      "features": [
-        "Gram-negative rods",
-        "Oxidase-negative",
-        "Indole-negative (most)",
-        "Motile (peritrichous flagella)",
-        "Variable lactose fermentation",
-        "Enterobacteriaceae family"
-      ],
-      "clinical": "Salmonella: typhoid fever (S. Typhi), non-typhoidal salmonellosis (food poisoning). Enterobacter: nosocomial infections, inducible AmpC resistance. Proteus: UTIs, swarming motility.",
-      "distinction": "Salmonella Typhi is exclusively human — no animal reservoir. This is why typhoid eradication is theoretically possible through vaccination and sanitation (unlike non-typhoidal Salmonella which has a vast animal reservoir). InVAX vaccines (Ty21a oral or Vi polysaccharide) are effective but not permanent."
     },
     "klebsiella": {
       "name": "Klebsiella pneumoniae",
@@ -664,16 +1035,28 @@
       "initials": "Kp",
       "path": [
         {
-          "t": "Oxidase",
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "pos"
+        },
+        {
+          "t": "Oxidase test (lactose fermenter branch)",
           "r": "neg"
         },
         {
-          "t": "Indole",
+          "t": "Indole test",
           "r": "neg"
         },
         {
-          "t": "Motility",
+          "t": "Citrate utilisation (Simmons citrate)",
+          "r": "pos"
+        },
+        {
+          "t": "Motility (semi-solid agar stab)",
           "r": "neg"
+        },
+        {
+          "t": "Urease test (timed)",
+          "r": "pos"
         }
       ],
       "features": [
@@ -683,7 +1066,10 @@
         "Non-motile",
         "Large polysaccharide capsule",
         "Mucoid colonies",
-        "Lactose fermenter"
+        "Lactose fermenter",
+        "Urease positive (usually slow, 24–48 h)",
+        "Citrate positive",
+        "TSI: A/A, gas, no H2S"
       ],
       "clinical": "Community-acquired pneumonia (especially in alcoholics, diabetics — \"currant jelly\" sputum from haemorrhagic necrosis). Hospital-acquired UTIs, bacteraemia. Extended-spectrum beta-lactamase (ESBL) and carbapenemase (KPC) strains are critical healthcare threats.",
       "distinction": "Klebsiella's large polysaccharide capsule produces mucoid colonies (similar appearance to Agrobacterium but Gram-negative). The capsule is antiphagocytic. Hypervirulent Klebsiella (hvKP) strains produce \"hypermucoviscous\" colonies that form a string >5mm when touched with a loop — the \"string test\" is a quick bedside screen for hvKP, which has higher mortality than classical KPC strains."
@@ -694,15 +1080,27 @@
       "initials": "OR",
       "path": [
         {
-          "t": "Oxidase",
-          "r": "pos"
-        },
-        {
-          "t": "UV fluorescence",
+          "t": "MacConkey lactose fermentation (pink colonies?)",
           "r": "neg"
         },
         {
-          "t": "Mucoid",
+          "t": "Oxidase test (non-lactose fermenter branch)",
+          "r": "pos"
+        },
+        {
+          "t": "Growth requirement on CHOC agar / fastidious pattern",
+          "r": "neg"
+        },
+        {
+          "t": "UV fluorescence (365 nm)",
+          "r": "neg"
+        },
+        {
+          "t": "Beta-haemolysis on blood agar",
+          "r": "neg"
+        },
+        {
+          "t": "Colony morphology — mucoid?",
           "r": "neg"
         }
       ],
@@ -714,12 +1112,399 @@
       ],
       "clinical": "Further testing required: Aeromonas, Plesiomonas, Vibrio, Chromobacterium, Alcaligenes, or other oxidase-positive non-fermenters. Additional tests: glucose fermentation, motility, growth on TCBS agar.",
       "distinction": "When you reach an ambiguous result in the decision tree, the distinction-level response is to say: \"Further biochemical characterisation would be required, specifically X and Y tests, to differentiate between [list of candidates].\" Demonstrating that you know what additional tests to use is as important as knowing when to use them."
+    },
+    "enterobacter": {
+      "name": "Enterobacter spp.",
+      "gram": "gn",
+      "initials": "En",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "pos"
+        },
+        {
+          "t": "Oxidase test (lactose fermenter branch)",
+          "r": "neg"
+        },
+        {
+          "t": "Indole test",
+          "r": "neg"
+        },
+        {
+          "t": "Citrate utilisation (Simmons citrate)",
+          "r": "pos"
+        },
+        {
+          "t": "Motility (semi-solid agar stab)",
+          "r": "pos"
+        }
+      ],
+      "features": [
+        "Gram-negative rod",
+        "Lactose fermenter",
+        "Oxidase negative",
+        "Indole negative",
+        "Citrate positive",
+        "Motile",
+        "Often VP positive",
+        "TSI: A/A, gas, no H2S"
+      ],
+      "clinical": "Nosocomial opportunist causing pneumonia, UTIs, line infections, and bacteraemia, especially in ICU settings.",
+      "distinction": "Enterobacter cloacae complex can derepress AmpC beta-lactamase during therapy, causing treatment failure with 3rd-generation cephalosporins."
+    },
+    "salmonella": {
+      "name": "Salmonella spp.",
+      "gram": "gn",
+      "initials": "Sa",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "neg"
+        },
+        {
+          "t": "Oxidase test (non-lactose fermenter branch)",
+          "r": "neg"
+        },
+        {
+          "t": "TSI/KIA profile with H2S production",
+          "r": "pos"
+        },
+        {
+          "t": "Rapid urease (15 min–4 h)",
+          "r": "neg"
+        }
+      ],
+      "features": [
+        "Gram-negative rod",
+        "Non-lactose fermenter",
+        "Oxidase negative",
+        "TSI: K/A with H2S positive",
+        "Urease negative",
+        "Usually motile"
+      ],
+      "clinical": "Causes enterocolitis and, for typhoidal serovars, systemic typhoid/paratyphoid fever.",
+      "distinction": "H2S production is a key practical differentiator from Shigella in routine Enterobacteriaceae workups."
+    },
+    "shigella": {
+      "name": "Shigella spp.",
+      "gram": "gn",
+      "initials": "Sh",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "neg"
+        },
+        {
+          "t": "Oxidase test (non-lactose fermenter branch)",
+          "r": "neg"
+        },
+        {
+          "t": "TSI/KIA profile with H2S production",
+          "r": "neg"
+        },
+        {
+          "t": "Motility (for H2S-negative isolate)",
+          "r": "neg"
+        }
+      ],
+      "features": [
+        "Gram-negative rod",
+        "Non-lactose fermenter",
+        "Oxidase negative",
+        "H2S negative",
+        "Non-motile",
+        "Low infectious dose",
+        "TSI: K/A, no gas, H2S negative"
+      ],
+      "clinical": "Causes bacillary dysentery with fever, abdominal cramps, and bloody diarrhoea.",
+      "distinction": "Because infectious dose is low, person-to-person spread is efficient; strict hygiene and outbreak control are essential."
+    },
+    "proteus": {
+      "name": "Proteus spp.",
+      "gram": "gn",
+      "initials": "Pr",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "neg"
+        },
+        {
+          "t": "Oxidase test (non-lactose fermenter branch)",
+          "r": "neg"
+        },
+        {
+          "t": "TSI/KIA profile with H2S production",
+          "r": "pos"
+        },
+        {
+          "t": "Rapid urease (15 min–4 h)",
+          "r": "pos"
+        }
+      ],
+      "features": [
+        "Gram-negative rod",
+        "Oxidase negative",
+        "Rapid urease positive (15 min–4 h)",
+        "Swarming motility",
+        "TSI: K/A with H2S positive (black precipitate)",
+        "Phenylalanine deaminase positive"
+      ],
+      "clinical": "Common cause of complicated UTIs and catheter-associated infection. Urease releases ammonia, alkalinising urine and promoting magnesium ammonium phosphate (struvite) kidney stone formation.",
+      "distinction": "Urease-driven alkalinisation promotes magnesium ammonium phosphate stone formation and persistent catheter-associated infection."
+    },
+    "aeromonas": {
+      "name": "Aeromonas spp.",
+      "gram": "gn",
+      "initials": "Ae",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "pos"
+        },
+        {
+          "t": "Oxidase test (lactose fermenter branch)",
+          "r": "pos"
+        }
+      ],
+      "features": [
+        "Gram-negative rod",
+        "Oxidase positive",
+        "Water-associated",
+        "Often beta-haemolytic",
+        "Variable lactose fermentation"
+      ],
+      "clinical": "Associated with wound infections after freshwater exposure and gastroenteritis.",
+      "distinction": "Clinical context (freshwater trauma, leech therapy, aquatic exposure) is often decisive when Aeromonas is suspected."
+    },
+    "haemophilus": {
+      "name": "Haemophilus influenzae",
+      "gram": "gn",
+      "initials": "Hi",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "neg"
+        },
+        {
+          "t": "Oxidase test (non-lactose fermenter branch)",
+          "r": "pos"
+        },
+        {
+          "t": "Growth requirement on CHOC agar / fastidious pattern",
+          "r": "pos"
+        },
+        {
+          "t": "X/V factor dependence",
+          "r": "pos"
+        }
+      ],
+      "features": [
+        "Small Gram-negative coccobacillus",
+        "Fastidious growth on chocolate agar",
+        "Requires X and V factors",
+        "Oxidase positive"
+      ],
+      "clinical": "Causes otitis, sinusitis, COPD exacerbations, and invasive disease (especially unvaccinated populations).",
+      "distinction": "Factor dependence testing (XV requirement) is the classic bench method to distinguish Haemophilus from Neisseria."
+    },
+    "neisseria": {
+      "name": "Neisseria spp.",
+      "gram": "gn",
+      "initials": "Ne",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "neg"
+        },
+        {
+          "t": "Oxidase test (non-lactose fermenter branch)",
+          "r": "pos"
+        },
+        {
+          "t": "Growth requirement on CHOC agar / fastidious pattern",
+          "r": "pos"
+        },
+        {
+          "t": "X/V factor dependence",
+          "r": "neg"
+        }
+      ],
+      "features": [
+        "Gram-negative diplococci (often)",
+        "Oxidase positive",
+        "Fastidious",
+        "Grows on chocolate/selective media"
+      ],
+      "clinical": "Includes N. meningitidis and N. gonorrhoeae, causing meningitis/septicaemia and gonorrhoea respectively.",
+      "distinction": "Always correlate organism-level ID with site and morphology because commensal Neisseria can colonise mucosal sites."
+    },
+    "other_lf": {
+      "name": "Other lactose-fermenting coliform",
+      "gram": "gn",
+      "initials": "Ol",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "pos"
+        },
+        {
+          "t": "Oxidase test (lactose fermenter branch)",
+          "r": "neg"
+        },
+        {
+          "t": "Indole test",
+          "r": "pos"
+        },
+        {
+          "t": "MUG test (β-glucuronidase, UV 366 nm)",
+          "r": "neg"
+        }
+      ],
+      "features": [
+        "Gram-negative rod",
+        "Lactose fermenter",
+        "Atypical IMViC/MUG profile"
+      ],
+      "clinical": "Could include Citrobacter, Serratia, or atypical Enterobacteriaceae depending on full panel.",
+      "distinction": "Use expanded IMViC and MALDI-TOF when key confirmatory tests are discordant."
+    },
+    "other_nlf": {
+      "name": "Other non-lactose fermenting enteric rod",
+      "gram": "gn",
+      "initials": "On",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "neg"
+        },
+        {
+          "t": "Oxidase test (non-lactose fermenter branch)",
+          "r": "neg"
+        },
+        {
+          "t": "TSI/KIA profile with H2S production",
+          "r": "neg"
+        },
+        {
+          "t": "Motility (for H2S-negative isolate)",
+          "r": "pos"
+        }
+      ],
+      "features": [
+        "Gram-negative rod",
+        "Non-lactose fermenter",
+        "Profile does not fully match Salmonella/Shigella/Proteus"
+      ],
+      "clinical": "May represent Morganella, Providencia, Yersinia, or uncommon enteric pathogens.",
+      "distinction": "If motility and TSI are discordant, escalate to comprehensive biochemical or molecular identification."
+    },
+    "erysipelothrix": {
+      "name": "Erysipelothrix rhusiopathiae",
+      "gram": "gp",
+      "initials": "Er",
+      "path": [
+        {
+          "t": "Endospore observation (microscopy)",
+          "r": "neg"
+        },
+        {
+          "t": "Catalase test",
+          "r": "neg"
+        },
+        {
+          "t": "H2S production (TSI/KIA or butt reaction)",
+          "r": "pos"
+        }
+      ],
+      "features": [
+        "Gram-positive slender rod",
+        "Catalase negative",
+        "Non-sporing",
+        "H2S positive on TSI/KIA",
+        "Associated with fish/animal exposure"
+      ],
+      "clinical": "Causes erysipeloid skin infection in fish handlers, butchers, and veterinarians; can rarely cause endocarditis.",
+      "distinction": "Occupational history is critical: handling fish, shellfish, or animals strongly raises suspicion for Erysipelothrix."
+    },
+    "micrococcus": {
+      "name": "Micrococcus luteus",
+      "gram": "gp",
+      "initials": "Ml",
+      "path": [
+        {
+          "t": "Haemolysis on blood agar",
+          "r": "pos"
+        },
+        {
+          "t": "Catalase test",
+          "r": "pos"
+        },
+        {
+          "t": "Slide coagulase screen (clumping factor)",
+          "r": "pos"
+        },
+        {
+          "t": "Tube coagulase confirmation",
+          "r": "neg"
+        },
+        {
+          "t": "Colony pigmentation (yellow carotenoid pigment?)",
+          "r": "pos"
+        }
+      ],
+      "features": [
+        "Gram-positive cocci in tetrads/clusters",
+        "Catalase-positive",
+        "Coagulase-negative",
+        "Bright yellow carotenoid pigment",
+        "Usually novobiocin susceptible",
+        "Often environmental/skin commensal"
+      ],
+      "clinical": "Usually low virulence and often a contaminant, but can cause opportunistic infection in immunocompromised patients or those with indwelling devices.",
+      "distinction": "Micrococcus can be separated from staphylococci by tetrad arrangement and pigment production. In practical exams, explicitly saying \"yellow pigmented catalase-positive cocci in tetrads\" demonstrates high-quality bench interpretation."
+    },
+    "ecoli_o157": {
+      "name": "Escherichia coli O157:H7 (STEC)",
+      "gram": "gn",
+      "initials": "O157",
+      "path": [
+        {
+          "t": "MacConkey lactose fermentation (pink colonies?)",
+          "r": "pos"
+        },
+        {
+          "t": "Oxidase test (lactose fermenter branch)",
+          "r": "neg"
+        },
+        {
+          "t": "Indole test",
+          "r": "pos"
+        },
+        {
+          "t": "MUG test (β-glucuronidase, UV 366 nm)",
+          "r": "pos"
+        },
+        {
+          "t": "Sorbitol MacConkey (SMAC) fermentation",
+          "r": "neg"
+        }
+      ],
+      "features": [
+        "Gram-negative rod",
+        "Oxidase-negative",
+        "Indole-positive",
+        "Typically sorbitol non-fermenting on SMAC",
+        "Shiga toxin producer (Stx1/Stx2)",
+        "TSI: A/A, gas, usually no H2S"
+      ],
+      "clinical": "Causes haemorrhagic colitis and can progress to haemolytic uraemic syndrome (HUS), especially in children and older adults.",
+      "distinction": "In suspected STEC, avoid empiric antibiotics until specialist guidance because bacterial lysis can increase Shiga toxin release and worsen HUS risk. Prioritise toxin testing and public-health notification."
     }
   },
   "TREES": {
     "gpc": {
       "label": "Gram+ Cocci",
-      "start": "gpc_catalase",
+      "start": "gpc_hemolysis",
       "color": "#7F77DD",
       "type": "gp",
       "desc": "Gram-positive cocci"
@@ -733,7 +1518,7 @@
     },
     "gn": {
       "label": "Gram-negative",
-      "start": "gn_oxidase",
+      "start": "gn_macconkey",
       "color": "#D4537E",
       "type": "gn",
       "desc": "Gram-negative rods"
