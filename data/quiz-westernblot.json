@@ -1,0 +1,34 @@
+[
+  {
+    "id": "wb-01",
+    "theme": "fundamentals",
+    "questionType": "identify-step",
+    "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here?",
+    "options": [
+      "A. Quantitative analysis — to measure relative abundance between samples",
+      "B. Qualitative analysis — to confirm presence or absence of a specific protein isoform",
+      "C. Structural analysis — to determine the 3D conformation of the target",
+      "D. Proteomic screening — to identify all proteins in the lysate simultaneously"
+    ],
+    "correctAnswer": "B",
+    "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
+    "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
+    "stepContext": {"step": "Experimental design — defining the goal","whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.","commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data — the two goals require different validation standards.","howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.","reagentIfApplicable": ""}
+  },
+  {
+    "id": "wb-02",
+    "theme": "fundamentals",
+    "questionType": "why-step",
+    "scenario": "SDS is added to the protein sample before gel loading. A student asks why this step is essential for size-based separation. What is the correct mechanistic explanation?",
+    "options": [
+      "A. SDS denatures only non-target proteins, leaving the target intact for antibody binding",
+      "B. SDS binds proportionally to protein mass (~1 molecule per 2 amino acids), giving all proteins a uniform negative charge-to-mass ratio so they migrate solely by size",
+      "C. SDS acts as a reducing agent, cleaving disulfide bonds between polypeptide chains",
+      "D. SDS increases buffer conductivity, accelerating migration of all proteins equally"
+    ],
+    "correctAnswer": "B",
+    "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
+    "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
+    "stepContext": {"step": "Sample preparation — SDS treatment","whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.","commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds — a reducing agent (DTT or β-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.","howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.","reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or β-mercaptoethanol"}
+  }
+]
