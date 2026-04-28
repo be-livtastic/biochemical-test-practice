@@ -74,7 +74,7 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
   border-color: var(--teal-border, #5DCAA5);
 }
 .mode-card#mode-exp:hover {
-  background: var(--teal-bg, #E1F5EE);
+  background: linear-gradient(150deg,#1b463a,#153a31);
 }
 
 .experiment-tag {
