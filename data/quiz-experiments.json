@@ -1,0 +1,442 @@
+[
+  {
+    "id": "dna-01",
+    "experiment": "DNA Extraction",
+    "questionType": "why-step",
+    "scenario": "During DNA extraction, the sample is incubated at 65°C in CTAB buffer for 30–60 minutes before any further processing. Why is this incubation step performed?",
+    "options": [
+      "To denature the DNA so it separates from the histone proteins",
+      "To lyse cell membranes and walls by disrupting hydrophobic interactions and hydrogen bonds, releasing cell contents including DNA",
+      "To activate the proteinase K enzyme which requires elevated temperature",
+      "To precipitate polysaccharides before the chloroform phase separation"
+    ],
+    "correctAnswer": "To lyse cell membranes and walls by disrupting hydrophobic interactions and hydrogen bonds, releasing cell contents including DNA",
+    "hint": "Think about what must happen to a cell before you can access its DNA.",
+    "explanation": "CTAB (cetyltrimethylammonium bromide) is a cationic detergent that disrupts cell membranes and walls by solubilising the lipid bilayer and breaking hydrophobic interactions. Elevated temperature (65°C) increases efficiency and also inhibits DNase activity. Without this lysis step, DNA remains trapped inside the cell and yield is negligible. This is why the incubation must be thorough — incomplete lysis is the most common cause of low yield.",
+    "stepContext": {
+      "step": "Cell lysis",
+      "whyWeDoThis": "Break open the cell to release DNA into solution.",
+      "commonShortfall": "Incomplete lysis — particularly with tough cell walls (plants, fungi, bacteria with thick PG) — leads to very low DNA yield.",
+      "howToPrevent": "Ensure full submersion of tissue in CTAB buffer, use appropriate mechanical disruption (pestle and mortar, bead beating) in addition to chemical lysis, and verify incubation time and temperature.",
+      "reagentIfApplicable": "CTAB buffer — cationic detergent that disrupts lipid membranes and solubilises cell contents."
+    }
+  },
+  {
+    "id": "dna-02",
+    "experiment": "DNA Extraction",
+    "questionType": "reagent",
+    "scenario": "After the CTAB lysis step, proteinase K is added to the sample and incubated at 56°C. What is the specific role of proteinase K in this protocol?",
+    "options": [
+      "It degrades RNA, removing it from the extract so only DNA remains",
+      "It breaks down the cell wall peptidoglycan to complete lysis",
+      "It degrades proteins — including DNases — preventing them from contaminating or degrading the DNA extract",
+      "It chelates magnesium ions to prevent enzymatic activity during extraction"
+    ],
+    "correctAnswer": "It degrades proteins — including DNases — preventing them from contaminating or degrading the DNA extract",
+    "hint": "Its name tells you its substrate. Consider what biological molecules could damage DNA if left intact.",
+    "explanation": "Proteinase K is a broad-spectrum serine protease that degrades proteins by cleaving peptide bonds. Its critical role is destroying DNases — enzymes that would otherwise degrade the DNA you are trying to extract. It also removes histones and other DNA-binding proteins, improving yield and purity. Without this step, DNase activity during the subsequent processing steps can result in severely degraded or absent DNA.",
+    "stepContext": {
+      "step": "Protein removal",
+      "whyWeDoThis": "Remove proteins (especially DNases) that contaminate the extract and degrade the DNA.",
+      "commonShortfall": "Incomplete protein removal causes a low A260/A280 ratio (below 1.8), indicating protein contamination which inhibits downstream applications like PCR.",
+      "howToPrevent": "Ensure adequate proteinase K concentration, incubation time, and temperature. A260/A280 of 1.8–2.0 indicates good purity — check this with a nanodrop before proceeding to PCR.",
+      "reagentIfApplicable": "Proteinase K — serine protease; degrades DNases and other proteins in the extract."
+    }
+  },
+  {
+    "id": "dna-03",
+    "experiment": "DNA Extraction",
+    "questionType": "shortfall",
+    "scenario": "A student extracts DNA from a bacterial sample. After nanodrop quantification, the A260/A280 ratio is 1.5 and the A260/A230 ratio is 0.9. PCR using this extract produces no bands. What is the most likely explanation?",
+    "options": [
+      "The DNA concentration is too high and needs diluting before PCR",
+      "The extract contains significant protein and phenol/polysaccharide contamination that is inhibiting the PCR reaction",
+      "The DNA is single-stranded and cannot be amplified by Taq polymerase",
+      "The A260 measurement indicates RNA contamination which is blocking primer binding"
+    ],
+    "correctAnswer": "The extract contains significant protein and phenol/polysaccharide contamination that is inhibiting the PCR reaction",
+    "hint": "A260/A280 should be 1.8–2.0 for pure DNA. A260/A230 should be 2.0–2.2. What do values below these ranges indicate?",
+    "explanation": "A260/A280 of 1.5 (expected 1.8–2.0) indicates protein contamination. A260/A230 of 0.9 (expected 2.0–2.2) indicates contamination with phenol, polysaccharides, or chaotropic salts from the extraction buffer. Both contaminant types inhibit Taq polymerase — proteins compete with the enzyme for binding, and phenolic compounds directly inhibit its activity. The student needs to repeat the chloroform extraction step and/or use a commercial cleanup column before attempting PCR.",
+    "stepContext": {
+      "step": "Purity assessment and phase separation",
+      "whyWeDoThis": "Verify extract quality using spectrophotometry before downstream applications.",
+      "commonShortfall": "Low A260/A280 (protein contamination) and low A260/A230 (phenol/polysaccharide contamination) both inhibit PCR — no bands result even with intact template DNA.",
+      "howToPrevent": "Repeat chloroform-isoamyl alcohol extraction once more if ratios are outside range. Use a PCR cleanup column as a final step. For polysaccharide-rich samples (plants, Agrobacterium), consider an additional precipitation step or extended centrifugation.",
+      "reagentIfApplicable": "Chloroform-isoamyl alcohol (24:1) — separates the aqueous DNA-containing phase from the organic phase containing proteins and lipids."
+    }
+  },
+  {
+    "id": "dna-04",
+    "experiment": "DNA Extraction",
+    "questionType": "why-step",
+    "scenario": "After phase separation, ice-cold isopropanol is added to the aqueous phase and the tube is incubated at -20°C for 20–30 minutes. What is this step achieving?",
+    "options": [
+      "Denaturing the double-stranded DNA so it can be measured spectrophotometrically",
+      "Precipitating the DNA out of solution so it can be pelleted by centrifugation",
+      "Removing residual chloroform from the aqueous phase",
+      "Inactivating any remaining proteinase K before elution"
+    ],
+    "correctAnswer": "Precipitating the DNA out of solution so it can be pelleted by centrifugation",
+    "hint": "DNA is soluble in water but not in cold alcohol.",
+    "explanation": "Isopropanol (or ethanol) reduces the dielectric constant of the solution, neutralising the negative charges on the phosphate backbone that keep DNA dissolved. DNA precipitates as a white pellet that can be collected by centrifugation. Cold temperature slows re-dissolution and reduces co-precipitation of contaminants. The resulting pellet contains the bulk of the DNA from the extract and is then washed with 70% ethanol to remove salts before resuspension.",
+    "stepContext": {
+      "step": "DNA precipitation",
+      "whyWeDoThis": "Concentrate and recover DNA from the aqueous phase by causing it to precipitate as a solid pellet.",
+      "commonShortfall": "Insufficient precipitation time or warm temperature reduces yield. Over-drying the pellet after washing makes it very difficult to resuspend.",
+      "howToPrevent": "Use ice-cold isopropanol, allow adequate incubation at -20°C, and do not over-dry the pellet — air-dry for 5 minutes maximum, then resuspend in TE buffer or water.",
+      "reagentIfApplicable": "Isopropanol — reduces solubility of DNA by neutralising phosphate backbone charges, causing precipitation."
+    }
+  },
+  {
+    "id": "pcr-01",
+    "experiment": "PCR",
+    "questionType": "why-step",
+    "scenario": "A PCR protocol begins with a single 2-minute incubation at 94°C before the 30 thermal cycles begin. This is distinct from the 30-second denaturation step within each cycle. Why is this initial long denaturation necessary?",
+    "options": [
+      "To activate the Taq polymerase which is stored in an inactive form at room temperature",
+      "To fully separate all template DNA strands and ensure complete denaturation before primers can bind in cycle 1, since incompletely denatured template produces fewer and inconsistent copies",
+      "To sterilise the reaction mix and prevent contamination of the PCR product",
+      "To melt the agarose beads in the master mix so the polymerase is released"
+    ],
+    "correctAnswer": "To fully separate all template DNA strands and ensure complete denaturation before primers can bind in cycle 1, since incompletely denatured template produces fewer and inconsistent copies",
+    "hint": "Think about what the template DNA looks like at the start — it is double-stranded and likely coiled. What needs to happen before primers can anneal?",
+    "explanation": "Template DNA is double-stranded and supercoiled at the start of the reaction. The 2-minute initial denaturation (sometimes 5 minutes for GC-rich templates or whole cells) ensures complete strand separation throughout the entire template pool before the first cycle begins. If some template molecules remain partially double-stranded entering cycle 1, the primers cannot access them, and those molecules produce no copies — reducing final yield and potentially introducing amplification bias. Hot-start polymerases also require this step to be activated.",
+    "stepContext": {
+      "step": "Initial denaturation",
+      "whyWeDoThis": "Fully separate all template DNA strands before amplification begins.",
+      "commonShortfall": "Too short an initial denaturation with complex templates (GC-rich, long, or whole-cell) results in low or inconsistent yield across the plate.",
+      "howToPrevent": "Use 94–95°C for 2–5 minutes. Extend to 5 minutes for GC-rich sequences or when using whole bacteria as template (as in colony PCR).",
+      "reagentIfApplicable": ""
+    }
+  },
+  {
+    "id": "pcr-02",
+    "experiment": "PCR",
+    "questionType": "reagent",
+    "scenario": "A PCR master mix contains the following components: Taq polymerase, dNTPs, MgCl2, forward primer, reverse primer, reaction buffer, and template DNA. A student accidentally omits the MgCl2. What will happen and why?",
+    "options": [
+      "PCR will proceed normally because MgCl2 is only required for restriction enzymes, not polymerases",
+      "The reaction will produce a faint single band because MgCl2 only affects primer specificity",
+      "No amplification will occur because Mg2+ ions are an essential cofactor for Taq polymerase catalytic activity",
+      "The product will be longer than expected because without MgCl2 the polymerase reads through the stop signal"
+    ],
+    "correctAnswer": "No amplification will occur because Mg2+ ions are an essential cofactor for Taq polymerase catalytic activity",
+    "hint": "Taq polymerase is a metalloenzyme. Consider what cofactors mean for enzyme function.",
+    "explanation": "Mg2+ ions are an obligate cofactor for Taq polymerase. They coordinate the phosphate groups of incoming dNTPs in the active site, enabling the nucleophilic attack that forms the phosphodiester bond. Without Mg2+, the polymerase cannot catalyse DNA synthesis regardless of how much enzyme is present. MgCl2 concentration also affects primer annealing specificity — higher Mg2+ (above the optimal ~1.5–2.5 mM) can cause non-specific amplification; lower Mg2+ reduces yield. This is why MgCl2 is optimised independently when troubleshooting difficult PCR reactions.",
+    "stepContext": {
+      "step": "Reaction setup — component addition",
+      "whyWeDoThis": "Include all essential components before thermal cycling begins.",
+      "commonShortfall": "Omitting or using incorrect MgCl2 concentration is a frequent troubleshooting target — too low gives no bands, too high gives multiple non-specific bands.",
+      "howToPrevent": "Always prepare a master mix checklist. The standard NS7011 PCR uses: 12.5 µL master mix (contains pre-optimised Mg2+) + 1 µL forward primer + 1 µL reverse primer + 5.5 µL water + 1 µL template = 25 µL total.",
+      "reagentIfApplicable": "MgCl2 — provides Mg2+ ions, the essential catalytic cofactor for Taq polymerase."
+    }
+  },
+  {
+    "id": "pcr-03",
+    "experiment": "PCR",
+    "questionType": "shortfall",
+    "scenario": "A student runs a PCR on Agrobacterium colonies taken directly from a plate. No bands are visible on the gel. A positive control with purified E. coli DNA run in the same reaction produces a strong band. What is the most likely cause of failure and how should it be resolved?",
+    "options": [
+      "The annealing temperature is too high for Agrobacterium-specific primers",
+      "The Taq polymerase is incompatible with Gram-negative bacteria",
+      "Exopolysaccharide (EPS) from Agrobacterium mucoid colonies is co-extracted and inhibits the PCR reaction — the template requires dilution",
+      "The colony was taken from too young a culture and there is insufficient DNA present"
+    ],
+    "correctAnswer": "Exopolysaccharide (EPS) from Agrobacterium mucoid colonies is co-extracted and inhibits the PCR reaction — the template requires dilution",
+    "hint": "Agrobacterium is characterised by very mucoid, slimy colonies. What does that sliminess consist of biochemically, and how might it affect a polymerase?",
+    "explanation": "Agrobacterium produces abundant exopolysaccharide (EPS), which forms the characteristic slimy mucoid colony appearance. EPS co-purifies with DNA and is a potent PCR inhibitor — it physically interferes with polymerase-template binding and may chelate Mg2+ ions. The positive control working correctly rules out a reagent problem; the failure is template-specific. The standard fix is to dilute the template 1:10 in nuclease-free water before adding to the PCR reaction, which dilutes the inhibitor concentration below the inhibitory threshold while keeping enough template for amplification.",
+    "stepContext": {
+      "step": "Template preparation for colony PCR",
+      "whyWeDoThis": "Ensure template quality is sufficient for amplification — inhibitor-free.",
+      "commonShortfall": "Mucoid organisms (Agrobacterium, Klebsiella, and other EPS producers) produce inhibitor-rich templates from direct colony suspension.",
+      "howToPrevent": "Dilute template 1:10 in nuclease-free water before adding to PCR. If failure persists, perform a phenol-chloroform extraction to remove EPS. Always run a positive control with known template to distinguish template failure from reagent failure.",
+      "reagentIfApplicable": ""
+    }
+  },
+  {
+    "id": "pcr-04",
+    "experiment": "PCR",
+    "questionType": "why-step",
+    "scenario": "The annealing step of the PCR cycle uses a temperature 5°C below the calculated primer Tm. Why is annealing performed below the Tm rather than at or above it?",
+    "options": [
+      "At the Tm, the polymerase denatures and must be kept cool to remain active",
+      "Temperatures at or above the Tm prevent primer-template hydrogen bonds from forming — annealing must occur below Tm so primers can stably bind to their complementary template sequences",
+      "Above the Tm, dNTPs are incorporated too rapidly and errors increase",
+      "The Tm is the temperature at which primers bind non-specifically — working below it prevents this"
+    ],
+    "correctAnswer": "Temperatures at or above the Tm prevent primer-template hydrogen bonds from forming — annealing must occur below Tm so primers can stably bind to their complementary template sequences",
+    "hint": "Tm is the melting temperature — the temperature at which 50% of duplexes are dissociated. Working above this means primers cannot stay bound.",
+    "explanation": "The Tm is defined as the temperature at which 50% of primer-template duplexes are melted (dissociated). Annealing above the Tm means the thermal energy exceeds the sum of hydrogen bonds in the primer-template duplex — primers cannot stably bind and extension cannot begin. Working 5°C below Tm maximises stable primer binding while still providing enough specificity to prevent primers from annealing to closely related but incorrect sequences (non-specific binding occurs at even lower temperatures). The NS7011 protocol uses 51°C annealing. Optimising annealing temperature is the first troubleshooting step for faint or non-specific bands.",
+    "stepContext": {
+      "step": "Annealing",
+      "whyWeDoThis": "Allow primers to bind specifically to their complementary template sequences so extension can begin from a defined position.",
+      "commonShortfall": "Too high an annealing temperature — no bands (primers cannot bind). Too low — multiple non-specific bands (primers bind to unintended sequences).",
+      "howToPrevent": "Use the formula Tm ≈ 2(A+T) + 4(G+C) for short primers. The NS7011 protocol specifies 51°C. If non-specific bands appear, raise annealing temp by 2°C increments. If no bands, lower by 2°C increments.",
+      "reagentIfApplicable": ""
+    }
+  },
+  {
+    "id": "gel-01",
+    "experiment": "Gel Electrophoresis",
+    "questionType": "why-step",
+    "scenario": "Before loading DNA samples onto the agarose gel, loading dye is added to each sample at a 1:6 ratio. What are the two functions of loading dye?",
+    "options": [
+      "To denature the DNA for single-stranded migration and to stain the DNA so it is visible without UV light",
+      "To add density so the sample sinks into the well, and to provide a visible tracking dye so you can monitor migration progress without stopping the run",
+      "To fix the DNA in the well before electrophoresis begins and to adjust the pH of the sample",
+      "To prevent the DNA from degrading during the electrophoresis run and to mark which wells contain samples"
+    ],
+    "correctAnswer": "To add density so the sample sinks into the well, and to provide a visible tracking dye so you can monitor migration progress without stopping the run",
+    "hint": "Think about what would happen to a DNA solution dropped into a well of buffer without any loading dye — would it stay in the well?",
+    "explanation": "Loading dye contains two functional components: (1) glycerol or Ficoll, which increases solution density so the sample sinks to the bottom of the well rather than diffusing into the buffer; (2) one or two tracking dyes — typically bromophenol blue and xylene cyanol — which migrate ahead of and alongside the DNA and are visible with the naked eye, allowing you to stop the run before fragments migrate off the gel. The dye itself does not stain the DNA. Staining (Fast Blast or EtBr) is a separate step performed after electrophoresis.",
+    "stepContext": {
+      "step": "Sample loading",
+      "whyWeDoThis": "Ensure samples enter and stay in wells, and enable visual monitoring of electrophoresis progress.",
+      "commonShortfall": "Omitting loading dye results in samples diffusing out of wells before the electric field can separate them — no visible bands after staining.",
+      "howToPrevent": "Always premix loading dye with sample before loading. Use a consistent 1:6 ratio (1 part dye, 5 parts sample). Load slowly with the pipette tip touching the bottom of the well.",
+      "reagentIfApplicable": "Loading dye (bromophenol blue + glycerol) — adds density to sink sample into well; tracking dye monitors migration."
+    }
+  },
+  {
+    "id": "gel-02",
+    "experiment": "Gel Electrophoresis",
+    "questionType": "reagent",
+    "scenario": "The NS7011 protocol uses Fast Blast stain instead of ethidium bromide (EtBr). A student asks why the lab switched from EtBr, which gives brighter bands. What is the most accurate reason?",
+    "options": [
+      "Fast Blast is more sensitive than EtBr and produces stronger fluorescent signal under UV light",
+      "EtBr is a potent intercalating mutagen and classified as a hazardous substance — Fast Blast achieves equivalent or adequate sensitivity with significantly lower toxicity and a simpler waste disposal protocol",
+      "EtBr degrades agarose gels so fragments cannot be sized accurately against the ladder",
+      "Fast Blast is added before electrophoresis so staining and running occur simultaneously, saving time"
+    ],
+    "correctAnswer": "EtBr is a potent intercalating mutagen and classified as a hazardous substance — Fast Blast achieves equivalent or adequate sensitivity with significantly lower toxicity and a simpler waste disposal protocol",
+    "hint": "EtBr intercalates between DNA base pairs. Consider what this property means for any biological molecule it contacts.",
+    "explanation": "Ethidium bromide intercalates between DNA base pairs and is therefore a potent frameshift mutagen and potential carcinogen. Its use requires dedicated contaminated waste streams, specialist disposal, and UV-protective equipment. Fast Blast (Bio-Rad) is a non-toxic, aqueous alternative that stains DNA by a different mechanism — it does not intercalate and is classified as non-hazardous. For teaching labs with high sample throughput and multiple users, reducing mutagen exposure is a significant safety and logistical advantage. Fast Blast results are visualised under white light, not UV, which also reduces UV exposure risk. The trade-off is slightly lower sensitivity for very faint bands.",
+    "stepContext": {
+      "step": "Gel staining",
+      "whyWeDoThis": "Make DNA bands visible for analysis and photography.",
+      "commonShortfall": "Insufficient staining time or destaining removes signal — bands appear faint or absent even with good DNA.",
+      "howToPrevent": "Follow manufacturer instructions for Fast Blast staining time. For the NS7011 protocol: stain in Fast Blast for the recommended time, then destain in water if background is too high. Visualise under white light (not UV for Fast Blast).",
+      "reagentIfApplicable": "Fast Blast stain — non-toxic DNA stain; visualised under white light. Alternative to EtBr (mutagenic, requires specialist disposal)."
+    }
+  },
+  {
+    "id": "gel-03",
+    "experiment": "Gel Electrophoresis",
+    "questionType": "shortfall",
+    "scenario": "After running a gel at 120V for 45 minutes, a student observes that all lanes show a faint smear from the well to near the bottom of the gel rather than discrete bands. The DNA ladder lane also shows smearing. What are the two most likely causes?",
+    "options": [
+      "The voltage was too low and the gel ran for too short a time",
+      "The DNA is degraded (smear in sample lanes) and/or the gel was overloaded with too much DNA per well, causing band smearing",
+      "The agarose percentage was too high, preventing large fragments from entering the gel",
+      "The wrong buffer was used — TBE instead of TAE causes DNA degradation during the run"
+    ],
+    "correctAnswer": "The DNA is degraded (smear in sample lanes) and/or the gel was overloaded with too much DNA per well, causing band smearing",
+    "hint": "A smear extending from the well downwards in sample lanes suggests the DNA molecules are many different sizes. Why would DNA be many different sizes?",
+    "explanation": "A smear (rather than discrete bands) has two main causes: (1) DNA degradation — if nucleases were active during extraction or if samples were not kept on ice, DNA is fragmented into random sizes, producing a continuous smear across all size ranges; (2) overloading — too much DNA per well causes band distortion because the charged molecules interfere with each other's migration, producing a thick diffuse smear. The ladder smearing is unusual and suggests a sample preparation or gel quality issue rather than a loading problem. Prevention: store DNA on ice, assess quality with nanodrop before loading, and load no more than 200–500 ng per well for a standard 1% gel.",
+    "stepContext": {
+      "step": "Electrophoresis and result interpretation",
+      "whyWeDoThis": "Separate DNA fragments by size and visualise distinct bands.",
+      "commonShortfall": "Smeared or absent bands — most commonly due to degraded template, overloading, or incomplete denaturation of complex samples.",
+      "howToPrevent": "Keep samples on ice throughout. Assess DNA quality by nanodrop (A260/A280 1.8–2.0) before loading. Load appropriate volume — not more than well capacity. Run a no-template control lane to confirm smear is sample-specific.",
+      "reagentIfApplicable": ""
+    }
+  },
+  {
+    "id": "gel-04",
+    "experiment": "Gel Electrophoresis",
+    "questionType": "why-step",
+    "scenario": "The NS7011 gel protocol specifies 1% agarose in TAE buffer run at 120V for 45 minutes. A different experiment needs to resolve fragments of 50–200 bp. Should the agarose percentage be changed, and if so, how?",
+    "options": [
+      "No change needed — 1% agarose resolves all fragment sizes equally",
+      "Decrease to 0.5% agarose — lower concentration makes larger pores to allow small fragments to migrate faster",
+      "Increase to 2–3% agarose — higher concentration creates smaller pores for better resolution of small fragments in the 50–200 bp range",
+      "Increase voltage to 200V instead — this improves resolution of small fragments without changing agarose percentage"
+    ],
+    "correctAnswer": "Increase to 2–3% agarose — higher concentration creates smaller pores for better resolution of small fragments in the 50–200 bp range",
+    "hint": "Gel electrophoresis separates by size through a molecular sieve. Consider what pore size does to very small versus very large molecules.",
+    "explanation": "Agarose forms a gel matrix with pores whose size is inversely related to agarose concentration. A 1% gel has large pores — effective for resolving fragments of 500–10,000 bp (PCR products, restriction digest patterns) as used in NS7011. For small fragments (50–200 bp, such as short PCR products, sequencing ladders, or small restriction digest fragments), a 2–3% gel is required because the smaller pores provide differential resistance that separates closely sized small molecules. At 1%, fragments below 200 bp migrate so quickly and close together they appear as a single band or run off the gel. Using higher voltage does not substitute for pore size optimisation.",
+    "stepContext": {
+      "step": "Gel preparation — agarose percentage",
+      "whyWeDoThis": "Optimise pore size for the fragment size range being analysed.",
+      "commonShortfall": "Using 1% gel for small fragments (under 300 bp) results in poor resolution — bands cannot be distinguished from each other.",
+      "howToPrevent": "Match agarose % to expected fragment size: 0.8–1% for 500 bp–10 kb; 1.5–2% for 200–500 bp; 2–3% for 50–200 bp.",
+      "reagentIfApplicable": "TAE buffer (Tris-Acetate-EDTA) — conducts current through the gel, maintains pH, and EDTA chelates Mg2+ to prevent DNase activity."
+    }
+  },
+  {
+    "id": "rflp-01",
+    "experiment": "RFLP",
+    "questionType": "why-step",
+    "scenario": "The RFLP protocol specifies a strict order of addition: DNA first, then restriction buffer, then water, then enzyme last. Why must the restriction enzyme always be added last?",
+    "options": [
+      "The enzyme denatures rapidly at room temperature and must be kept at -20°C until the moment of addition",
+      "Adding enzyme to buffer without DNA causes it to degrade the tube material",
+      "Adding enzyme directly to water or to high-salt conditions before the buffer is present causes star activity — non-specific cutting at incorrect recognition sequences",
+      "The enzyme requires a specific pH that is only achieved once buffer and water are mixed, and adding it before equilibration causes permanent inactivation"
+    ],
+    "correctAnswer": "Adding enzyme directly to water or to high-salt conditions before the buffer is present causes star activity — non-specific cutting at incorrect recognition sequences",
+    "hint": "Restriction enzymes cut at specific recognition sequences. What environmental conditions affect this specificity?",
+    "explanation": "Restriction enzymes exhibit 'star activity' — relaxed specificity cutting at sequences that only partially match the recognition sequence — under several abnormal conditions: wrong buffer pH/salt concentration, excess glycerol (from the enzyme storage solution if too much enzyme is added relative to reaction volume), high organic solvent, or prolonged incubation. Adding enzyme to water alone before buffer is present exposes the enzyme to abnormal low-salt conditions that can induce star activity. Adding it last, after buffer and template are pre-mixed, ensures the enzyme enters an immediately optimal environment. The NS7011 volumes are: 5 µL DNA + 5 µL buffer + 39 µL water + 1 µL enzyme = 50 µL total.",
+    "stepContext": {
+      "step": "Restriction digest — reagent addition order",
+      "whyWeDoThis": "Protect enzyme activity and prevent non-specific cutting that would produce incorrect fragment patterns.",
+      "commonShortfall": "Adding enzyme first or to water produces additional non-specific bands on the gel that mimic unexpected fragments, making pattern interpretation impossible.",
+      "howToPrevent": "Always follow the addition order: DNA → buffer → water → enzyme last. Keep enzyme on ice at all times. Vortex gently and spin down after final addition.",
+      "reagentIfApplicable": "Restriction buffer — provides optimal salt concentration, pH, and cofactors (typically Mg2+) for enzyme activity and specificity."
+    }
+  },
+  {
+    "id": "rflp-02",
+    "experiment": "RFLP",
+    "questionType": "identify-step",
+    "scenario": "After the 37°C incubation, the RFLP protocol instructs the student to heat the digest to 65°C for 10 minutes before loading onto the gel. What is this step and why is it necessary?",
+    "options": [
+      "A denaturation step to separate the cut DNA strands before electrophoresis",
+      "A heat inactivation step to stop the restriction enzyme activity and prevent it from cutting DNA during gel loading and electrophoresis",
+      "An annealing step to allow complementary sticky ends from the digest to re-anneal before ligation",
+      "A sterilisation step to prevent gel contamination with live bacteria from the DNA template"
+    ],
+    "correctAnswer": "A heat inactivation step to stop the restriction enzyme activity and prevent it from cutting DNA during gel loading and electrophoresis",
+    "hint": "If restriction enzyme is still active when you load the gel, what would happen to the fragments as you prepare to load them?",
+    "explanation": "Restriction enzymes remain active at room temperature. If the digest is not inactivated, the enzyme continues cutting during gel preparation and loading — potentially producing smaller, additional fragments that complicate the banding pattern and make interpretation unreliable. Heat inactivation (65°C for 10 minutes for most Type II enzymes, though some require different conditions) denatures the enzyme irreversibly. After heat inactivation, the digest can be handled at room temperature without risk of continued enzymatic activity. Note: some enzymes (e.g. BamHI) require more extreme conditions for inactivation — always check the manufacturer's data sheet.",
+    "stepContext": {
+      "step": "Enzyme heat inactivation",
+      "whyWeDoThis": "Stop the restriction enzyme after the digest is complete to prevent continued cutting during gel loading.",
+      "commonShortfall": "Skipping this step can produce extra bands or smearing if enzyme is still active during the 45-minute electrophoresis run.",
+      "howToPrevent": "Always heat-inactivate at 65°C for 10 minutes after digestion. Place on ice before loading onto gel. Verify inactivation temperature in the enzyme data sheet — it varies between enzymes.",
+      "reagentIfApplicable": ""
+    }
+  },
+  {
+    "id": "rflp-03",
+    "experiment": "RFLP",
+    "questionType": "shortfall",
+    "scenario": "An RFLP digest of a bacterial sample intended to be E. coli using AflIII produces four bands instead of the expected three (approximately 850, 370, and 300 bp). A no-enzyme negative control shows only one uncut band. What is the most likely explanation?",
+    "options": [
+      "The AflIII enzyme used is from a different supplier and has a different recognition sequence",
+      "E. coli naturally has four AflIII sites in this PCR product and the four-band pattern is correct",
+      "Star activity or a contaminating second restriction enzyme has caused non-specific or additional cuts, producing extra fragments",
+      "The PCR template was from two different organisms so two different amplicons were present — each digests to give a partial pattern"
+    ],
+    "correctAnswer": "Star activity or a contaminating second restriction enzyme has caused non-specific or additional cuts, producing extra fragments",
+    "hint": "The negative control (no enzyme) shows one uncut band, which confirms the template is correct. The extra band is therefore introduced by the enzyme step.",
+    "explanation": "The negative control eliminates the possibility of a template problem — the template is intact and correctly amplified. The extra band is introduced by the enzyme treatment. Most likely causes: (1) Star activity — AflIII cutting at degenerate sequences due to incorrect buffer conditions, enzyme excess, or prolonged incubation, generating additional fragments; (2) enzyme contamination — a second endonuclease co-purified with the commercial preparation. Resolution: check enzyme:DNA ratio (should not exceed 1 unit per µg DNA per hour), verify correct buffer, reduce incubation time, and obtain a fresh enzyme aliquot. Also verify the PCR product size is correct by running an undigested control.",
+    "stepContext": {
+      "step": "Digest result interpretation",
+      "whyWeDoThis": "Compare observed band pattern to expected pattern to confirm organism identity.",
+      "commonShortfall": "Extra unexpected bands due to star activity, partial digestion (too few bands), or mixed templates produce uninterpretable patterns.",
+      "howToPrevent": "Always run a no-enzyme negative control alongside every digest. Use no more than 1 unit of enzyme per µg DNA. Use the correct buffer supplied with the enzyme. The expected AflIII E. coli pattern: ~850, ~370, ~300 bp (three bands).",
+      "reagentIfApplicable": "AflIII — Type II restriction endonuclease; cuts at specific recognition sequence to produce characteristic fragment pattern for organism identification."
+    }
+  },
+  {
+    "id": "rflp-04",
+    "experiment": "RFLP",
+    "questionType": "why-step",
+    "scenario": "RFLP uses restriction enzyme digestion of a PCR product to identify organisms. Why does each organism produce a different banding pattern, and why is this useful for identification?",
+    "options": [
+      "Each organism has a different number of base pairs in its genome, so digestion always produces size-unique fragments",
+      "Restriction enzyme recognition sequences occur at different positions in the PCR product sequence of each organism — the number and size of fragments reflects the exact sequence composition, acting as a molecular fingerprint",
+      "Different organisms express different amounts of the PCR product, so band intensity is the identification signal rather than band pattern",
+      "Restriction enzymes from different bacterial species recognise different sequences — the enzyme used in RFLP is matched to a specific organism's restriction system"
+    ],
+    "correctAnswer": "Restriction enzyme recognition sequences occur at different positions in the PCR product sequence of each organism — the number and size of fragments reflects the exact sequence composition, acting as a molecular fingerprint",
+    "hint": "A restriction enzyme cuts at a specific DNA sequence. If two organisms have different nucleotide sequences in the same region, how many cut sites will they have?",
+    "explanation": "A Type II restriction enzyme cuts only at its specific recognition sequence (e.g. AflIII cuts at ACRYGT). The number of times that sequence appears in a PCR product, and the distance between occurrences, depends entirely on the sequence of that region in that organism. E. coli has three AflIII sites in the amplified region, producing fragments of ~850, ~370, ~300 bp. A different organism may have two, four, or zero AflIII sites — producing a completely different pattern. This pattern is unique and reproducible, making it a molecular fingerprint that reliably identifies organisms without requiring full sequencing.",
+    "stepContext": {
+      "step": "Conceptual basis of RFLP",
+      "whyWeDoThis": "Identify organisms by their unique restriction fragment length pattern without sequencing.",
+      "commonShortfall": "Partial digestion (incomplete incubation time or too little enzyme) produces fewer bands than expected, making it appear like a different organism.",
+      "howToPrevent": "Ensure complete digestion by using sufficient enzyme, correct incubation time (60 minutes at 37°C), and adequate substrate DNA. Always compare to a known positive control pattern.",
+      "reagentIfApplicable": ""
+    }
+  },
+  {
+    "id": "streak-01",
+    "experiment": "Streak Plating",
+    "questionType": "why-step",
+    "scenario": "Between each sector of a streak plate, the inoculation loop is passed through a flame until glowing red-orange, then allowed to cool before touching the agar. Why is the cooling step essential — not just the flaming?",
+    "options": [
+      "A hot loop melts the agar when it makes contact, creating gouges that cause spreading colonies and contamination",
+      "A hot loop kills the bacteria transferred from the previous sector, eliminating the dilution effect and producing no growth in later sectors",
+      "A hot loop causes the loading dye to diffuse into the agar, obscuring results",
+      "A cool loop is required to absorb sufficient bacteria from the previous streak for the dilution gradient to work"
+    ],
+    "correctAnswer": "A hot loop kills the bacteria transferred from the previous sector, eliminating the dilution effect and producing no growth in later sectors",
+    "hint": "The purpose of the loop is to carry a small number of bacteria from one sector to the next. What happens to bacteria that contact a surface at flaming temperature?",
+    "explanation": "Flaming kills all bacteria on the loop by incineration — which is exactly the point of sterilisation. However, if the loop is used while still hot, any bacteria picked up when touching the agar of the previous sector are immediately killed by residual heat, and no viable cells are transferred to the new sector. The result is zero growth in later sectors despite correct technique elsewhere. The cool-down ensures thermal energy has dissipated to a temperature that bacteria can survive (below ~50°C). Standard practice is to cool the loop by touching the agar in a sterile region of the plate for 2–3 seconds, or to allow 10–15 seconds of air cooling, before picking up bacteria from the previous streak.",
+    "stepContext": {
+      "step": "Loop sterilisation between sectors",
+      "whyWeDoThis": "Remove bacteria from the previous sector so each new sector begins with progressively fewer bacteria — creating the dilution gradient that produces isolated colonies.",
+      "commonShortfall": "Insufficient cooling kills bacteria on contact and produces no growth in the tertiary streak where isolated colonies should appear.",
+      "howToPrevent": "Touch the hot loop to a sterile region of agar for 2–3 seconds to cool before picking up bacteria. A sizzle sound when touching agar means the loop is still too hot.",
+      "reagentIfApplicable": ""
+    }
+  },
+  {
+    "id": "streak-02",
+    "experiment": "Streak Plating",
+    "questionType": "shortfall",
+    "scenario": "After incubation, a student's streak plate shows heavy confluent bacterial growth across all four sectors with no isolated colonies visible anywhere. What combination of errors most likely produced this result?",
+    "options": [
+      "The incubation temperature was too high, causing bacteria to spread across all sectors",
+      "Too much starting inoculum was used, and the loop was not cooled sufficiently between sectors — the bacteria were not diluted out as intended",
+      "The agar plate was too dry, preventing normal colony formation and causing spreading",
+      "The organism is a rapid swarmer (like Proteus) and swarming behaviour prevents isolated colonies on any streak plate"
+    ],
+    "correctAnswer": "Too much starting inoculum was used, and the loop was not cooled sufficiently between sectors — the bacteria were not diluted out as intended",
+    "hint": "The purpose of the technique is progressive dilution across sectors. If all sectors have heavy growth, what does that tell you about whether dilution occurred?",
+    "explanation": "Confluent growth across all sectors means the dilution gradient was not achieved. Two compounding errors are responsible: (1) too much starting inoculum — beginning with too dense a cell suspension means even with correct technique, there are enough bacteria surviving into later sectors to produce confluent growth; (2) insufficient cooling between sectors — if bacteria are not removed from the loop by flaming-and-cooling, a full complement of cells is transferred to each new sector rather than only those picked up from the end of the previous streak. Both errors must be corrected together. Additionally, if this organism is Proteus, the student should add 0.1% boric acid to the agar to inhibit swarming.",
+    "stepContext": {
+      "step": "Streak technique — inoculum density and sector-to-sector transfer",
+      "whyWeDoThis": "Achieve a progressively decreasing number of bacteria across sectors until single cells deposit individually, forming isolated colonies after incubation.",
+      "commonShortfall": "Confluent growth in all sectors — typically from too heavy an initial inoculum combined with inadequate loop sterilisation between sectors.",
+      "howToPrevent": "Start from a single well-isolated colony when subculturing, or use a 10−3 dilution from a broth. Flame the loop thoroughly between sectors and cool completely. Tilt the plate to check isolated colonies forming in the tertiary sector before moving on.",
+      "reagentIfApplicable": ""
+    }
+  },
+  {
+    "id": "streak-03",
+    "experiment": "Streak Plating",
+    "questionType": "why-step",
+    "scenario": "Streak plates are incubated inverted (lid-side down) at 37°C for 18–24 hours. Why are they incubated inverted?",
+    "options": [
+      "To allow gravity to pull colonies downward, producing rounder colony morphology that is easier to identify",
+      "To prevent condensation water droplets forming on the agar surface from dripping onto colonies and causing them to spread or merge",
+      "The organisms in NS7011 are anaerobes and the inverted position restricts oxygen access through the sealed base",
+      "To allow the agar to absorb moisture from the lid and prevent the plate drying out during incubation"
+    ],
+    "correctAnswer": "To prevent condensation water droplets forming on the agar surface from dripping onto colonies and causing them to spread or merge",
+    "hint": "Water accumulates on the lid from evaporation during incubation. What would happen if those water drops fell onto bacterial colonies?",
+    "explanation": "During incubation at 37°C, moisture evaporates from the agar surface and condenses on the cooler plastic lid. If the plate is stored right-side up, these condensation droplets fall back onto the agar, landing on and merging separate colonies — disrupting colony morphology, causing satellite growth, and potentially contaminating isolated colonies with neighbours. Inverting the plate means condensation drops fall onto the lid inner surface harmlessly, away from the agar. Colony morphology is therefore clean, discrete, and reliable for identification. This applies to all aerobically incubated plates — it is standard practice regardless of organism.",
+    "stepContext": {
+      "step": "Incubation — plate orientation",
+      "whyWeDoThis": "Preserve discrete colony morphology by preventing condensation from disrupting the agar surface.",
+      "commonShortfall": "Right-side-up incubation produces spreading, merged, or satellite colonies that are difficult to distinguish from legitimate growth and may invalidate the isolation.",
+      "howToPrevent": "Always invert agar plates immediately after streaking. Stack carefully to avoid sliding — no more than 5 plates per stack. Label on the base of the plate (not the lid) so the label is always visible when the plate is inverted.",
+      "reagentIfApplicable": ""
+    }
+  },
+  {
+    "id": "streak-04",
+    "experiment": "Streak Plating",
+    "questionType": "identify-step",
+    "scenario": "When examining colonies after incubation for Gram staining, the protocol states to use colonies from an 18–24 hour culture rather than older (48–72 hour) colonies. Why does culture age affect Gram staining results?",
+    "options": [
+      "Older colonies produce more catalase which oxidises the crystal violet before it can bind to the peptidoglycan",
+      "In older cultures, cell wall integrity declines — Gram-positive organisms may lose peptidoglycan structure and stain Gram-variable or Gram-negative even when they are truly Gram-positive",
+      "Older colonies are too thick to flatten on a glass slide, preventing the heat fixation step from working correctly",
+      "The staining reagents penetrate colonies differently depending on age — 18–24h cultures have not yet produced the secondary metabolites that block crystal violet uptake"
+    ],
+    "correctAnswer": "In older cultures, cell wall integrity declines — Gram-positive organisms may lose peptidoglycan structure and stain Gram-variable or Gram-negative even when they are truly Gram-positive",
+    "hint": "The Gram stain depends entirely on the structural integrity of the peptidoglycan. What happens to cell walls as cultures age?",
+    "explanation": "As bacterial cultures age beyond 24 hours, autolytic enzymes (produced by the bacteria themselves) begin degrading the peptidoglycan. In Gram-positive organisms this weakens the cell wall, reducing its ability to retain the CV–I complex during decolourisation — the organism stains pink (appearing Gram-negative) even though it is structurally and genetically Gram-positive. This 'Gram-variable' or 'Gram-negative artefact' from old cultures is one of the most common sources of misidentification in clinical and teaching laboratories. Always Gram stain from 18–24 hour fresh cultures on solid media or 12–18 hour broth cultures for reliable results.",
+    "stepContext": {
+      "step": "Colony selection for Gram staining",
+      "whyWeDoThis": "Use young cultures to ensure cell wall structural integrity for accurate Gram staining.",
+      "commonShortfall": "Using colonies older than 36 hours produces false Gram-negative results for Gram-positive organisms — a critical misidentification error in clinical settings.",
+      "howToPrevent": "Always note the culture age before Gram staining. Use colonies from plates incubated for exactly 18–24 hours. If older plates must be used, subculture onto a fresh plate and incubate overnight before staining.",
+      "reagentIfApplicable": ""
+    }
+  }
+]
