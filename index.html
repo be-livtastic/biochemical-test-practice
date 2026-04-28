@@ -31,8 +31,10 @@
       let quizStartToken = 0;
       let experimentPool = [];
       let westernBlotPool = [];
+      let omicsPool = [];
       let currentExpQuestion = null;
       let currentWBQuestion = null;
+      let currentOmicsQuestion = null;
 
       function shuffle(items) {
         const arr = [...items];
@@ -44,33 +46,15 @@
       }
 
       function startMode(mode) {
+        if (mode === 'omics') {
+          startOmicsMode();
+          return;
+        }
         startQuiz(mode);
       }
 
       function showLanding() {
-  
-      function renderWBQuestion(q) {
-        currentWBQuestion = q;
-        renderExpQuestion({ ...q, experiment: q.theme });
-      }
-
-      function submitWBAnswer(q, buttonEl, selectedOption) {
-        submitExpAnswer(q, buttonEl, selectedOption);
-      }
-
-      function renderWBResult(q, wasCorrect) {
-        renderExpResult({ ...q, experiment: q.theme }, wasCorrect);
-      }
-
-      function advanceWBQuiz() {
-        advanceExpQuiz();
-      }
-
-      function renderWBSummary() {
-        renderExpSummary();
-      }
-
-      renderModeSelector();
+        renderModeSelector();
       }
 
       function renderModeSelector() {
@@ -78,7 +62,7 @@
         app.innerHTML = `
           <article class="card">
             <h2>Select quiz mode</h2>
-            <p class="hero-sub">All four modes use the same scoring and summary flow.</p>
+            <p class="hero-sub">All five modes use the same scoring and summary flow.</p>
             <div class="mode-grid">
               <button class="mode-btn mode-organism" onclick="startQuiz('organism')">
                 <strong>Identify the organism</strong>
@@ -97,6 +81,11 @@
                 <span class="mode-icon">🧬</span>
                 <span class="mode-title">Western Blotting</span>
                 <span class="mode-desc">Fundamentals · gel & transfer · immunodetection</span>
+              </button>
+              <button class="mode-btn mode-card" id="mode-omics" onclick="startMode('omics')">
+                <span class="mode-icon">🧫</span>
+                <span class="mode-title">Omics & Tools</span>
+                <span class="mode-desc">Metabolites · proteomics · functional genomics · EMBL-EBI · AlphaFold</span>
               </button>
             </div>
           </article>
@@ -142,6 +131,14 @@
           }
           const pool = overridePool || westernBlotPool;
           nextQuizOrder = shuffle(pool);
+        } else if (mode === 'omics') {
+          if (!omicsPool.length) {
+            const response = await fetch('data/quiz-omics.json');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            omicsPool = await response.json();
+          }
+          const pool = overridePool || omicsPool;
+          nextQuizOrder = shuffle(pool);
         }
 
         if (startToken !== quizStartToken) {
@@ -156,29 +153,7 @@
         selectedName = '';
 
         if (!quizOrder.length) {
-    
-      function renderWBQuestion(q) {
-        currentWBQuestion = q;
-        renderExpQuestion({ ...q, experiment: q.theme });
-      }
-
-      function submitWBAnswer(q, buttonEl, selectedOption) {
-        submitExpAnswer(q, buttonEl, selectedOption);
-      }
-
-      function renderWBResult(q, wasCorrect) {
-        renderExpResult({ ...q, experiment: q.theme }, wasCorrect);
-      }
-
-      function advanceWBQuiz() {
-        advanceExpQuiz();
-      }
-
-      function renderWBSummary() {
-        renderExpSummary();
-      }
-
-      renderModeSelector();
+          renderModeSelector();
           return;
         }
 
@@ -190,6 +165,8 @@
           renderExpQuestion(quizOrder[currentIndex]);
         } else if (quizMode === 'westernblot') {
           renderWBQuestion(quizOrder[currentIndex]);
+        } else if (quizMode === 'omics') {
+          renderOmicsQuestion(quizOrder[currentIndex]);
         }
       }
 
@@ -203,21 +180,23 @@
           'identify-step': 'badge-identifystep',
           'why-step': 'badge-whystep',
           shortfall: 'badge-shortfall',
-          reagent: 'badge-reagent'
+          reagent: 'badge-reagent',
+          interpret: 'badge-interpret'
         }[q.questionType] || 'badge-identifystep';
 
         const badgeLabel = {
           'identify-step': 'Identify the step',
           'why-step': 'Why this step',
           shortfall: 'Shortfall scenario',
-          reagent: 'Reagent purpose'
+          reagent: 'Reagent purpose',
+          interpret: 'Interpretation'
         }[q.questionType] || q.questionType;
 
         app.innerHTML = `
           <article class="card">
             <div class="progress-bar">
               <span class="progress-text">Question ${current} of ${total}</span>
-              <span class="experiment-tag">${q.experiment}</span>
+              <span class="experiment-tag theme-tag tag-${(q.experiment || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}">${q.experiment}</span>
             </div>
             <span class="type-badge question-badge ${badgeClass}">${badgeLabel}</span>
             <p class="scenario question-text">${q.scenario}</p>
@@ -551,7 +530,7 @@
             </div>
             ${reagentBlock}
             <div class="quick-actions">
-              <button class="next-btn" onclick="advanceExpQuiz()">
+              <button class="next-btn" onclick="quizMode === 'omics' ? advanceOmicsQuiz() : advanceExpQuiz()">
                 ${currentIndex + 1 < quizOrder.length ? 'Next question →' : 'See summary'}
               </button>
               <button class="hint-btn" onclick="startMode('experiment')">Restart quiz</button>
@@ -569,7 +548,13 @@
       function advanceExpQuiz() {
         currentIndex += 1;
         if (currentIndex < quizOrder.length) {
-          renderExpQuestion(quizOrder[currentIndex]);
+          if (quizMode === 'omics') {
+            renderOmicsQuestion(quizOrder[currentIndex]);
+          } else {
+            renderExpQuestion(quizOrder[currentIndex]);
+          }
+        } else if (quizMode === 'omics') {
+          renderOmicsSummary();
         } else {
           renderExpSummary();
         }
@@ -640,6 +625,8 @@
           renderExpQuestion(quizOrder[currentIndex]);
         } else if (quizMode === 'westernblot') {
           renderWBQuestion(quizOrder[currentIndex]);
+        } else if (quizMode === 'omics') {
+          renderOmicsQuestion(quizOrder[currentIndex]);
         }
       }
 
@@ -679,6 +666,11 @@
 
         if (quizMode === 'experiment') {
           renderExpSummary();
+          return;
+        }
+
+        if (quizMode === 'omics') {
+          renderOmicsSummary();
           return;
         }
 
@@ -776,6 +768,51 @@
       function renderWBQuestion(q) {
         currentWBQuestion = q;
         renderExpQuestion({ ...q, experiment: q.theme });
+      }
+
+      async function startOmicsMode() {
+        await startQuiz('omics');
+      }
+
+      function renderOmicsQuestion(q) {
+        currentOmicsQuestion = q;
+        renderExpQuestion({ ...q, experiment: q.theme });
+      }
+
+      function submitOmicsAnswer(q, buttonEl, selectedOption) {
+        submitExpAnswer(q, buttonEl, selectedOption);
+      }
+
+      function renderOmicsResult(q, wasCorrect) {
+        renderExpResult({ ...q, experiment: q.theme }, wasCorrect);
+      }
+
+      function advanceOmicsQuiz() {
+        advanceExpQuiz();
+      }
+
+      function renderOmicsSummary() {
+        const app = document.getElementById('card-area');
+        const themes = [
+          ['metabolomics', 'Metabolomics'],
+          ['functional-genomics', 'Functional Genomics'],
+          ['proteomics', 'Proteomics'],
+          ['embl-ebi', 'EMBL-EBI'],
+          ['alphafold', 'AlphaFold & Structural']
+        ];
+
+        const groupedRows = themes.map(([themeKey, label]) => {
+          const qs = quizOrder.filter((q) => q.theme === themeKey);
+          if (!qs.length) return '';
+          const rows = qs.map((q) => {
+            const wasCorrect = q._userAnsweredCorrectly;
+            const badgeClass = `badge-${q.questionType.replaceAll('-', '')}`;
+            return `<tr><td>${q.scenario.substring(0, 80)}${q.scenario.length > 80 ? '…' : ''}</td><td><span class="type-badge question-badge ${badgeClass}">${q.questionType}</span></td><td class="${wasCorrect ? 'result-tick' : 'result-cross'}">${wasCorrect ? '✓' : '✗'}</td></tr>`;
+          }).join('');
+          return `<h3 class="summary-omics-heading">${label}</h3><table class="org-table summary-table"><thead><tr><th>Question</th><th>Type</th><th>Result</th></tr></thead><tbody>${rows}</tbody></table>`;
+        }).join('');
+
+        app.innerHTML = `<article class="card"><div class="summary-score">Score: ${score} / ${quizOrder.length}</div>${groupedRows}<div class="summary-actions"><button onclick="startMode('omics')">Restart omics quiz</button><button onclick="showLanding()">Back to menu</button></div></article>`;
       }
 
       function submitWBAnswer(q, buttonEl, selectedOption) {
