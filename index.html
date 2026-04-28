@@ -372,6 +372,18 @@
         renderBiochemResult(questionObj, wasCorrect);
       }
 
+      function getOptionLabel(optionText = '') {
+        const match = optionText.match(/^([A-Z])\.\s+/);
+        return match ? match[1] : '';
+      }
+
+      function isMatchingAnswer(selectedOption, correctAnswer) {
+        if (selectedOption === correctAnswer) return true;
+        if (typeof correctAnswer !== 'string') return false;
+        const selectedLabel = getOptionLabel(selectedOption);
+        return selectedLabel && selectedLabel === correctAnswer.trim();
+      }
+
       function submitExpAnswer(q, buttonEl, selectedOption) {
         const buttons = document.querySelectorAll('.option-btn');
         q._selectedOption = selectedOption;
@@ -379,7 +391,7 @@
           b.disabled = true;
         });
 
-        const isCorrect = selectedOption === q.correctAnswer;
+        const isCorrect = isMatchingAnswer(selectedOption, q.correctAnswer);
         q._userAnsweredCorrectly = isCorrect;
 
         if (isCorrect) {
@@ -388,7 +400,8 @@
         } else {
           buttonEl.classList.add('btn-incorrect');
           buttons.forEach((b) => {
-            if (b.textContent.trim().replace(/^\d+/, '').trim() === q.correctAnswer) {
+            const optionText = b.textContent.trim().replace(/^\d+/, '').trim();
+            if (isMatchingAnswer(optionText, q.correctAnswer)) {
               b.classList.add('btn-correct');
             }
           });
