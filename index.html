@@ -29,6 +29,25 @@
       let selectedName = '';
       let quizMode = '';
       let quizStartToken = 0;
+      let experimentPool = [];
+      let currentExpQuestion = null;
+
+      function shuffle(items) {
+        const arr = [...items];
+        for (let i = arr.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      function startMode(mode) {
+        startQuiz(mode);
+      }
+
+      function showLanding() {
+        renderModeSelector();
+      }
 
       function renderModeSelector() {
         const app = document.getElementById('card-area');
@@ -44,6 +63,11 @@
               <button class="mode-btn mode-biochem" onclick="startQuiz('biochem')">
                 <strong>Identify the test</strong>
                 <span>Scenario/result → test, meaning, reasoning</span>
+              </button>
+              <button class="mode-btn mode-card mode-exp" id="mode-exp" onclick="startMode('experiment')">
+                <span class="mode-icon">🧪</span>
+                <span class="mode-title">Experiment quiz</span>
+                <span class="mode-desc">Steps · reagents · shortfalls · fixes</span>
               </button>
             </div>
           </article>
@@ -64,7 +88,7 @@
           }
           const pool = overridePool || organismPool;
           nextQuizOrder = [...pool].sort(() => Math.random() - 0.5);
-        } else {
+        } else if (mode === 'biochem') {
           if (!biochemPool.length) {
             const response = await fetch('data/quiz-biochemical.json');
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -73,6 +97,14 @@
           }
           const pool = overridePool || biochemPool;
           nextQuizOrder = [...pool].sort(() => Math.random() - 0.5);
+        } else if (mode === 'experiment') {
+          if (!experimentPool.length) {
+            const response = await fetch('data/quiz-experiments.json');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            experimentPool = await response.json();
+          }
+          const pool = overridePool || experimentPool;
+          nextQuizOrder = shuffle(pool);
         }
 
         if (startToken !== quizStartToken) {
@@ -93,9 +125,48 @@
 
         if (mode === 'organism') {
           renderQuestion(quizOrder[currentIndex]);
-        } else {
+        } else if (quizMode === 'biochem') {
           renderBiochemQuestion(quizOrder[currentIndex]);
+        } else if (quizMode === 'experiment') {
+          renderExpQuestion(quizOrder[currentIndex]);
         }
+      }
+
+      function renderExpQuestion(q) {
+        currentExpQuestion = q;
+        const app = document.getElementById('card-area');
+        const current = currentIndex + 1;
+        const total = quizOrder.length;
+
+        const badgeClass = {
+          'identify-step': 'badge-identifystep',
+          'why-step': 'badge-whystep',
+          shortfall: 'badge-shortfall',
+          reagent: 'badge-reagent'
+        }[q.questionType] || 'badge-identifystep';
+
+        const badgeLabel = {
+          'identify-step': 'Identify the step',
+          'why-step': 'Why this step',
+          shortfall: 'Shortfall scenario',
+          reagent: 'Reagent purpose'
+        }[q.questionType] || q.questionType;
+
+        app.innerHTML = `
+          <article class="card">
+            <div class="progress-bar">
+              <span class="progress-text">Question ${current} of ${total}</span>
+              <span class="experiment-tag">${q.experiment}</span>
+            </div>
+            <span class="type-badge question-badge ${badgeClass}">${badgeLabel}</span>
+            <p class="scenario question-text">${q.scenario}</p>
+            <div class="answer-grid options-list">
+              ${q.options.map((opt, idx) => `<button class="answer-btn option-btn" onclick="submitExpAnswer(currentExpQuestion, this, currentExpQuestion.options[${idx}])"><span class="keycap">${idx + 1}</span>${opt}</button>`).join('')}
+            </div>
+            <button class="hint-toggle" onclick="toggleHint()">Show hint</button>
+            <div id="hint-box" class="hint-box hidden">${q.hint}</div>
+          </article>
+        `;
       }
 
       function renderQuestion(organism) {
@@ -159,8 +230,12 @@
             </div>
 
             <button class="hint-btn" id="hint-toggle">Show hint</button>
-            <p id="hint-text" class="hint hidden">${questionObj.hint}</p>
+            <p id="hint-text" class="hint hidden">${questionObj.questionType === 'identify-test' ? getSimpleBiochemHint(questionObj) : questionObj.hint}</p>
             <p class="kbd-note">Keyboard: press 1–4 to answer, Backspace to go back one question.</p>
+            <div class="quick-actions">
+              <button class="hint-btn" onclick="startQuiz('biochem')">Restart quiz</button>
+              <button class="hint-btn" onclick="showLanding()">Home</button>
+            </div>
           </article>
         `;
 
@@ -169,6 +244,43 @@
           document.getElementById('hint-text').classList.toggle('hidden', !hintVisible);
           document.getElementById('hint-toggle').textContent = hintVisible ? 'Hide hint' : 'Show hint';
         });
+      }
+
+
+      function getSimpleBiochemHint(questionObj) {
+        const simpleHints = {
+          Catalase: 'Look for quick bubbles with hydrogen peroxide.',
+          'Coagulase (tube method)': 'Look for plasma turning into a clot/gel.',
+          PYR: 'A fast cherry-red color after reagent points to PYR.',
+          'Optochin susceptibility': 'A P disk with a clear zone means optochin testing.',
+          'CAMP test': 'An arrowhead hemolysis pattern near S. aureus suggests CAMP.',
+          'Novobiocin susceptibility': 'This test is read by the size of the inhibition zone.',
+          'Oxidase test': 'A rapid blue-purple color after oxidase reagent is the clue.',
+          'Indole test': 'A red ring at the top after Kovács reagent indicates indole testing.',
+          'Urease test': 'Urea medium turning pink from ammonia indicates urease.',
+          'H2S production (TSI)': 'Blackening in TSI points to H2S production.',
+          'MUG test': 'Think UV fluorescence, not a visible color change.',
+          'TSI interpretation': 'This one combines slant/butt color, gas, and blackening clues.'
+        };
+        return simpleHints[questionObj.testName] || questionObj.hint;
+      }
+
+      function getSimpleBiochemExplanation(questionObj) {
+        const simpleExplanations = {
+          Catalase: 'This is catalase: adding hydrogen peroxide causes immediate oxygen bubbles when catalase is present.',
+          'Coagulase (tube method)': 'This is tube coagulase: a positive result is plasma turning from liquid to a firm clot/gel.',
+          PYR: 'This is PYR: a cherry-red color after reagent means the PYR enzyme reaction is positive.',
+          'Optochin susceptibility': 'This is optochin testing: you identify it by measuring the inhibition zone around a P disk.',
+          'CAMP test': 'This is the CAMP test: a positive result is arrowhead-shaped enhanced hemolysis near S. aureus.',
+          'Novobiocin susceptibility': 'This is novobiocin susceptibility: interpret it by zone size to determine susceptible vs resistant.',
+          'Oxidase test': 'This is oxidase: a rapid purple/blue color means cytochrome c oxidase is present.',
+          'Indole test': 'This is indole: a cherry-red top ring after Kovács reagent means indole was produced.',
+          'Urease test': 'This is urease: ammonia from urea breakdown raises pH and turns the medium pink.',
+          'H2S production (TSI)': 'This indicates H2S production in TSI: H2S reacts with iron salts and forms a black precipitate.',
+          'MUG test': 'This is MUG: a positive result is blue-white fluorescence under UV from released methylumbelliferone.',
+          'TSI interpretation': 'This is TSI interpretation: you read sugar use, H2S, and gas together from one tube pattern.'
+        };
+        return simpleExplanations[questionObj.testName] || questionObj.explanation;
       }
 
       function checkAnswer(selected, correctName) {
@@ -195,6 +307,40 @@
         };
         if (wasCorrect) score += 1;
         renderBiochemResult(questionObj, wasCorrect);
+      }
+
+      function submitExpAnswer(q, buttonEl, selectedOption) {
+        const buttons = document.querySelectorAll('.option-btn');
+        q._selectedOption = selectedOption;
+        buttons.forEach((b) => {
+          b.disabled = true;
+        });
+
+        const isCorrect = selectedOption === q.correctAnswer;
+        q._userAnsweredCorrectly = isCorrect;
+
+        if (isCorrect) {
+          buttonEl.classList.add('btn-correct');
+          score += 1;
+        } else {
+          buttonEl.classList.add('btn-incorrect');
+          buttons.forEach((b) => {
+            if (b.textContent.trim().replace(/^\d+/, '').trim() === q.correctAnswer) {
+              b.classList.add('btn-correct');
+            }
+          });
+        }
+
+        setTimeout(() => renderExpResult(q, isCorrect), 400);
+      }
+
+      function formatExplanationParagraphs(explanation) {
+        return explanation
+          .split(/(?<=[.!?])\s+/)
+          .map((sentence) => sentence.trim())
+          .filter(Boolean)
+          .map((sentence) => `<p>${sentence}</p>`)
+          .join('');
       }
 
       function renderResult(organism, wasCorrect) {
@@ -238,7 +384,7 @@
             </div>
 
             <p class="why-note"><strong>Correct answer:</strong> ${questionObj.correctAnswer}</p>
-            <p class="clinical"><strong>Explanation:</strong> ${questionObj.explanation}</p>
+            <p class="clinical"><strong>Explanation:</strong> ${questionObj.questionType === 'identify-test' ? getSimpleBiochemExplanation(questionObj) : questionObj.explanation}</p>
 
             <div class="section-label">Colour change</div>
             <div class="color-panel">
@@ -262,9 +408,110 @@
               <tbody>${organismRows}</tbody>
             </table>
 
-            <button class="next-btn" onclick="nextQuestion()">${currentIndex + 1 >= quizOrder.length ? 'See summary' : 'Next question'}</button>
+            <div class="quick-actions">
+              <button class="next-btn" onclick="nextQuestion()">${currentIndex + 1 >= quizOrder.length ? 'See summary' : 'Next question'}</button>
+              <button class="hint-btn" onclick="startQuiz('biochem')">Restart quiz</button>
+              <button class="hint-btn" onclick="showLanding()">Home</button>
+            </div>
           </article>
         `;
+      }
+
+      function renderExpResult(q, wasCorrect) {
+        const app = document.getElementById('card-area');
+        const selectedAnswerText = q._selectedOption || 'Not captured';
+        const feedbackLead = wasCorrect
+          ? 'Nice work — you selected the best answer.'
+          : 'Not quite this time. Review the breakdown below and compare it with your choice.';
+        const explanationParagraphs = formatExplanationParagraphs(q.explanation);
+        const reagentBlock = q.stepContext.reagentIfApplicable
+          ? `<div class="reagent-note">
+               <span class="reagent-label">Reagent note</span>
+               ${q.stepContext.reagentIfApplicable}
+             </div>`
+          : '';
+
+        app.innerHTML = `
+          <article class="card">
+            <div class="result-banner ${wasCorrect ? 'correct banner-correct' : 'incorrect banner-incorrect'}">
+              ${wasCorrect ? 'Correct' : 'Incorrect'}
+            </div>
+            <p class="exp-feedback-lead">${feedbackLead}</p>
+            ${!wasCorrect ? `<div class="selected-answer-box"><strong>Your answer:</strong> ${selectedAnswerText}</div>` : ''}
+            <div class="correct-answer-box">
+              <strong>Correct answer:</strong> ${q.correctAnswer}
+            </div>
+            <div class="explanation-block">
+              ${explanationParagraphs}
+            </div>
+            <div class="step-context-block">
+              <div class="step-context-title">Step context — ${q.experiment}</div>
+              <div class="step-row"><span class="step-label">Step</span><span>${q.stepContext.step}</span></div>
+              <div class="step-row"><span class="step-label">Why we do this</span><span>${q.stepContext.whyWeDoThis}</span></div>
+              <div class="step-row"><span class="step-label">Common shortfall</span><span>${q.stepContext.commonShortfall}</span></div>
+              <div class="step-row"><span class="step-label">How to prevent</span><span>${q.stepContext.howToPrevent}</span></div>
+            </div>
+            ${reagentBlock}
+            <button class="next-btn" onclick="advanceExpQuiz()">
+              ${currentIndex + 1 < quizOrder.length ? 'Next question →' : 'See summary'}
+            </button>
+          </article>
+        `;
+      }
+
+      function advanceExpQuiz() {
+        currentIndex += 1;
+        if (currentIndex < quizOrder.length) {
+          renderExpQuestion(quizOrder[currentIndex]);
+        } else {
+          renderExpSummary();
+        }
+      }
+
+      function renderExpSummary() {
+        const app = document.getElementById('card-area');
+        const experiments = ['DNA Extraction', 'PCR', 'Gel Electrophoresis', 'RFLP', 'Streak Plating'];
+
+        const groupedRows = experiments.map((exp) => {
+          const qs = quizOrder.filter((q) => q.experiment === exp);
+          if (!qs.length) return '';
+          const rows = qs.map((q) => {
+            const wasCorrect = q._userAnsweredCorrectly;
+            const badgeClass = `badge-${q.questionType.replaceAll('-', '')}`;
+            return `<tr>
+              <td>${q.scenario.substring(0, 80)}${q.scenario.length > 80 ? '…' : ''}</td>
+              <td><span class="type-badge question-badge ${badgeClass}">${q.questionType}</span></td>
+              <td class="${wasCorrect ? 'result-tick' : 'result-cross'}">${wasCorrect ? '✓' : '✗'}</td>
+            </tr>`;
+          }).join('');
+          return `<h3 class="summary-exp-heading">${exp}</h3>
+            <table class="org-table summary-table"><thead>
+              <tr><th>Question</th><th>Type</th><th>Result</th></tr>
+            </thead><tbody>${rows}</tbody></table>`;
+        }).join('');
+
+        app.innerHTML = `
+          <article class="card">
+            <div class="summary-score">Score: ${score} / ${quizOrder.length}</div>
+            ${groupedRows}
+            <div class="summary-actions">
+              <button onclick="startMode('experiment')">Restart experiment quiz</button>
+              <button onclick="showLanding()">Back to menu</button>
+            </div>
+          </article>
+        `;
+      }
+
+      function toggleHint() {
+        const box = document.getElementById('hint-box');
+        const btn = document.querySelector('.hint-toggle');
+        if (box.classList.contains('hidden')) {
+          box.classList.remove('hidden');
+          btn.textContent = 'Hide hint';
+        } else {
+          box.classList.add('hidden');
+          btn.textContent = 'Show hint';
+        }
       }
 
       function nextQuestion() {
@@ -275,8 +522,10 @@
         }
         if (quizMode === 'organism') {
           renderQuestion(quizOrder[currentIndex]);
-        } else {
+        } else if (quizMode === 'biochem') {
           renderBiochemQuestion(quizOrder[currentIndex]);
+        } else if (quizMode === 'experiment') {
+          renderExpQuestion(quizOrder[currentIndex]);
         }
       }
 
@@ -311,6 +560,11 @@
           }
           document.getElementById('restart-all').addEventListener('click', () => startQuiz('organism'));
           document.getElementById('back-home').addEventListener('click', renderModeSelector);
+          return;
+        }
+
+        if (quizMode === 'experiment') {
+          renderExpSummary();
           return;
         }
 
