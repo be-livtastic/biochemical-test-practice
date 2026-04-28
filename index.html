@@ -262,6 +262,7 @@
 
       function submitExpAnswer(q, buttonEl, selectedOption) {
         const buttons = document.querySelectorAll('.option-btn');
+        q._selectedOption = selectedOption;
         buttons.forEach((b) => {
           b.disabled = true;
         });
@@ -282,6 +283,15 @@
         }
 
         setTimeout(() => renderExpResult(q, isCorrect), 400);
+      }
+
+      function formatExplanationParagraphs(explanation) {
+        return explanation
+          .split(/(?<=[.!?])\s+/)
+          .map((sentence) => sentence.trim())
+          .filter(Boolean)
+          .map((sentence) => `<p>${sentence}</p>`)
+          .join('');
       }
 
       function renderResult(organism, wasCorrect) {
@@ -356,6 +366,11 @@
 
       function renderExpResult(q, wasCorrect) {
         const app = document.getElementById('card-area');
+        const selectedAnswerText = q._selectedOption || 'Not captured';
+        const feedbackLead = wasCorrect
+          ? 'Nice work — you selected the best answer.'
+          : 'Not quite this time. Review the breakdown below and compare it with your choice.';
+        const explanationParagraphs = formatExplanationParagraphs(q.explanation);
         const reagentBlock = q.stepContext.reagentIfApplicable
           ? `<div class="reagent-note">
                <span class="reagent-label">Reagent note</span>
@@ -368,11 +383,13 @@
             <div class="result-banner ${wasCorrect ? 'correct banner-correct' : 'incorrect banner-incorrect'}">
               ${wasCorrect ? 'Correct' : 'Incorrect'}
             </div>
+            <p class="exp-feedback-lead">${feedbackLead}</p>
+            ${!wasCorrect ? `<div class="selected-answer-box"><strong>Your answer:</strong> ${selectedAnswerText}</div>` : ''}
             <div class="correct-answer-box">
               <strong>Correct answer:</strong> ${q.correctAnswer}
             </div>
             <div class="explanation-block">
-              ${q.explanation}
+              ${explanationParagraphs}
             </div>
             <div class="step-context-block">
               <div class="step-context-title">Step context — ${q.experiment}</div>
