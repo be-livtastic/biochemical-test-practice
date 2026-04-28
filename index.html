@@ -222,8 +222,12 @@
             </div>
 
             <button class="hint-btn" id="hint-toggle">Show hint</button>
-            <p id="hint-text" class="hint hidden">${questionObj.hint}</p>
+            <p id="hint-text" class="hint hidden">${questionObj.questionType === 'identify-test' ? getSimpleBiochemHint(questionObj) : questionObj.hint}</p>
             <p class="kbd-note">Keyboard: press 1–4 to answer, Backspace to go back one question.</p>
+            <div class="quick-actions">
+              <button class="hint-btn" onclick="startQuiz('biochem')">Restart quiz</button>
+              <button class="hint-btn" onclick="showLanding()">Home</button>
+            </div>
           </article>
         `;
 
@@ -232,6 +236,43 @@
           document.getElementById('hint-text').classList.toggle('hidden', !hintVisible);
           document.getElementById('hint-toggle').textContent = hintVisible ? 'Hide hint' : 'Show hint';
         });
+      }
+
+
+      function getSimpleBiochemHint(questionObj) {
+        const simpleHints = {
+          Catalase: 'Look for quick bubbles with hydrogen peroxide.',
+          'Coagulase (tube method)': 'Look for plasma turning into a clot/gel.',
+          PYR: 'A fast cherry-red color after reagent points to PYR.',
+          'Optochin susceptibility': 'A P disk with a clear zone means optochin testing.',
+          'CAMP test': 'An arrowhead hemolysis pattern near S. aureus suggests CAMP.',
+          'Novobiocin susceptibility': 'This test is read by the size of the inhibition zone.',
+          'Oxidase test': 'A rapid blue-purple color after oxidase reagent is the clue.',
+          'Indole test': 'A red ring at the top after Kovács reagent indicates indole testing.',
+          'Urease test': 'Urea medium turning pink from ammonia indicates urease.',
+          'H2S production (TSI)': 'Blackening in TSI points to H2S production.',
+          'MUG test': 'Think UV fluorescence, not a visible color change.',
+          'TSI interpretation': 'This one combines slant/butt color, gas, and blackening clues.'
+        };
+        return simpleHints[questionObj.testName] || questionObj.hint;
+      }
+
+      function getSimpleBiochemExplanation(questionObj) {
+        const simpleExplanations = {
+          Catalase: 'This is catalase: adding hydrogen peroxide causes immediate oxygen bubbles when catalase is present.',
+          'Coagulase (tube method)': 'This is tube coagulase: a positive result is plasma turning from liquid to a firm clot/gel.',
+          PYR: 'This is PYR: a cherry-red color after reagent means the PYR enzyme reaction is positive.',
+          'Optochin susceptibility': 'This is optochin testing: you identify it by measuring the inhibition zone around a P disk.',
+          'CAMP test': 'This is the CAMP test: a positive result is arrowhead-shaped enhanced hemolysis near S. aureus.',
+          'Novobiocin susceptibility': 'This is novobiocin susceptibility: interpret it by zone size to determine susceptible vs resistant.',
+          'Oxidase test': 'This is oxidase: a rapid purple/blue color means cytochrome c oxidase is present.',
+          'Indole test': 'This is indole: a cherry-red top ring after Kovács reagent means indole was produced.',
+          'Urease test': 'This is urease: ammonia from urea breakdown raises pH and turns the medium pink.',
+          'H2S production (TSI)': 'This indicates H2S production in TSI: H2S reacts with iron salts and forms a black precipitate.',
+          'MUG test': 'This is MUG: a positive result is blue-white fluorescence under UV from released methylumbelliferone.',
+          'TSI interpretation': 'This is TSI interpretation: you read sugar use, H2S, and gas together from one tube pattern.'
+        };
+        return simpleExplanations[questionObj.testName] || questionObj.explanation;
       }
 
       function checkAnswer(selected, correctName) {
@@ -335,7 +376,7 @@
             </div>
 
             <p class="why-note"><strong>Correct answer:</strong> ${questionObj.correctAnswer}</p>
-            <p class="clinical"><strong>Explanation:</strong> ${questionObj.explanation}</p>
+            <p class="clinical"><strong>Explanation:</strong> ${questionObj.questionType === 'identify-test' ? getSimpleBiochemExplanation(questionObj) : questionObj.explanation}</p>
 
             <div class="section-label">Colour change</div>
             <div class="color-panel">
@@ -359,7 +400,11 @@
               <tbody>${organismRows}</tbody>
             </table>
 
-            <button class="next-btn" onclick="nextQuestion()">${currentIndex + 1 >= quizOrder.length ? 'See summary' : 'Next question'}</button>
+            <div class="quick-actions">
+              <button class="next-btn" onclick="nextQuestion()">${currentIndex + 1 >= quizOrder.length ? 'See summary' : 'Next question'}</button>
+              <button class="hint-btn" onclick="startQuiz('biochem')">Restart quiz</button>
+              <button class="hint-btn" onclick="showLanding()">Home</button>
+            </div>
           </article>
         `;
       }
