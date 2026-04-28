@@ -28,6 +28,7 @@
       let hintVisible = false;
       let selectedName = '';
       let quizMode = '';
+      let quizStartToken = 0;
 
       function renderModeSelector() {
         const app = document.getElementById('card-area');
@@ -50,7 +51,9 @@
       }
 
       async function startQuiz(mode, overridePool = null) {
+        const startToken = ++quizStartToken;
         quizMode = mode;
+        let nextQuizOrder = [];
 
         if (mode === 'organism') {
           if (!organismPool.length) {
@@ -60,7 +63,7 @@
             organismPool = data.ORGS;
           }
           const pool = overridePool || organismPool;
-          quizOrder = [...pool].sort(() => Math.random() - 0.5);
+          nextQuizOrder = [...pool].sort(() => Math.random() - 0.5);
         } else {
           if (!biochemPool.length) {
             const response = await fetch('data/quiz-biochemical.json');
@@ -69,9 +72,14 @@
             biochemPool = data.QUESTIONS;
           }
           const pool = overridePool || biochemPool;
-          quizOrder = [...pool].sort(() => Math.random() - 0.5);
+          nextQuizOrder = [...pool].sort(() => Math.random() - 0.5);
         }
 
+        if (startToken !== quizStartToken) {
+          return;
+        }
+
+        quizOrder = nextQuizOrder;
         currentIndex = 0;
         score = 0;
         answers = [];
@@ -83,7 +91,7 @@
           return;
         }
 
-        if (quizMode === 'organism') {
+        if (mode === 'organism') {
           renderQuestion(quizOrder[currentIndex]);
         } else {
           renderBiochemQuestion(quizOrder[currentIndex]);
