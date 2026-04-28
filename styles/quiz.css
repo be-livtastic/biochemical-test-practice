@@ -202,3 +202,7 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
 .btn-correct{background:#1f4d2f!important;border-color:#4db26d!important;color:#e9ffef!important}
 .btn-incorrect{background:#5b2525!important;border-color:#cc6c6c!important;color:#ffd2d2!important}
 .correct-answer-box,.explanation-block{margin:10px 0;padding:10px;border-radius:10px;background:var(--surface-soft);border:1px solid #344a80}
+
+
+.quick-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.quick-actions .next-btn,.quick-actions .hint-btn{margin-top:0}
