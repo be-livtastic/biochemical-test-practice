@@ -1,0 +1,24 @@
+[
+  {
+    "id": "om-01",
+    "theme": "metabolomics",
+    "questionType": "identify-step",
+    "scenario": "A researcher profiles all small molecules in a blood sample without prior selection of targets — amino acids, lipids, sugars, and intermediates — to find differences between diabetic and healthy patients. Which metabolomics approach is this?",
+    "options": [
+      "A. Targeted metabolomics — measuring a predefined panel of metabolites using reference standards",
+      "B. Untargeted metabolomics — profiling the complete small-molecule content of a sample without prior selection",
+      "C. Fluxomics — measuring the rate of metabolite interconversion through pathways",
+      "D. Lipidomics — exclusively profiling lipid species in biological samples"
+    ],
+    "correctAnswer": "B",
+    "hint": "The key phrase is 'without prior selection of targets' — all molecules are captured, then differences identified.",
+    "explanation": "Untargeted metabolomics profiles the entire detectable small-molecule complement of a sample — the metabolome — without pre-selecting which molecules to measure. This is discovery-driven: you find differences first, then identify what they are. Targeted metabolomics is hypothesis-driven: you measure a specific predefined set (e.g. TCA cycle intermediates) with quantitative precision. The trade-off is coverage vs accuracy — untargeted catches everything but identification of unknowns remains a major challenge.",
+    "stepContext": {
+      "step": "Study design — targeted vs untargeted metabolomics",
+      "whyWeDoThis": "Untargeted approaches are used for discovery when you do not know which metabolites differ between conditions. Targeted approaches are used when you need precise quantification of known metabolites.",
+      "commonShortfall": "Confusing untargeted metabolomics with fluxomics — fluxomics specifically measures metabolic flux (rates of reaction) using isotope labelling, not just metabolite presence.",
+      "howToPrevent": "Define the experimental question first: discovery → untargeted; quantification of known pathway → targeted; reaction rates → fluxomics.",
+      "reagentIfApplicable": ""
+    }
+  }
+]
