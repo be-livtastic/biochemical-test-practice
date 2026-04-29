@@ -5,18 +5,18 @@
     "questionType": "identify-step",
     "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here?",
     "options": [
-      "A. Quantitative analysis \u2014 to measure relative abundance between samples",
-      "B. Qualitative analysis \u2014 to confirm presence or absence of a specific protein isoform",
-      "C. Structural analysis \u2014 to determine the 3D conformation of the target",
-      "D. Proteomic screening \u2014 to identify all proteins in the lysate simultaneously"
+      "A. Quantitative analysis — to measure relative abundance between samples",
+      "B. Qualitative analysis — to confirm presence or absence of a specific protein isoform",
+      "C. Structural analysis — to determine the 3D conformation of the target",
+      "D. Proteomic screening — to identify all proteins in the lysate simultaneously"
     ],
     "correctAnswer": "B",
     "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
     "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
     "stepContext": {
-      "step": "Experimental design \u2014 defining the goal",
+      "step": "Experimental design — defining the goal",
       "whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.",
-      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data \u2014 the two goals require different validation standards.",
+      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data — the two goals require different validation standards.",
       "howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.",
       "reagentIfApplicable": ""
     }
@@ -36,363 +36,115 @@
     "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
     "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
     "stepContext": {
-      "step": "Sample preparation \u2014 SDS treatment",
+      "step": "Sample preparation — SDS treatment",
       "whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.",
-      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds \u2014 a reducing agent (DTT or \u03b2-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
+      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds — a reducing agent (DTT or β-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
       "howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.",
-      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or \u03b2-mercaptoethanol"
+      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or β-mercaptoethanol"
     }
   },
   {
     "id": "wb-03",
     "theme": "fundamentals",
-    "questionType": "identify-step",
-    "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here? (Variant 1)",
+    "questionType": "why-step",
+    "scenario": "A lab is studying a protein complex that retains function only when its subunits remain associated. They want to detect whether the complex is intact in treated vs untreated cells. Why would denaturing SDS-PAGE be inappropriate for this experiment?",
     "options": [
-      "A. Quantitative analysis \u2014 to measure relative abundance between samples",
-      "B. Qualitative analysis \u2014 to confirm presence or absence of a specific protein isoform",
-      "C. Structural analysis \u2014 to determine the 3D conformation of the target",
-      "D. Proteomic screening \u2014 to identify all proteins in the lysate simultaneously"
+      "A. SDS-PAGE cannot separate proteins above 150 kDa",
+      "B. Denaturing conditions unfold proteins and disrupt non-covalent interactions, so subunit associations and oligomerization would be destroyed before analysis",
+      "C. SDS interferes with antibody binding during immunodetection",
+      "D. Denaturing gels cannot be transferred to membranes"
     ],
     "correctAnswer": "B",
-    "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
-    "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
+    "hint": "Consider what 'native conditions' preserve that denaturing conditions do not.",
+    "explanation": "Native (non-denaturing) PAGE omits SDS and reducing agents to preserve protein shape, oligomerization, and interactions. SDS-PAGE denatures proteins by disrupting non-covalent bonds, which would dissociate the subunits of the complex. For this experiment, native PAGE is required so the complex migrates as an intact unit. The trade-off is that migration is no longer strictly size-based — charge and shape also contribute.",
     "stepContext": {
-      "step": "Experimental design \u2014 defining the goal",
-      "whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.",
-      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data \u2014 the two goals require different validation standards.",
-      "howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.",
+      "step": "Experimental design — denaturing vs native gel selection",
+      "whyWeDoThis": "Native conditions preserve protein-protein interactions and quaternary structure, which denaturing conditions would destroy.",
+      "commonShortfall": "Using SDS-PAGE by default without considering whether the target's functional form is relevant — results in intact complexes being detected only as their individual subunits.",
+      "howToPrevent": "Ask explicitly: does this experiment require detecting the protein in its native conformation or interaction state? If yes, use native PAGE.",
       "reagentIfApplicable": ""
     }
   },
   {
     "id": "wb-04",
     "theme": "fundamentals",
-    "questionType": "why-step",
-    "scenario": "SDS is added to the protein sample before gel loading. A student asks why this step is essential for size-based separation. What is the correct mechanistic explanation? (Variant 2)",
+    "questionType": "shortfall",
+    "scenario": "A researcher runs a western blot and sees strong, clean bands at the expected molecular weight in all lanes. They did not include any controls. A reviewer rejects the paper, citing a lack of validation. Which specific controls were missing and why does their absence matter?",
     "options": [
-      "A. SDS denatures only non-target proteins, leaving the target intact for antibody binding",
-      "B. SDS binds proportionally to protein mass (~1 molecule per 2 amino acids), giving all proteins a uniform negative charge-to-mass ratio so they migrate solely by size",
-      "C. SDS acts as a reducing agent, cleaving disulfide bonds between polypeptide chains",
-      "D. SDS increases buffer conductivity, accelerating migration of all proteins equally"
+      "A. A size ladder only — without it, band position cannot be assigned a molecular weight",
+      "B. Loading controls to verify equal protein amounts, and positive/negative controls to confirm antibody specificity and process validation",
+      "C. A secondary antibody-only control to check for non-specific binding",
+      "D. A Ponceau stain to confirm transfer — without this, band identity is uncertain"
     ],
     "correctAnswer": "B",
-    "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
-    "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
+    "hint": "The question asks what was missing — think about all three control categories described in the design principles.",
+    "explanation": "A successful western blot requires loading controls (e.g. a housekeeping protein like β-actin or total protein stain) to confirm equal amounts were loaded across lanes, positive controls to confirm the antibody and protocol can detect the target, negative controls to demonstrate antibody specificity, and process validation to confirm transfer worked. Without these, even clean-looking bands cannot be interpreted with confidence — they may reflect loading differences, non-specific binding, or transfer artefacts.",
     "stepContext": {
-      "step": "Sample preparation \u2014 SDS treatment",
-      "whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.",
-      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds \u2014 a reducing agent (DTT or \u03b2-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
-      "howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.",
-      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or \u03b2-mercaptoethanol"
+      "step": "Experimental design — controls",
+      "whyWeDoThis": "Controls provide the interpretive framework that converts a band into a meaningful result. Without them, reproducibility and specificity cannot be established.",
+      "commonShortfall": "Treating controls as optional rather than as the foundation of the experiment — particularly omitting loading controls during quantitative analyses.",
+      "howToPrevent": "Design the control panel before running the blot: loading control, positive control, negative control, and a total protein transfer verification step.",
+      "reagentIfApplicable": ""
     }
   },
   {
     "id": "wb-05",
-    "theme": "fundamentals",
-    "questionType": "identify-step",
-    "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here? (Variant 3)",
+    "theme": "gel-transfer",
+    "questionType": "why-step",
+    "scenario": "A student is separating a mixture of proteins ranging from 15 to 200 kDa on a single gel. Their supervisor suggests using a gradient gel rather than a fixed-percentage gel. What is the mechanistic reason for this recommendation?",
     "options": [
-      "A. Quantitative analysis \u2014 to measure relative abundance between samples",
-      "B. Qualitative analysis \u2014 to confirm presence or absence of a specific protein isoform",
-      "C. Structural analysis \u2014 to determine the 3D conformation of the target",
-      "D. Proteomic screening \u2014 to identify all proteins in the lysate simultaneously"
+      "A. Gradient gels run faster than fixed-percentage gels",
+      "B. Fixed gels cannot separate proteins above 100 kDa regardless of percentage",
+      "C. A gradient gel varies pore size across its length, providing optimal resolution for small proteins in the fine-pore region and for large proteins in the large-pore region simultaneously",
+      "D. Gradient gels eliminate the need for a stacking gel"
     ],
-    "correctAnswer": "B",
-    "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
-    "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
-    "stepContext": {
-      "step": "Experimental design \u2014 defining the goal",
-      "whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.",
-      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data \u2014 the two goals require different validation standards.",
-      "howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.",
-      "reagentIfApplicable": ""
-    }
+    "correctAnswer": "C",
+    "hint": "Lower %T = larger pores = better for large proteins. Higher %T = smaller pores = better for small proteins. Now think about what gradient means.",
+    "explanation": "In polyacrylamide gels, the acrylamide percentage (%T) determines pore size: high %T produces small pores (resolves small proteins) and low %T produces large pores (resolves large proteins). A fixed gel optimises resolution only within a narrow size range. A gradient gel continuously varies %T from top to bottom, so large proteins are resolved at the large-pore top region and small proteins at the fine-pore bottom region — extending effective resolution across the full 15–200 kDa range in one run.",
+    "stepContext": {"step":"Gel electrophoresis — %T selection","whyWeDoThis":"Matching pore size to protein size maximises resolution. Gradient gels allow a single run to span a wide molecular weight range.","commonShortfall":"Choosing a mid-range fixed %T (e.g. 10%) for a wide-range sample — large proteins are underresolved at the top and small proteins run off the bottom.","howToPrevent":"Use the target protein's molecular weight to select %T: low %T for high MW, high %T for low MW, gradient for wide-range samples.","reagentIfApplicable":""}
   },
   {
     "id": "wb-06",
-    "theme": "fundamentals",
-    "questionType": "why-step",
-    "scenario": "SDS is added to the protein sample before gel loading. A student asks why this step is essential for size-based separation. What is the correct mechanistic explanation? (Variant 4)",
-    "options": [
-      "A. SDS denatures only non-target proteins, leaving the target intact for antibody binding",
-      "B. SDS binds proportionally to protein mass (~1 molecule per 2 amino acids), giving all proteins a uniform negative charge-to-mass ratio so they migrate solely by size",
-      "C. SDS acts as a reducing agent, cleaving disulfide bonds between polypeptide chains",
-      "D. SDS increases buffer conductivity, accelerating migration of all proteins equally"
-    ],
-    "correctAnswer": "B",
-    "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
-    "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
-    "stepContext": {
-      "step": "Sample preparation \u2014 SDS treatment",
-      "whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.",
-      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds \u2014 a reducing agent (DTT or \u03b2-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
-      "howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.",
-      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or \u03b2-mercaptoethanol"
-    }
+    "theme": "gel-transfer",
+    "questionType": "shortfall",
+    "scenario": "After transfer, a researcher stains the membrane with Ponceau and sees strong signal only in the lower half of the membrane. The upper half (where high MW proteins should be) is blank. The pre-stained ladder shows bands throughout the gel. What is the most likely cause?",
+    "options": ["A. Over-transfer: high MW proteins passed through and out of the membrane","B. Incomplete transfer: high MW proteins were retained in the gel and not transferred","C. Air bubbles trapped in the lower half prevented protein binding there","D. The blocking agent was too concentrated, stripping proteins from the upper half"],
+    "correctAnswer":"B","hint":"High MW proteins move slowly and need longer transfer times or higher voltage. The pattern tells you where proteins ended up.","explanation":"The presence of bands throughout the gel (confirmed by the ladder remaining visible post-transfer) but absence of Ponceau signal on the upper membrane indicates that large proteins failed to migrate out of the gel during transfer. High molecular weight proteins have lower mobility and require longer transfer times, higher voltage, or wet tank transfer to move efficiently. Semi-dry transfer is particularly prone to this for proteins above ~100 kDa. The fix is to extend transfer time, increase voltage cautiously, or switch to wet tank transfer for large proteins.","stepContext":{"step":"Protein transfer — verification","whyWeDoThis":"Verifying transfer with Ponceau or a total protein stain confirms proteins have left the gel and are bound to the membrane before committing to antibody incubation.","commonShortfall":"Relying solely on pre-stained ladder bands to assess transfer quality — these markers migrate differently from native proteins and can be misleading for high MW targets.","howToPrevent":"Always use total protein stain on both the membrane and the post-transfer gel. Wet tank transfer is more reliable for high MW proteins.","reagentIfApplicable":"Ponceau S stain; Stain-Free gel imaging"}
   },
   {
-    "id": "wb-07",
-    "theme": "fundamentals",
-    "questionType": "identify-step",
-    "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here? (Variant 5)",
-    "options": [
-      "A. Quantitative analysis \u2014 to measure relative abundance between samples",
-      "B. Qualitative analysis \u2014 to confirm presence or absence of a specific protein isoform",
-      "C. Structural analysis \u2014 to determine the 3D conformation of the target",
-      "D. Proteomic screening \u2014 to identify all proteins in the lysate simultaneously"
-    ],
-    "correctAnswer": "B",
-    "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
-    "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
-    "stepContext": {
-      "step": "Experimental design \u2014 defining the goal",
-      "whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.",
-      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data \u2014 the two goals require different validation standards.",
-      "howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.",
-      "reagentIfApplicable": ""
-    }
+    "id":"wb-07","theme":"gel-transfer","questionType":"reagent","scenario":"A student asks why PVDF membrane is preferred over nitrocellulose in experiments where chemiluminescence signal strength is critical. What is the correct comparison?","options":["A. PVDF has lower binding capacity but is more compatible with HRP substrates","B. PVDF has approximately double the protein binding capacity (~200 µg/cm²) vs nitrocellulose (~80–100 µg/cm²), yielding stronger chemiluminescence signals","C. PVDF requires no pre-wetting step and is therefore easier to assemble under time pressure","D. PVDF is preferable because it is compatible with phosphoprotein detection, unlike nitrocellulose"],"correctAnswer":"B","hint":"Binding capacity determines how much protein is retained on the membrane — more protein retained means more signal amplification possible.","explanation":"PVDF has roughly twice the protein binding capacity of nitrocellulose (~200 vs ~80–100 µg/cm²). More protein immobilised per unit area means more primary antibody can bind, more secondary antibody can then bind, and the final chemiluminescence signal is proportionally stronger. The key trade-off is that PVDF must be pre-wetted with methanol or ethanol before use in aqueous buffers, adding a preparation step that is easy to forget.","stepContext":{"step":"Transfer — membrane selection","whyWeDoThis":"Membrane choice affects binding capacity, signal strength, and compatibility with downstream detection methods.","commonShortfall":"Using PVDF without pre-wetting it in methanol first — the membrane becomes hydrophobic and proteins do not bind, resulting in a blank blot.","howToPrevent":"Wet PVDF in 100% methanol for 1 minute, then equilibrate in transfer buffer before assembly. Nitrocellulose requires only aqueous buffer.","reagentIfApplicable":"PVDF requires methanol or ethanol pre-wetting; nitrocellulose wets directly in aqueous transfer buffer"}
   },
   {
-    "id": "wb-08",
-    "theme": "fundamentals",
-    "questionType": "why-step",
-    "scenario": "SDS is added to the protein sample before gel loading. A student asks why this step is essential for size-based separation. What is the correct mechanistic explanation? (Variant 6)",
-    "options": [
-      "A. SDS denatures only non-target proteins, leaving the target intact for antibody binding",
-      "B. SDS binds proportionally to protein mass (~1 molecule per 2 amino acids), giving all proteins a uniform negative charge-to-mass ratio so they migrate solely by size",
-      "C. SDS acts as a reducing agent, cleaving disulfide bonds between polypeptide chains",
-      "D. SDS increases buffer conductivity, accelerating migration of all proteins equally"
-    ],
-    "correctAnswer": "B",
-    "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
-    "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
-    "stepContext": {
-      "step": "Sample preparation \u2014 SDS treatment",
-      "whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.",
-      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds \u2014 a reducing agent (DTT or \u03b2-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
-      "howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.",
-      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or \u03b2-mercaptoethanol"
-    }
+    "id":"wb-08","theme":"gel-transfer","questionType":"shortfall","scenario":"After semi-dry transfer, Ponceau staining reveals a circular clear zone (swirl pattern) in the middle of the membrane, surrounded by strong signal. Bands in that area are faint or absent. What caused this pattern?","options":["A. The blocking agent was applied before Ponceau, masking protein in that region","B. An air bubble trapped between the gel and membrane during transfer assembly, preventing protein contact with the membrane in that zone","C. Over-transfer in the central region due to uneven current distribution","D. The membrane dried out in the centre during the transfer run"],"correctAnswer":"B","hint":"The swirl/halo pattern is characteristic of one specific assembly error.","explanation":"Air bubbles trapped between the gel and membrane during semi-dry transfer assembly create a physical barrier — proteins cannot migrate across that gap and bind the membrane in that zone. The result is a circular clear area (the bubble's footprint) surrounded by normal signal. The fix is to carefully roll out bubbles using a glass rod or roller during assembly, working from the centre outward, before applying current.","stepContext":{"step":"Transfer — assembly and troubleshooting","whyWeDoThis":"Complete gel-membrane contact is required for uniform protein transfer across the entire blot.","commonShortfall":"Rushing the transfer stack assembly and not rolling out bubbles — particularly common with semi-dry setups where the stack is compressed.","howToPrevent":"Assemble the stack in transfer buffer, lower gel onto membrane gently, then roll firmly from centre to edges with a glass rod before sealing.","reagentIfApplicable":""}
   },
   {
-    "id": "wb-09",
-    "theme": "fundamentals",
-    "questionType": "identify-step",
-    "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here? (Variant 7)",
-    "options": [
-      "A. Quantitative analysis \u2014 to measure relative abundance between samples",
-      "B. Qualitative analysis \u2014 to confirm presence or absence of a specific protein isoform",
-      "C. Structural analysis \u2014 to determine the 3D conformation of the target",
-      "D. Proteomic screening \u2014 to identify all proteins in the lysate simultaneously"
-    ],
-    "correctAnswer": "B",
-    "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
-    "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
-    "stepContext": {
-      "step": "Experimental design \u2014 defining the goal",
-      "whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.",
-      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data \u2014 the two goals require different validation standards.",
-      "howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.",
-      "reagentIfApplicable": ""
-    }
+    "id":"wb-09","theme":"immunodetection","questionType":"why-step","scenario":"After transfer, a membrane is incubated in 5% non-fat milk in TBST before applying the primary antibody. A student asks why this step is necessary. What is the correct explanation?","options":["A. Milk proteins carry the primary antibody to the target, acting as a delivery vehicle","B. The blocking agent occupies all non-specific protein-binding sites on the membrane, preventing the primary antibody from sticking anywhere other than the target","C. Milk denatures any residual SDS left on the membrane from electrophoresis","D. Blocking reduces membrane background by chemically neutralising exposed PVDF or nitrocellulose"],"correctAnswer":"B","hint":"The membrane binds protein non-specifically — blocking saturates those sites before the antibody is introduced.","explanation":"Membranes used in western blotting are designed to bind protein, but this applies to all proteins, not just the target. Without blocking, the primary antibody would bind non-specifically across the entire membrane surface, producing high background that obscures target bands. The blocking agent (e.g. non-fat milk, BSA) saturates these non-specific sites so that when the primary antibody is added, only genuine epitope-specific binding contributes to signal.","stepContext":{"step":"Immunodetection — blocking","whyWeDoThis":"Blocking reduces non-specific antibody binding, lowering background noise and improving signal-to-noise ratio.","commonShortfall":"Using milk to detect phosphoproteins — milk contains casein, a phosphoprotein, which competes with the phosphorylated target for anti-phospho antibody binding, destroying the signal.","howToPrevent":"Use BSA-based blocking buffer for phosphoprotein detection. Use milk for standard total protein targets where cost-effectiveness matters.","reagentIfApplicable":"Non-fat milk (1–5%), BSA (1–5%), casein (0.5–5%), Fish Gelatin (1%), EveryBlot (proprietary)"}
   },
   {
-    "id": "wb-10",
-    "theme": "fundamentals",
-    "questionType": "why-step",
-    "scenario": "SDS is added to the protein sample before gel loading. A student asks why this step is essential for size-based separation. What is the correct mechanistic explanation? (Variant 8)",
-    "options": [
-      "A. SDS denatures only non-target proteins, leaving the target intact for antibody binding",
-      "B. SDS binds proportionally to protein mass (~1 molecule per 2 amino acids), giving all proteins a uniform negative charge-to-mass ratio so they migrate solely by size",
-      "C. SDS acts as a reducing agent, cleaving disulfide bonds between polypeptide chains",
-      "D. SDS increases buffer conductivity, accelerating migration of all proteins equally"
-    ],
-    "correctAnswer": "B",
-    "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
-    "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
-    "stepContext": {
-      "step": "Sample preparation \u2014 SDS treatment",
-      "whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.",
-      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds \u2014 a reducing agent (DTT or \u03b2-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
-      "howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.",
-      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or \u03b2-mercaptoethanol"
-    }
+    "id":"wb-10","theme":"immunodetection","questionType":"shortfall","scenario":"A researcher is detecting a phosphorylated signalling protein using a phospho-specific antibody. They block in 5% non-fat milk as usual. Despite using a validated antibody, there is no detectable band. What is the most likely explanation?","options":["A. Milk increases membrane permeability, allowing the target protein to wash away","B. Casein in milk is a phosphoprotein — it competes directly with the phosphorylated target for the phospho-specific antibody, effectively neutralising antibody activity before it reaches the membrane","C. Non-fat milk cannot be used with PVDF membranes","D. The milk concentration was too low to prevent background, causing signal to be buried in noise"],"correctAnswer":"B","hint":"Look at the Known Risks column for non-fat milk in your blocking agent reference guide.","explanation":"Non-fat milk contains casein, which is a phosphoprotein. A phospho-specific primary antibody will bind casein molecules in solution, depleting available antibody before it reaches the membrane. This effectively eliminates target detection. For phosphoprotein western blots, the blocking agent must be BSA-based or a dedicated phospho-compatible buffer. This is one of the most common and easily prevented failures in signalling research.","stepContext":{"step":"Immunodetection — blocking agent selection","whyWeDoThis":"Blocking agent composition must be compatible with the antibody target — phospho-specific antibodies require phosphoprotein-free blocking.","commonShortfall":"Defaulting to milk blocking for all experiments without checking target compatibility — particularly critical for phospho, biotin, or glycoprotein detection.","howToPrevent":"Check the antibody datasheet for blocking recommendations. Default to BSA for phospho-targets. Fish Gelatin is the non-mammalian alternative for biotin-based detection.","reagentIfApplicable":"BSA (1–5%) for phosphoprotein detection; avoid milk and casein"}
   },
   {
-    "id": "wb-11",
-    "theme": "fundamentals",
-    "questionType": "identify-step",
-    "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here? (Variant 9)",
-    "options": [
-      "A. Quantitative analysis \u2014 to measure relative abundance between samples",
-      "B. Qualitative analysis \u2014 to confirm presence or absence of a specific protein isoform",
-      "C. Structural analysis \u2014 to determine the 3D conformation of the target",
-      "D. Proteomic screening \u2014 to identify all proteins in the lysate simultaneously"
-    ],
-    "correctAnswer": "B",
-    "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
-    "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
-    "stepContext": {
-      "step": "Experimental design \u2014 defining the goal",
-      "whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.",
-      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data \u2014 the two goals require different validation standards.",
-      "howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.",
-      "reagentIfApplicable": ""
-    }
+    "id":"wb-11","theme":"immunodetection","questionType":"why-step","scenario":"After primary antibody incubation, the membrane must be washed before the secondary antibody is applied. A student proposes skipping the wash to save time since the secondary antibody is applied in excess anyway. What would the consequence be?","options":["A. No consequence — excess secondary antibody displaces any remaining unbound primary antibody","B. Unbound and non-specifically bound primary antibody would remain on the membrane, and the secondary antibody would bind these, dramatically increasing background signal across the entire blot","C. The secondary antibody would not bind without the wash, as the wash activates binding sites on the primary antibody","D. Skipping the wash increases signal at the target band, improving sensitivity"],"correctAnswer":"B","hint":"Think about what the secondary antibody targets — and what it would find if unbound primary antibody is still present everywhere.","explanation":"The wash step removes unbound and non-specifically adhered primary antibody from the membrane. The secondary antibody binds the Fc region of the primary antibody — it does not distinguish between specifically bound primary antibody (on the target) and non-specifically retained primary antibody (everywhere else). Without washing, secondary antibody binds all residual primary antibody, converting non-specific background into amplified signal. The result is a dark, non-specific blot with no interpretable bands.","stepContext":{"step":"Immunodetection — washing","whyWeDoThis":"Washing removes non-specific primary antibody so that secondary antibody binding is restricted to epitope-specific primary antibody at the target location.","commonShortfall":"Insufficient wash duration or number of wash cycles — particularly with hydrophobic membranes like PVDF that retain more protein non-specifically.","howToPrevent":"Perform at least 3 x 10-minute washes in TBST or PBST between primary and secondary antibody steps, with gentle agitation.","reagentIfApplicable":"TBST or PBST wash buffer; Tween-20 concentration typically 0.05–0.1%"}
   },
   {
-    "id": "wb-12",
-    "theme": "fundamentals",
-    "questionType": "why-step",
-    "scenario": "SDS is added to the protein sample before gel loading. A student asks why this step is essential for size-based separation. What is the correct mechanistic explanation? (Variant 10)",
-    "options": [
-      "A. SDS denatures only non-target proteins, leaving the target intact for antibody binding",
-      "B. SDS binds proportionally to protein mass (~1 molecule per 2 amino acids), giving all proteins a uniform negative charge-to-mass ratio so they migrate solely by size",
-      "C. SDS acts as a reducing agent, cleaving disulfide bonds between polypeptide chains",
-      "D. SDS increases buffer conductivity, accelerating migration of all proteins equally"
-    ],
-    "correctAnswer": "B",
-    "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
-    "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
-    "stepContext": {
-      "step": "Sample preparation \u2014 SDS treatment",
-      "whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.",
-      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds \u2014 a reducing agent (DTT or \u03b2-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
-      "howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.",
-      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or \u03b2-mercaptoethanol"
-    }
+    "id":"wb-12","theme":"immunodetection","questionType":"reagent","scenario":"A lab wants to simultaneously detect two proteins on the same blot — the target (60 kDa) and a loading control (42 kDa) — without stripping and reprobing. They are designing a multiplexing experiment. What is the critical requirement for this to work?","options":["A. Both proteins must be at identical concentrations in the sample","B. The primary antibodies must be raised in different host species (e.g. one mouse, one rabbit) so that species-specific secondary antibodies do not cross-react","C. Both targets must be separated by at least 50 kDa to avoid signal overlap","D. Multiplexing requires chemiluminescent detection — fluorescent secondaries cannot be used"],"correctAnswer":"B","hint":"The secondary antibody must be able to find the right primary antibody — how does it tell them apart?","explanation":"In multiplexing, two primary antibodies are applied simultaneously. To detect them independently, two different secondary antibodies are needed, each specific to a different host species (e.g. anti-mouse and anti-rabbit). If both primary antibodies were raised in the same species, the secondary antibodies would cross-react with both primaries, making it impossible to assign signal to the correct target. Multiplexing using fluorescence allows simultaneous imaging in different channels without signal overlap, which is not possible with chemiluminescence.","stepContext":{"step":"Immunodetection — multiplexing","whyWeDoThis":"Multiplexing allows co-detection of target and loading control on the same membrane in the same experiment, improving data quality and reducing sample consumption.","commonShortfall":"Using two primary antibodies raised in the same species — the secondary antibodies cross-react, making signal uninterpretable.","howToPrevent":"When selecting primary antibodies for multiplexing, confirm they are raised in different species. Use fluorescent secondary antibodies with distinct excitation/emission spectra.","reagentIfApplicable":"Fluorescent secondary antibodies (distinct channels required); species-matched anti-mouse and anti-rabbit secondary antibodies"}
   },
   {
-    "id": "wb-13",
-    "theme": "fundamentals",
-    "questionType": "identify-step",
-    "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here? (Variant 11)",
-    "options": [
-      "A. Quantitative analysis \u2014 to measure relative abundance between samples",
-      "B. Qualitative analysis \u2014 to confirm presence or absence of a specific protein isoform",
-      "C. Structural analysis \u2014 to determine the 3D conformation of the target",
-      "D. Proteomic screening \u2014 to identify all proteins in the lysate simultaneously"
-    ],
-    "correctAnswer": "B",
-    "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
-    "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
-    "stepContext": {
-      "step": "Experimental design \u2014 defining the goal",
-      "whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.",
-      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data \u2014 the two goals require different validation standards.",
-      "howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.",
-      "reagentIfApplicable": ""
-    }
+    "id":"wb-13","theme":"immunodetection","questionType":"shortfall","scenario":"A researcher sees diffuse, high background signal across the entire membrane rather than clean discrete bands. They used a 1:500 primary antibody dilution. The antibody datasheet recommends 1:5000. What is the most likely cause of the high background?","options":["A. The secondary antibody was used at too low a concentration","B. The primary antibody concentration was too high — antibody oversaturation causes loss of selectivity and non-specific binding across the membrane","C. The gel percentage was too low, causing proteins to run together","D. The transfer was incomplete — proteins remained in the gel and are producing background signal"],"correctAnswer":"B","hint":"The researcher used 10x more antibody than recommended. What happens when antibody concentration exceeds the optimal point?","explanation":"Antibody concentration must be optimised per target and sample type. Using 1:500 instead of the recommended 1:5000 means approximately 10x excess primary antibody. At high concentrations, even low-affinity non-specific interactions become significant, and background noise rises exponentially while signal plateaus. The result is diffuse background that obscures target bands. The 8-strip parallel screening protocol exists precisely to identify the concentration at which signal is maximal and background is minimal.","stepContext":{"step":"Immunodetection — primary antibody concentration optimisation","whyWeDoThis":"The correct antibody concentration is the point where target signal is strong and background is absent — this sits within the linear dynamic range.","commonShortfall":"Defaulting to high antibody concentrations assuming 'more = stronger signal' — the signal-to-noise ratio actually worsens above the optimal concentration.","howToPrevent":"Start with the manufacturer's recommended dilution. Use a dilution series (e.g. 1:1000, 1:5000, 1:10000) to empirically determine optimal concentration for your sample type.","reagentIfApplicable":""}
   },
   {
-    "id": "wb-14",
-    "theme": "fundamentals",
-    "questionType": "why-step",
-    "scenario": "SDS is added to the protein sample before gel loading. A student asks why this step is essential for size-based separation. What is the correct mechanistic explanation? (Variant 12)",
-    "options": [
-      "A. SDS denatures only non-target proteins, leaving the target intact for antibody binding",
-      "B. SDS binds proportionally to protein mass (~1 molecule per 2 amino acids), giving all proteins a uniform negative charge-to-mass ratio so they migrate solely by size",
-      "C. SDS acts as a reducing agent, cleaving disulfide bonds between polypeptide chains",
-      "D. SDS increases buffer conductivity, accelerating migration of all proteins equally"
-    ],
-    "correctAnswer": "B",
-    "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
-    "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
-    "stepContext": {
-      "step": "Sample preparation \u2014 SDS treatment",
-      "whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.",
-      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds \u2014 a reducing agent (DTT or \u03b2-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
-      "howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.",
-      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or \u03b2-mercaptoethanol"
-    }
+    "id":"wb-14","theme":"immunodetection","questionType":"interpret","scenario":"A researcher uses a monoclonal antibody for their western blot. A collaborator suggests switching to a polyclonal antibody for stronger signal. The target protein is moderately expressed. What is the correct tradeoff analysis?","options":["A. Polyclonal antibodies are always superior — switch immediately","B. Polyclonal antibodies bind multiple epitopes and produce higher signal, but introduce lot-to-lot variability and higher background risk; monoclonal antibodies give lower but highly consistent, reproducible signal with a single defined epitope","C. Monoclonal antibodies produce higher signal because they are derived from a purer source","D. There is no meaningful difference between mono- and polyclonal antibodies for western blotting specifically"],"correctAnswer":"B","hint":"Polyclonal = multiple epitopes = multiple binding sites = more signal but also more variability. Monoclonal = single epitope = consistent but lower signal.","explanation":"Polyclonal antibodies are produced from multiple B-cell clones and bind multiple different epitopes on the target, creating more antibody-binding events per target molecule and a higher cumulative signal. However, the mixed population introduces lot-to-lot variability — each production batch may have a different epitope profile. Monoclonal antibodies recognise a single defined epitope with extremely low variance between lots, making data highly reproducible. For a moderately expressed target, a polyclonal antibody may help sensitivity; for quantitative studies requiring reproducibility across experiments, monoclonal is preferable.","stepContext":{"step":"Immunodetection — primary antibody selection","whyWeDoThis":"Antibody source determines signal strength, specificity, and reproducibility — all three matter for experimental validity.","commonShortfall":"Assuming polyclonal antibodies are unconditionally better — their lot-to-lot variability requires re-validation with each new lot, which is costly in longitudinal studies.","howToPrevent":"For discovery/screening work where signal strength is the priority, polyclonal antibodies are appropriate. For quantitative or longitudinal studies, monoclonal antibodies are more reproducible.","reagentIfApplicable":""}
   },
   {
-    "id": "wb-15",
-    "theme": "fundamentals",
-    "questionType": "identify-step",
-    "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here? (Variant 13)",
-    "options": [
-      "A. Quantitative analysis \u2014 to measure relative abundance between samples",
-      "B. Qualitative analysis \u2014 to confirm presence or absence of a specific protein isoform",
-      "C. Structural analysis \u2014 to determine the 3D conformation of the target",
-      "D. Proteomic screening \u2014 to identify all proteins in the lysate simultaneously"
-    ],
-    "correctAnswer": "B",
-    "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
-    "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
-    "stepContext": {
-      "step": "Experimental design \u2014 defining the goal",
-      "whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.",
-      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data \u2014 the two goals require different validation standards.",
-      "howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.",
-      "reagentIfApplicable": ""
-    }
+    "id":"wb-15","theme":"immunodetection","questionType":"why-step","scenario":"A secondary antibody conjugated to HRP (horseradish peroxidase) is used for chemiluminescent detection. A student asks: why is a secondary antibody used at all, rather than conjugating the reporter directly to the primary antibody?","options":["A. Primary antibodies cannot be chemically modified without losing their antigen-binding activity","B. Secondary antibodies provide signal amplification — multiple secondary antibodies bind each primary antibody, each carrying a reporter, multiplying the signal generated per target molecule","C. Direct conjugation is technically possible but prohibited by regulatory standards for laboratory use","D. Secondary antibodies are used because they are species-specific, making the system more selective"],"correctAnswer":"B","hint":"Think about how many secondary antibodies can bind one primary antibody — and what each secondary carries.","explanation":"The secondary antibody system provides amplification. Each primary antibody bound to the target presents multiple Fc region binding sites accessible to secondary antibodies. Multiple secondary antibodies bind each primary, and each secondary carries one or more reporter molecules (e.g. HRP enzymes). The net effect is that each target molecule generates a signal proportional to the number of secondaries bound — substantially amplifying the signal compared to direct conjugation of a single reporter to the primary antibody.","stepContext":{"step":"Immunodetection — secondary antibody and signal amplification","whyWeDoThis":"Signal amplification allows detection of low-abundance proteins that a directly conjugated primary antibody system would fail to detect.","commonShortfall":"Using too high a secondary antibody concentration — like with primaries, oversaturation increases non-specific background. Always optimise secondary dilution.","howToPrevent":"Use manufacturer-recommended secondary dilutions as a starting point; 1:5000 to 1:20000 is typical for HRP-conjugated secondaries with ECL detection.","reagentIfApplicable":"HRP-conjugated secondary antibody (chemiluminescent detection); AP-conjugated secondary antibody (colorimetric detection); fluorescent secondary antibodies (multiplexing)"}
   },
   {
-    "id": "wb-16",
-    "theme": "fundamentals",
-    "questionType": "why-step",
-    "scenario": "SDS is added to the protein sample before gel loading. A student asks why this step is essential for size-based separation. What is the correct mechanistic explanation? (Variant 14)",
-    "options": [
-      "A. SDS denatures only non-target proteins, leaving the target intact for antibody binding",
-      "B. SDS binds proportionally to protein mass (~1 molecule per 2 amino acids), giving all proteins a uniform negative charge-to-mass ratio so they migrate solely by size",
-      "C. SDS acts as a reducing agent, cleaving disulfide bonds between polypeptide chains",
-      "D. SDS increases buffer conductivity, accelerating migration of all proteins equally"
-    ],
-    "correctAnswer": "B",
-    "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
-    "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
-    "stepContext": {
-      "step": "Sample preparation \u2014 SDS treatment",
-      "whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.",
-      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds \u2014 a reducing agent (DTT or \u03b2-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
-      "howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.",
-      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or \u03b2-mercaptoethanol"
-    }
+    "id":"wb-16","theme":"immunodetection","questionType":"interpret","scenario":"After running a quantitative western blot, a researcher loads 10 µg, 20 µg, and 40 µg of total protein per lane. Band intensities measured by densitometry are 950, 980, and 990 arbitrary units respectively. What does this pattern indicate and how should the researcher respond?","options":["A. The result is valid — the small numerical differences between lanes confirm precise equal loading","B. The band intensities have plateaued despite doubling protein input, indicating the samples were loaded outside the linear dynamic range — accurate quantification is not possible from this data","C. The antibody has very high sensitivity — the near-equal readings confirm that even low protein amounts are detectable","D. The secondary antibody was used at too low a concentration, limiting maximum signal"],"correctAnswer":"B","hint":"If doubling the protein loaded should double the signal — and it doesn't — what does that tell you about where on the curve you are?","explanation":"In quantitative western blotting, signal must be proportional to protein amount — doubling protein loaded should approximately double band intensity. Intensities of 950, 980, 990 AU for 10, 20, and 40 µg show signal saturation: the detection system has reached its ceiling and cannot resolve the difference. This places the samples outside the linear dynamic range. To fix this, the researcher should load less protein (e.g. 1, 2, 4, and 8 µg) and re-determine the linear range before drawing any quantitative conclusions.","stepContext":{"step":"Image analysis — linear dynamic range validation","whyWeDoThis":"Quantitative WB is only valid when samples are loaded within the linear range — outside it, intensities are not proportional to protein abundance and cannot be compared.","commonShortfall":"Running quantitative blots without first performing a protein loading titration to define the linear range — a common cause of irreproducible quantitative data.","howToPrevent":"Before quantitative experiments, run a dilution series and plot intensity vs protein amount. Load experimental samples in the middle of the confirmed linear region.","reagentIfApplicable":""}
   },
   {
-    "id": "wb-17",
-    "theme": "fundamentals",
-    "questionType": "identify-step",
-    "scenario": "A researcher wants to determine whether a specific 45 kDa protein is present in two different cell lysates. They are not trying to measure exact quantities. Which primary goal of western blotting applies here? (Variant 15)",
-    "options": [
-      "A. Quantitative analysis \u2014 to measure relative abundance between samples",
-      "B. Qualitative analysis \u2014 to confirm presence or absence of a specific protein isoform",
-      "C. Structural analysis \u2014 to determine the 3D conformation of the target",
-      "D. Proteomic screening \u2014 to identify all proteins in the lysate simultaneously"
-    ],
-    "correctAnswer": "B",
-    "hint": "The researcher is asking 'is it there?' not 'how much is there?'",
-    "explanation": "Western blotting serves two primary goals: qualitative (presence/absence of a specific protein isoform) and quantitative (relative abundance to monitor changes). This scenario asks only whether the protein exists in each lysate, making it a qualitative application. Quantitative WB requires loading controls, linear dynamic range validation, and densitometry.",
-    "stepContext": {
-      "step": "Experimental design \u2014 defining the goal",
-      "whyWeDoThis": "Defining the goal before running the blot determines which controls are required and whether densitometry data needs to be collected.",
-      "commonShortfall": "Researchers run quantitative blots without validating the linear dynamic range, then report qualitative presence/absence data \u2014 the two goals require different validation standards.",
-      "howToPrevent": "State the experimental question explicitly before selecting controls. Quantitative goals require loading controls and linear range validation; qualitative goals require positive and negative controls.",
-      "reagentIfApplicable": ""
-    }
+    "id":"wb-17","theme":"gel-transfer","questionType":"why-step","scenario":"A lab routinely uses semi-dry transfer for 25–75 kDa proteins. They receive a new project targeting a 180 kDa receptor. Their supervisor tells them to switch to wet tank transfer. Why is wet tank transfer the better choice for this target?","options":["A. Wet tank transfer uses a different buffer system that is specifically required for glycosylated proteins","B. Wet tank transfer submerges the entire stack in buffer, providing better cooling and flexible time and voltage settings — critical for high MW proteins that require longer transfer durations without overheating","C. Semi-dry transfer cannot achieve the voltage required to move high MW proteins","D. Wet tank transfer uses higher ionic strength buffers that improve high MW protein mobility"],"correctAnswer":"B","hint":"Semi-dry transfer's main limitation is heat — high MW proteins need long run times. What does full submersion in buffer do?","explanation":"Semi-dry transfer is fast and efficient for mid-range proteins but uses only a limited volume of transfer buffer, making it prone to overheating during extended runs. High MW proteins require longer transfer times (often overnight) and sustained current to fully migrate from gel to membrane — conditions that exceed semi-dry capacity. Wet tank transfer fully submerges the stack in a large buffer reservoir, providing continuous cooling, flexible voltage, and the extended run times necessary for complete transfer of 180 kDa and above targets.","stepContext":{"step":"Transfer — method selection for high MW proteins","whyWeDoThis":"Transfer method selection must account for target molecular weight — high MW proteins need the sustained, cooled conditions that wet tank transfer provides.","commonShortfall":"Defaulting to semi-dry transfer for all targets regardless of MW — results in incomplete transfer of high MW proteins confirmed only after failed immunodetection.","howToPrevent":"For targets above ~100 kDa, use wet tank transfer with overnight low-voltage conditions (30V overnight at 4°C is a common protocol).","reagentIfApplicable":""}
   },
   {
-    "id": "wb-18",
-    "theme": "fundamentals",
-    "questionType": "why-step",
-    "scenario": "SDS is added to the protein sample before gel loading. A student asks why this step is essential for size-based separation. What is the correct mechanistic explanation? (Variant 16)",
-    "options": [
-      "A. SDS denatures only non-target proteins, leaving the target intact for antibody binding",
-      "B. SDS binds proportionally to protein mass (~1 molecule per 2 amino acids), giving all proteins a uniform negative charge-to-mass ratio so they migrate solely by size",
-      "C. SDS acts as a reducing agent, cleaving disulfide bonds between polypeptide chains",
-      "D. SDS increases buffer conductivity, accelerating migration of all proteins equally"
-    ],
-    "correctAnswer": "B",
-    "hint": "Think about what uniform charge-to-mass ratio actually achieves during electrophoresis.",
-    "explanation": "SDS is an anionic detergent that binds to proteins at a ratio of approximately one molecule per two amino acids. This consistent binding gives every protein the same charge density relative to its mass, so the only remaining variable determining migration speed is molecular weight. Without SDS, a protein's native charge, shape, and interactions would all influence migration, making size separation impossible.",
-    "stepContext": {
-      "step": "Sample preparation \u2014 SDS treatment",
-      "whyWeDoThis": "Uniform negative charge-to-mass ratio ensures separation is purely by size, making band position directly interpretable as molecular weight.",
-      "commonShortfall": "Forgetting that SDS itself does not cleave disulfide bonds \u2014 a reducing agent (DTT or \u03b2-mercaptoethanol) is separately required to break disulfide bridges under denaturing conditions.",
-      "howToPrevent": "Use complete Laemmli sample buffer containing both SDS and a reducing agent, and boil the sample to ensure full denaturation.",
-      "reagentIfApplicable": "SDS (sodium dodecyl sulfate); reducing agents: DTT or \u03b2-mercaptoethanol"
-    }
+    "id":"wb-18","theme":"fundamentals","questionType":"identify-step","scenario":"Place the six main western blot workflow steps in the correct order: (1) Image Analysis, (2) Sample Preparation, (3) Immunodetection, (4) Image Acquisition, (5) Electrophoresis, (6) Transfer.","options":["A. 2 → 5 → 6 → 3 → 4 → 1","B. 5 → 2 → 6 → 3 → 4 → 1","C. 2 → 6 → 5 → 3 → 1 → 4","D. 2 → 5 → 3 → 6 → 4 → 1"],"correctAnswer":"A","hint":"Proteins must be prepared before they can be run, transferred before they can be probed, and imaged before they can be analysed.","explanation":"The correct order is: Sample Preparation (denature and prepare lysate) → Electrophoresis (separate by size) → Transfer (move proteins from gel to membrane) → Immunodetection (block, primary Ab, wash, secondary Ab) → Image Acquisition (capture the signal) → Image Analysis (quantify and interpret). This sequence is non-negotiable — each step depends on the output of the one before it.","stepContext":{"step":"Full western blot workflow","whyWeDoThis":"Understanding the sequential dependency of each step is essential for troubleshooting — a failure at any stage propagates to all subsequent steps.","commonShortfall":"Attempting immunodetection before confirming successful transfer — time wasted on antibody incubation when the protein never reached the membrane.","howToPrevent":"Verify each step before proceeding: check gel separation (Stain-Free or Coomassie), verify transfer (Ponceau), then proceed to immunodetection.","reagentIfApplicable":""}
   }
 ]
