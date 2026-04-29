@@ -245,3 +245,35 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
   padding-bottom: 4px;
   border-bottom: 2px solid #1a3a5c;
 }
+
+/* Omics mode card */
+.mode-card#mode-omics {
+  border-color: #4a1a7c;
+}
+.mode-card#mode-omics:hover {
+  background: rgba(74, 26, 124, 0.08);
+}
+
+/* Theme tag colour variants for omics */
+.theme-tag.tag-metabolomics   { background: #2e7d32; }
+.theme-tag.tag-functional-genomics { background: #1565c0; }
+.theme-tag.tag-proteomics     { background: #6a1a4c; }
+.theme-tag.tag-embl-ebi       { background: #0077b6; }
+.theme-tag.tag-alphafold      { background: #1b5e20; }
+
+/* Summary headings for omics themes */
+.summary-omics-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #4a1a7c;
+  margin: 1.5rem 0 0.5rem;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #4a1a7c;
+}
+
+.mode-btn{line-height:1.35}
+.mode-title{font-size:18px;font-weight:800;color:#f2f7ff}
+.mode-desc{font-size:13px;color:#e6efff;opacity:.98}
+.mode-icon{font-size:20px}
+.mode-card{border-color:#5b76b8;background:linear-gradient(150deg,#223865,#1b2f56)}
+#mode-wb .mode-title,#mode-omics .mode-title,#mode-exp .mode-title{letter-spacing:.01em}
